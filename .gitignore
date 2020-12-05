@@ -1,0 +1,8 @@
+node_modules
+.DS_Store
+
+*.js
+*.d.ts
+
+!api/*.js
+!api/*.d.ts
