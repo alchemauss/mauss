@@ -1,0 +1,22 @@
+{
+	"compilerOptions": {
+		/* Visit https://aka.ms/tsconfig.json to read more about this file */
+
+		"target": "ESNext",
+		"module": "ESNext",
+		"declaration": true,
+		// "noEmit": true,
+		// "isolatedModules": true,
+		"strict": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+		"noImplicitReturns": true,
+		"noFallthroughCasesInSwitch": true,
+		// "baseUrl": "./",
+		// "paths": {},
+		// "typeRoots": [],
+		// "types": [],
+		"esModuleInterop": true,
+		"forceConsistentCasingInFileNames": true
+	}
+}
