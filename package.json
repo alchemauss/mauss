@@ -8,6 +8,7 @@
   "module": "index.js",
   "types": "index.d.ts",
   "scripts": {
+    "build": "tsc",
     "prepublishOnly": "tsc && prettier -w *",
     "postpublish": "git clean -dfx"
   },
