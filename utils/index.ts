@@ -12,7 +12,6 @@ export const random = {
 	},
 	key<T>(dict: Record<string, T>): T {
 		const keys = Object.keys(dict);
-		const idx = this.int(keys.length);
-		return dict[keys[idx << 0]];
+		return dict[keys[this.int(keys.length)]];
 	},
 };
