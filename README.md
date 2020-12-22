@@ -131,9 +131,3 @@ random.key(data); // a || 1 || [3]
 <h3 align="center"><pre>
 Mauss | <a href="LICENSE">MIT License</a>
 </pre></h3>
-
-***
-
-<h5 align="center"><pre>
-Copyright &copy; 2020 <a href="https://mauss.dev">Ignatius Bagussuputra</a>
-</pre></h5>
