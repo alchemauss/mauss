@@ -34,7 +34,7 @@ import { :util } from 'mauss';
 
 ### `cookies`
 
-`cookies` can only be used in the browser because it needs to access `document` object. Using this in Node will certainly crash the server.
+can only be used in the browser because it needs to access `document` object. Using this in Node will certainly crash the server.
 
 ```js
 // This will create a cookie with key of 'token'
@@ -104,7 +104,7 @@ capitalize('hI thErE', true); // 'Hi There'
 
 ### `checkNum`
 
-`checkNum` will check an input and return a parsed number if it is one, otherwise it will return the input as is.
+will check an input and return a parsed number if it is one, otherwise it will return the input as is.
 
 ```js
 checkNum('0');  // 0
