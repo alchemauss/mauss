@@ -122,6 +122,7 @@ random.int(9, 1); // 1 - 8
 
 /** random key from any object */
 const data = { 'a': a, 'b': 1, 'c': [3] }
+// returns a random value from an object
 random.key(data); // a || 1 || [3]
 ```
 
