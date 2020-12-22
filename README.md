@@ -26,7 +26,7 @@ API Documentation
 
 The headings refers to the namespaces available to import from. Replace `:util` in the import with the actual exported functions and objects. You shouldn't need to refer to this docs as frequently if you're using a text editor that supports reading `.d.ts` files like VSCode. But, feel free to read and improve as needed.
 
-## `mauss`
+## mauss
 
 ```js
 import { :util } from 'mauss';
@@ -60,7 +60,7 @@ dSearch('mauss'); // will execute after 500ms
 // will start over if called again before 500ms is up
 ```
 
-## `mauss/api`
+## mauss/api
 
 This defaults to `fetch` api from browser, but you can also use it on the server-side by first installing the package `node-fetch`.
 
@@ -88,7 +88,7 @@ function check(path) {
 init({ check }); // Pass the check function
 ```
 
-## `mauss/utils`
+## mauss/utils
 
 ```js
 import { :util } from 'mauss/utils';
