@@ -52,9 +52,11 @@ cookies.remove('token');
 ### `debounce`
 
 ```js
-function search() {...}
+function search(name) {...}
 
-debounce(search, 500); // will execute after 500ms
+const dSearch = debounce(search, 500);
+
+dSearch('mauss'); // will execute after 500ms
 // will start over if called again before 500ms is up
 ```
 
