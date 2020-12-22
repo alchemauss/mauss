@@ -1,6 +1,8 @@
 # Mauss ![Total npm downloads](https://img.shields.io/npm/dt/mauss) &middot; ![Published npm version](https://img.shields.io/npm/v/mauss) ![Monthly npm downloads](https://img.shields.io/npm/dm/mauss) ![License](https://img.shields.io/github/license/devmauss/mauss)
 
-A Complete Zero-Dependency Development Toolkit. Mauss is a collection of development tools written in TypeScript. Completely self-contained with utility functions and helpers that's frequently used, it is meant to be installed and used immediately.
+> Zero-Dependency Development Toolkit
+
+A collection of development tools written in TypeScript.
 
 Ever been frustrated when starting up a new project? Feels like there's a lot to setup and prepare even before writing the actual code itself? Perhaps annoyed by having to write the same code to help you do something each time? This might be the library for you.
 
