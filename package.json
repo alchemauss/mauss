@@ -10,7 +10,7 @@
   "scripts": {
     "build": "tsc",
     "prepublishOnly": "tsc && prettier -w *",
-    "postpublish": "git clean -dfx"
+    "postpublish": "git clean -dfx -e node_modules"
   },
   "exports": {
     "./package.json": "./package.json",
