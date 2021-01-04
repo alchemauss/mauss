@@ -1,4 +1,4 @@
-const options: { base?: string; check?: InitOpts['check']; fetch?: InitOpts['fetch'] } = {};
+let options: InitOpts = {};
 async function send({ method, path, data, token }: SendParams) {
 	const browser = typeof window !== 'undefined';
 
@@ -14,7 +14,7 @@ async function send({ method, path, data, token }: SendParams) {
 		opts.headers!['Authorization'] = `Bearer ${token}`;
 	}
 
-	const { base, check } = options;
+	const { host: base, check } = options;
 	const fetch = browser ? window.fetch : options.fetch;
 	/**
 	 * 1: check function precedes everything
@@ -37,9 +37,7 @@ async function send({ method, path, data, token }: SendParams) {
 
 export const init = ({ host, check, fetch }: InitOpts) => {
 	const browser = typeof window !== 'undefined';
-	options.base = host;
-	options.check = check;
-	options.fetch = fetch;
+	options = { host, check, fetch };
 	if (!browser && !options.fetch) {
 		try {
 			options.fetch = require('node-fetch').default;
@@ -67,15 +65,9 @@ export function put<T>(path: string, data: BodyInit, token?: string): Promise<T>
 
 type BodyInit = ArrayBuffer | ArrayBufferView | string | URLSearchParams | FormData;
 type SendParams = { method: string; path: string; data?: BodyInit; token?: string };
-type RequestOpts = {
-	body?: BodyInit;
-	headers?: Record<string, string>;
-	method?: string;
-	redirect?: RequestRedirect;
-	signal?: AbortSignal | null;
-};
+type RequestOpts = { body?: BodyInit; headers?: Record<string, string>; method?: string };
 type InitOpts = {
-	host: string;
-	check: (path: string) => string;
-	fetch: (url: RequestInfo, init?: RequestInit) => Promise<Response>;
+	host?: string;
+	check?: (path: string) => string;
+	fetch?: (url: RequestInfo, init?: RequestInit) => Promise<Response>;
 };
