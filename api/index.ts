@@ -49,19 +49,19 @@ export const init = ({ host, check, fetch }: InitOpts) => {
 	}
 };
 
-export function get(path: string, token?: string) {
+export function get<T>(path: string, token?: string): Promise<T> {
 	return send({ method: 'GET', path, token });
 }
 
-export function del(path: string, token?: string) {
+export function del<T>(path: string, token?: string): Promise<T> {
 	return send({ method: 'DELETE', path, token });
 }
 
-export function post(path: string, data: BodyInit, token?: string) {
+export function post<T>(path: string, data: BodyInit, token?: string): Promise<T> {
 	return send({ method: 'POST', path, data, token });
 }
 
-export function put(path: string, data: BodyInit, token?: string) {
+export function put<T>(path: string, data: BodyInit, token?: string): Promise<T> {
 	return send({ method: 'PUT', path, data, token });
 }
 
