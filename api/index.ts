@@ -6,7 +6,7 @@ async function send({ method, path, data, token }: SendParams) {
 	if (browser && typeof FormData !== 'undefined' && data instanceof FormData) {
 		opts.body = data;
 	} else if (data) {
-		opts.headers!['Content-Type'] = 'application/json';
+		opts.headers['Content-Type'] = 'application/json';
 		opts.body = JSON.stringify(data);
 	}
 
@@ -65,7 +65,7 @@ export function put<T>(path: string, data: BodyInit, token?: string): Promise<T>
 
 type BodyInit = ArrayBuffer | ArrayBufferView | string | URLSearchParams | FormData;
 type SendParams = { method: string; path: string; data?: BodyInit; token?: string };
-type RequestOpts = { body?: BodyInit; headers?: Record<string, string>; method?: string };
+type RequestOpts = { method: string; headers: Record<string, string>; body?: BodyInit };
 type InitOpts = {
 	host?: string;
 	check?: (path: string) => string;
