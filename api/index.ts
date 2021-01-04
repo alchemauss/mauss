@@ -1,6 +1,5 @@
-const options = { base: '', check: undefined, fetch: undefined };
-async function send(params: SendParams) {
-	const { method, path, data, token } = params;
+const options: { base?: string; check?: InitOpts['check']; fetch?: InitOpts['fetch'] } = {};
+async function send({ method, path, data, token }: SendParams) {
 	const browser = typeof window !== 'undefined';
 
 	const opts: RequestOpts = { method, headers: {} };
@@ -27,7 +26,7 @@ async function send(params: SendParams) {
 		(browser && (base ? `${base}/${path}` : path)) ||
 		`${base || 'localhost:3000'}/${path}`;
 
-	const res = await fetch(url, opts);
+	const res = await fetch!(url, opts);
 	const text = await res.text();
 	try {
 		return JSON.parse(text);
