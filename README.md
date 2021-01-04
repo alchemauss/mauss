@@ -1,6 +1,8 @@
 # Mauss ![Total npm downloads](https://img.shields.io/npm/dt/mauss) &middot; ![Published npm version](https://img.shields.io/npm/v/mauss) ![Monthly npm downloads](https://img.shields.io/npm/dm/mauss) ![License](https://img.shields.io/github/license/devmauss/mauss)
 
-A Complete Zero-Dependency Development Toolkit. Mauss is a collection of development tools written in TypeScript. Completely self-contained with utility functions and helpers that's frequently used, it is meant to be installed and used immediately.
+> Zero-Dependency Development Toolkit
+
+A collection of development tools written in TypeScript.
 
 Ever been frustrated when starting up a new project? Feels like there's a lot to setup and prepare even before writing the actual code itself? Perhaps annoyed by having to write the same code to help you do something each time? This might be the library for you.
 
@@ -26,7 +28,7 @@ API Documentation
 
 The headings refers to the namespaces available to import from. Replace `:util` in the import with the actual exported functions and objects. You shouldn't need to refer to this docs as frequently if you're using a text editor that supports reading `.d.ts` files like VSCode. But, feel free to read and improve as needed.
 
-## `mauss`
+## mauss
 
 ```js
 import { :util } from 'mauss';
@@ -34,7 +36,7 @@ import { :util } from 'mauss';
 
 ### `cookies`
 
-`cookies` can only be used in the browser because it needs to access `document` object. Using this in Node will certainly crash the server.
+can only be used in the browser because it needs to access `document` object. Using this in Node will certainly crash the server.
 
 ```js
 // This will create a cookie with key of 'token'
@@ -52,13 +54,15 @@ cookies.remove('token');
 ### `debounce`
 
 ```js
-function search() {...}
+function search(name) {...}
 
-debounce(search, 500); // will execute after 500ms
+const dSearch = debounce(search, 500);
+
+dSearch('mauss'); // will execute after 500ms
 // will start over if called again before 500ms is up
 ```
 
-## `mauss/api`
+## mauss/api
 
 This defaults to `fetch` api from browser, but you can also use it on the server-side by first installing the package `node-fetch`.
 
@@ -86,7 +90,7 @@ function check(path) {
 init({ check }); // Pass the check function
 ```
 
-## `mauss/utils`
+## mauss/utils
 
 ```js
 import { :util } from 'mauss/utils';
@@ -102,7 +106,7 @@ capitalize('hI thErE', true); // 'Hi There'
 
 ### `checkNum`
 
-`checkNum` will check an input and return a parsed number if it is one, otherwise it will return the input as is.
+will check an input and return a parsed number if it is one, otherwise it will return the input as is.
 
 ```js
 checkNum('0');  // 0
@@ -120,6 +124,7 @@ random.int(9, 1); // 1 - 8
 
 /** random key from any object */
 const data = { 'a': a, 'b': 1, 'c': [3] }
+// returns a random value from an object
 random.key(data); // a || 1 || [3]
 ```
 
@@ -128,9 +133,3 @@ random.key(data); // a || 1 || [3]
 <h3 align="center"><pre>
 Mauss | <a href="LICENSE">MIT License</a>
 </pre></h3>
-
-***
-
-<h5 align="center"><pre>
-Copyright &copy; 2020 <a href="https://mauss.dev">Ignatius Bagussuputra</a>
-</pre></h5>
