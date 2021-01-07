@@ -42,7 +42,9 @@ export const init = ({ host, check, fetch }: InitOpts) => {
 		try {
 			options.fetch = require('node-fetch').default;
 		} catch (error) {
-			console.error('API warning, fetch cannot be used on the server!');
+			console.warn(
+				"Warning! API cannot be used on the server. If you do not intent to use 'mauss/api' server-side, you can safely ignore this message."
+			);
 		}
 	}
 };
