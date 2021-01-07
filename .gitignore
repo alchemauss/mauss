@@ -3,6 +3,3 @@ node_modules
 
 *.js
 *.d.ts
-
-!api/*.js
-!api/*.d.ts
