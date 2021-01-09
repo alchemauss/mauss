@@ -1,2 +1,2 @@
-export const isExists = <T>(item: T | false | null | undefined): item is T =>
-	item !== false && item !== null && item !== undefined;
+export const isExists = <T>(item: T | 0 | '' | false | null | undefined | typeof NaN): item is T =>
+	!!item;
