@@ -1,6 +1,7 @@
 .*
 *.ts
 tests/
+coverage/
 tsconfig.json
 
 !*.d.ts
