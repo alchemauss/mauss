@@ -1,5 +1,6 @@
 .*
 *.ts
+tests/
 tsconfig.json
 
 !*.d.ts
