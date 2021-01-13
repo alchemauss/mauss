@@ -15,3 +15,11 @@ export const random = {
 		return dict[keys[this.int(keys.length)]];
 	},
 };
+
+// prettier-ignore
+export function shuffle<T>(arr: T[]): T[] {
+	let i = arr.length - 1, j = random.int(i), k = arr[i];
+	for (; i > 0; i--, j = random.int(i), k = arr[i])
+		arr[i] = arr[j], arr[j] = k;
+	return arr;
+}
