@@ -57,15 +57,15 @@ export function del<T>(path: string, token?: string): Promise<T> {
 	return send({ method: 'DELETE', path, token });
 }
 
-export function post<T>(path: string, data: BodyInit, token?: string): Promise<T> {
+export function post<T>(path: string, data: any, token?: string): Promise<T> {
 	return send({ method: 'POST', path, data, token });
 }
 
-export function put<T>(path: string, data: BodyInit, token?: string): Promise<T> {
+export function put<T>(path: string, data: any, token?: string): Promise<T> {
 	return send({ method: 'PUT', path, data, token });
 }
 
-type BodyInit = ArrayBuffer | ArrayBufferView | string | URLSearchParams | FormData;
+type BodyInit = ArrayBuffer | ArrayBufferView | FormData | URLSearchParams | string;
 type SendParams = { method: string; path: string; data?: BodyInit; token?: string };
 type RequestOpts = { method: string; headers: Record<string, string>; body?: BodyInit };
 type InitOpts = {
