@@ -1,5 +1,5 @@
 export const cookies = {
-	create(key: string, value = '', validDays = 0): void {
+	create(key: string, value: string | number | boolean = '', validDays = 0): void {
 		let expiry = '';
 		if (validDays) {
 			const date = new Date();
