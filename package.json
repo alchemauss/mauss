@@ -8,16 +8,19 @@
   "module": "index.js",
   "types": "index.d.ts",
   "scripts": {
-    "watch": "tsc -w",
-    "prepublishOnly": "tsc && prettier -w **",
-    "postpublish": "git clean -dfx -e node_modules"
+    "watch": "tsc -w --noEmit",
+    "build": "tsc -d",
+    "clean": "git clean -dfx -e node_modules",
+    "prepublishOnly": "tsc && prettier -w **"
   },
   "exports": {
     "./package.json": "./package.json",
-    ".": "./index.js",
-    "./api": "./api/index.js",
-    "./guards": "./guards/index.js",
-    "./utils": "./utils/index.js"
+    "./tsconfig.json": "./tsconfig.json",
+    ".": "./src/index.js",
+    "./api": "./src/api/index.js",
+    "./bits": "./src/bits/index.js",
+    "./guards": "./src/guards/index.js",
+    "./utils": "./src/utils/index.js"
   },
   "repository": {
     "type": "git",
@@ -26,7 +29,6 @@
   "bugs": {
     "url": "https://github.com/devmauss/mauss/issues"
   },
-  "dependencies": {},
   "devDependencies": {
     "@types/node": "^14.14.16",
     "prettier": "^2.2.1",
