@@ -1,5 +1,4 @@
 .*
 *.ts
-tsconfig.json
 
 !*.d.ts
