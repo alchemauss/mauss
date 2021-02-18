@@ -1,22 +1,21 @@
 {
 	"compilerOptions": {
-		/* Visit https://aka.ms/tsconfig.json to read more about this file */
-
-		"target": "ESNext",
+		"target": "ES2017",
 		"module": "ESNext",
-		"declaration": true,
-		// "noEmit": true,
-		// "isolatedModules": true,
+		"moduleResolution": "Node",
+		"skipLibCheck": true,
+		"isolatedModules": true,
+
 		"strict": true,
 		"noUnusedLocals": true,
 		"noUnusedParameters": true,
 		"noImplicitReturns": true,
-		"noFallthroughCasesInSwitch": true,
-		// "baseUrl": "./",
-		// "paths": {},
-		// "typeRoots": [],
-		// "types": [],
+		"importsNotUsedAsValues": "error",
+
 		"esModuleInterop": true,
+		"experimentalDecorators": true,
+		"emitDecoratorMetadata": true,
+		"allowSyntheticDefaultImports": true,
 		"forceConsistentCasingInFileNames": true
 	}
 }
