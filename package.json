@@ -2,11 +2,11 @@
   "name": "mauss",
   "author": "Ignatius Bagus",
   "description": "Zero-dependency development kit",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "license": "MIT",
-  "main": "index.js",
-  "module": "index.js",
-  "types": "index.d.ts",
+  "main": "src/index.js",
+  "module": "src/index.js",
+  "types": "src/index.d.ts",
   "scripts": {
     "watch": "tsc -w --noEmit",
     "build": "tsc -d && prettier -w src",
@@ -21,6 +21,13 @@
     "./bits": "./src/bits/index.js",
     "./guards": "./src/guards/index.js",
     "./utils": "./src/utils/index.js"
+  },
+  "typesVersions": {
+    "*": {
+      "*": [
+        "src/*"
+      ]
+    }
   },
   "repository": {
     "type": "git",
