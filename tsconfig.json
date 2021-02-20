@@ -1,21 +1,29 @@
 {
 	"compilerOptions": {
+		// Project Options
 		"target": "ES2017",
-		"module": "ESNext",
-		"moduleResolution": "Node",
-		"skipLibCheck": true,
+		"module": "ES2020",
 		"isolatedModules": true,
 
+		// Module Resolution
+		"moduleResolution": "Node",
+		"esModuleInterop": true,
+		"allowSyntheticDefaultImports": true,
+
+		// Linter Checks
 		"strict": true,
 		"noUnusedLocals": true,
 		"noUnusedParameters": true,
 		"noImplicitReturns": true,
-		"importsNotUsedAsValues": "error",
 
-		"esModuleInterop": true,
-		"experimentalDecorators": true,
+		// Advanced
+		"skipLibCheck": true,
+		"resolveJsonModule": true,
+		"importsNotUsedAsValues": "error",
+		"forceConsistentCasingInFileNames": true,
+
+		// Experimental
 		"emitDecoratorMetadata": true,
-		"allowSyntheticDefaultImports": true,
-		"forceConsistentCasingInFileNames": true
+		"experimentalDecorators": true
 	}
 }
