@@ -4,8 +4,8 @@
   "description": "Zero-dependency development kit",
   "version": "0.0.5",
   "license": "MIT",
+  "type": "module",
   "main": "src/index.js",
-  "module": "src/index.js",
   "types": "src/index.d.ts",
   "scripts": {
     "watch": "tsc -w --noEmit",
@@ -14,16 +14,22 @@
     "prepublishOnly": "npm run build"
   },
   "exports": {
-    "./package.json": "./package.json",
-    "./tsconfig.json": "./tsconfig.json",
     ".": "./src/index.js",
     "./api": "./src/api/index.js",
     "./bits": "./src/bits/index.js",
     "./guards": "./src/guards/index.js",
-    "./utils": "./src/utils/index.js"
+    "./utils": "./src/utils/index.js",
+    "./package.json": "./package.json",
+    "./tsconfig.json": "./tsconfig.json"
   },
   "typesVersions": {
     "*": {
+      "package.json": [
+        "package.json"
+      ],
+      "tsconfig.json": [
+        "tsconfig.json"
+      ],
       "*": [
         "src/*"
       ]
