@@ -5,35 +5,22 @@
   "version": "0.0.6",
   "license": "MIT",
   "type": "module",
-  "main": "src/index.js",
-  "types": "src/index.d.ts",
+  "main": "index.js",
+  "types": "index.d.ts",
   "scripts": {
     "watch": "tsc -w --noEmit",
-    "build": "tsc -d && prettier -w src",
+    "build": "tsc -d --outDir . && prettier -wu **/*.{d.ts,js}",
     "clean": "git clean -dfx -e node_modules",
     "prepublishOnly": "npm run build"
   },
   "exports": {
-    ".": "./src/index.js",
-    "./api": "./src/api/index.js",
-    "./bits": "./src/bits/index.js",
-    "./guards": "./src/guards/index.js",
-    "./utils": "./src/utils/index.js",
+    ".": "./index.js",
+    "./api": "./api/index.js",
+    "./bits": "./bits/index.js",
+    "./guards": "./guards/index.js",
+    "./utils": "./utils/index.js",
     "./package.json": "./package.json",
     "./tsconfig.json": "./tsconfig.json"
-  },
-  "typesVersions": {
-    "*": {
-      "package.json": [
-        "package.json"
-      ],
-      "tsconfig.json": [
-        "tsconfig.json"
-      ],
-      "*": [
-        "src/*"
-      ]
-    }
   },
   "repository": {
     "type": "git",
