@@ -2,7 +2,7 @@
   "name": "mauss",
   "author": "Ignatius Bagus",
   "description": "Zero-dependency development kit",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "license": "MIT",
   "type": "module",
   "main": "src/index.js",
