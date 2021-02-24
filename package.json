@@ -2,32 +2,26 @@
   "name": "mauss",
   "author": "Ignatius Bagus",
   "description": "Zero-dependency development kit",
-  "version": "0.0.5",
+  "version": "0.0.7",
   "license": "MIT",
-  "main": "src/index.js",
-  "module": "src/index.js",
-  "types": "src/index.d.ts",
+  "type": "module",
+  "main": "index.js",
+  "types": "index.d.ts",
   "scripts": {
     "watch": "tsc -w --noEmit",
-    "build": "tsc -d && prettier -w src",
-    "clean": "git clean -dfx -e node_modules",
-    "prepublishOnly": "npm run build"
+    "publish:clean": "git clean -dfx -e node_modules",
+    "publish:build": "tsc -d --outDir .",
+    "publish:format": "prettier -wu **/*.{d.ts,js}",
+    "prepublishOnly": "run-s publish:**"
   },
   "exports": {
+    ".": "./index.js",
+    "./api": "./api/index.js",
+    "./bits": "./bits/index.js",
+    "./guards": "./guards/index.js",
+    "./utils": "./utils/index.js",
     "./package.json": "./package.json",
-    "./tsconfig.json": "./tsconfig.json",
-    ".": "./src/index.js",
-    "./api": "./src/api/index.js",
-    "./bits": "./src/bits/index.js",
-    "./guards": "./src/guards/index.js",
-    "./utils": "./src/utils/index.js"
-  },
-  "typesVersions": {
-    "*": {
-      "*": [
-        "src/*"
-      ]
-    }
+    "./tsconfig.json": "./tsconfig.json"
   },
   "repository": {
     "type": "git",
@@ -38,6 +32,7 @@
   },
   "devDependencies": {
     "@types/node": "^14.14.16",
+    "npm-run-all": "^4.1.5",
     "prettier": "^2.2.1",
     "tslib": "^2.0.3",
     "typescript": "^4.1.2"
