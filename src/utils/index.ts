@@ -7,8 +7,12 @@ export const random = {
 		[min, max] = [Math.ceil(min), Math.floor(max)];
 		return Math.floor(Math.random() * (max - min)) + min;
 	},
-	key<T>(dict: Record<string, T>): T {
+	key<T>(dict: Record<string, T>): string {
 		const keys = Object.keys(dict);
-		return dict[keys[this.int(keys.length)]];
+		return keys[this.int(keys.length)];
+	},
+	val<T>(dict: Record<string, T>): T {
+		const values = Object.values(dict);
+		return values[this.int(values.length)];
 	},
 };
