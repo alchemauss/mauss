@@ -10,8 +10,7 @@ export const cookies = {
 	},
 	get(key: string): string {
 		const name = `${key}=`;
-		const cookies = document.cookie.split(';');
-		for (const cookie of cookies) {
+		for (const cookie of document.cookie.split(';')) {
 			if (!cookie.trim().startsWith(name)) continue;
 			return cookie.trim().slice(name.length);
 		}
