@@ -3,6 +3,9 @@ export const capitalize = (text: string, lower?: boolean): string =>
 export const checkNum = <T>(text: T): T | number => (Number.isNaN(+text) ? text : +text);
 
 export const random = {
+	bool(): boolean {
+		return !!this.int();
+	},
 	float(max = 1, min = 0): number {
 		return Math.random() * (max - min) + min;
 	},
