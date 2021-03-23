@@ -3,9 +3,12 @@ export const capitalize = (text: string, lower?: boolean): string =>
 export const checkNum = <T>(text: T): T | number => (Number.isNaN(+text) ? text : +text);
 
 export const random = {
-	int(max: number, min = 0): number {
+	float(max = 1, min = 0): number {
+		return Math.random() * (max - min) + min;
+	},
+	int(max = 1, min = 0): number {
 		[min, max] = [Math.ceil(min), Math.floor(max)];
-		return Math.floor(Math.random() * (max - min)) + min;
+		return Math.floor(this.float(max, min));
 	},
 	key<T>(dict: Record<string, T>): string {
 		const keys = Object.keys(dict);
