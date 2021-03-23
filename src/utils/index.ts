@@ -10,6 +10,9 @@ export const random = {
 		[min, max] = [Math.ceil(min), Math.floor(max)];
 		return Math.floor(this.float(max, min));
 	},
+	ipv4(): string {
+		return [0, 1, 2, 3].map((i) => this.int(255) + (!i ? 1 : 0)).join('.');
+	},
 	key<T>(dict: Record<string, T>): string {
 		const keys = Object.keys(dict);
 		return keys[this.int(keys.length)];
