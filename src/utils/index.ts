@@ -12,6 +12,10 @@ export const random = {
 	float(max = 1, min = 0): number {
 		return Math.random() * (max - min) + min;
 	},
+	hex(): string {
+		const code = ~~(this.float() * (1 << 24));
+		return `#${code.toString(16)}`;
+	},
 	int(max = 1, min = 0): number {
 		[min, max] = [Math.ceil(min), Math.floor(max)];
 		return Math.floor(this.float(max, min));
