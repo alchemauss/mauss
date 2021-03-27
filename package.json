@@ -2,7 +2,7 @@
   "name": "mauss",
   "author": "Ignatius Bagus",
   "description": "Zero-dependency development kit",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "license": "MIT",
   "type": "module",
   "main": "index.js",
@@ -16,10 +16,18 @@
   },
   "exports": {
     ".": "./index.js",
-    "./api": "./api/index.js",
-    "./bits": "./bits/index.js",
-    "./guards": "./guards/index.js",
-    "./utils": "./utils/index.js",
+    "./api": {
+      "import": "./api/index.js"
+    },
+    "./bits": {
+      "import": "./bits/index.js"
+    },
+    "./guards": {
+      "import": "./guards/index.js"
+    },
+    "./utils": {
+      "import": "./utils/index.js"
+    },
     "./package.json": "./package.json",
     "./tsconfig.json": "./tsconfig.json"
   },
