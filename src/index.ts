@@ -11,10 +11,13 @@ export function cookies(cookie = (typeof window !== 'undefined' && document.cook
 			cookie = `${key}=${value}${expiry}; path=/;`;
 		},
 		get(key: string): string {
-			const name = `${key}=`;
-			for (const c of cookie.split(';')) {
-				if (!c.trim().startsWith(name)) continue;
-				return c.trim().slice(name.length);
+			for (let i = 0, c = 0; i < cookie.length; i++) {
+				if (c === key.length && cookie[i + 1] === '=') {
+					let end = i + 2;
+					while (cookie[end++] !== ';');
+					return cookie.slice(i + 1, end);
+				}
+				c = key[c] === cookie[i] ? c + 1 : 0;
 			}
 			return '';
 		},
