@@ -21,8 +21,8 @@ export function cookies(cookie = (typeof window !== 'undefined' && document.cook
 			}
 			return '';
 		},
-		remove(key: string): Error | void {
-			if (!browser) return new Error('Not in browser, cannot remove');
+		remove(key: string): void {
+			if (!browser) throw new Error('Not in browser, cannot remove');
 			cookie = `${key}=; expires=Thu, 01 Jan 1970 00:00:01 GMT;`;
 		},
 	};
