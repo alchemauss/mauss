@@ -28,6 +28,9 @@
     "./utils": {
       "import": "./utils/index.js"
     },
+    "./web": {
+      "import": "./web/index.js"
+    },
     "./package.json": "./package.json",
     "./tsconfig.json": "./tsconfig.json"
   },
