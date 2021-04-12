@@ -1,6 +1,7 @@
 export const compare: Record<string, any> & {
 	format: { [type: string]: RegExp };
 	boolean: (x: boolean, y: boolean) => number;
+	bigint: (x: bigint, y: bigint) => number;
 	number: (x: number, y: number) => number;
 	date: (x: string, y: string) => number;
 	string: (x: string, y: string) => number;
@@ -8,6 +9,7 @@ export const compare: Record<string, any> & {
 	format: { date: /\d{1,4}-\d{1,2}-\d{1,4}/ },
 	boolean: (x, y) => +y - +x,
 	number: (x, y) => y - x,
+	bigint: (x, y) => (x < y ? -1 : x > y ? 1 : 0),
 	date: (x, y) => new Date(y).getTime() - new Date(x).getTime(),
 	string(x, y) {
 		for (const [type, exp] of Object.entries(this.format))
