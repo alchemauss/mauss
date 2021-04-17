@@ -1,13 +1,25 @@
-import type { BodyInit, RequestInit, Response } from 'node-fetch';
 type InitOpts = { host?: string; check?: (path: string) => string };
 type SendParams = { method: string; path: string; data?: BodyInit; token?: string };
 type MaussFetch = (url: string, init?: RequestInit) => Promise<Response>;
 
+const tryImport = async (browser: boolean) => {
+	if (browser) return window.fetch;
+	try {
+		const module = await import('node-fetch');
+		return <MaussFetch>(module.default as any);
+	} catch (err) {
+		console.warn(`Cannot use in server, "node-fetch" not available`);
+		return '';
+	}
+};
+
 const options: InitOpts & { fetch?: MaussFetch } = {};
 async function send({ method, path, data, token }: SendParams) {
 	const browser = typeof window !== 'undefined';
-	if (!browser && !options.fetch) {
-		options.fetch = await import('node-fetch').then((m) => m.default);
+	if (!options.fetch) {
+		const module = await tryImport(browser);
+		if (typeof module !== 'string') options.fetch = module;
+		else if (!browser) return module;
 	}
 
 	const opts: RequestInit = { method };
@@ -48,7 +60,8 @@ export const init = async ({ host, check }: InitOpts) => {
 	const browser = typeof window !== 'undefined';
 	options.host = host && host.startsWith('http') ? host : undefined;
 	options.check = typeof check === 'function' ? check : undefined;
-	if (!browser) options.fetch = await import('node-fetch').then((m) => m.default);
+	const module = await tryImport(browser);
+	if (typeof module !== 'string') options.fetch = module;
 };
 
 export function get(path: string, token?: string): Promise<Response> {
