@@ -4,7 +4,7 @@ export function binary<T>(
 		item: (item: T) => false | ((item: T) => any);
 		pointer: (item: T) => boolean;
 	}
-) {
+): T | undefined {
 	let start = 0, end = array.length - 1; // prettier-ignore
 	while (start <= end) {
 		const midpoint = (start + end) >> 1;
@@ -15,7 +15,7 @@ export function binary<T>(
 			end = midpoint - 1;
 		} else start = midpoint + 1;
 	}
-	return null;
+	return;
 }
 
 export function minmax(array: number[]): [number, number] {
