@@ -1,10 +1,13 @@
-export const compare: Record<string, any> & {
-	format: { [type: string]: RegExp };
+interface CompareTypes extends Record<string, any> {
 	boolean: (x: boolean, y: boolean) => number;
 	bigint: (x: bigint, y: bigint) => number;
 	number: (x: number, y: number) => number;
 	date: (x: string, y: string) => number;
 	string: (x: string, y: string) => number;
+}
+
+export const compare: CompareTypes & {
+	format: Partial<Record<keyof CompareTypes, RegExp>>;
 } = {
 	format: { date: /\d{1,4}-\d{1,2}-\d{1,4}/ },
 	boolean: (x, y) => +y - +x,
@@ -13,7 +16,7 @@ export const compare: Record<string, any> & {
 	date: (x, y) => new Date(y).getTime() - new Date(x).getTime(),
 	string(x, y) {
 		for (const [type, exp] of Object.entries(this.format))
-			if (exp.test(x) && exp.test(y)) return this[type](x, y);
+			if (exp!.test(x) && exp!.test(y)) return this[type](x, y);
 		return x.localeCompare(y);
 	},
 };
