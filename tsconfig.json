@@ -1,22 +1,28 @@
 {
 	"compilerOptions": {
-		/* Visit https://aka.ms/tsconfig.json to read more about this file */
+		// Project Options
+		"target": "ES2017",
+		"module": "ES2020",
+		"isolatedModules": true,
 
-		"target": "ESNext",
-		"module": "ESNext",
-		"declaration": true,
-		// "noEmit": true,
-		// "isolatedModules": true,
+		// Module Resolution
+		"moduleResolution": "Node",
+		"esModuleInterop": true,
+		"allowSyntheticDefaultImports": true,
+
+		// Linter Checks
 		"strict": true,
 		"noUnusedLocals": true,
 		"noUnusedParameters": true,
 		"noImplicitReturns": true,
-		"noFallthroughCasesInSwitch": true,
-		// "baseUrl": "./",
-		// "paths": {},
-		// "typeRoots": [],
-		// "types": [],
-		"esModuleInterop": true,
-		"forceConsistentCasingInFileNames": true
+
+		// Advanced
+		"skipLibCheck": true,
+		"importsNotUsedAsValues": "error",
+		"forceConsistentCasingInFileNames": true,
+
+		// Experimental
+		"emitDecoratorMetadata": true,
+		"experimentalDecorators": true
 	}
 }

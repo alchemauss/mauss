@@ -2,22 +2,37 @@
   "name": "mauss",
   "author": "Ignatius Bagus",
   "description": "Zero-dependency development kit",
-  "version": "0.0.3",
+  "version": "0.0.9",
   "license": "MIT",
+  "type": "module",
   "main": "index.js",
-  "module": "index.js",
   "types": "index.d.ts",
   "scripts": {
-    "watch": "tsc -w",
-    "prepublishOnly": "tsc && prettier -w **",
-    "postpublish": "git clean -dfx -e node_modules"
+    "watch": "tsc -w --noEmit",
+    "publish:clean": "git clean -dfx -e node_modules",
+    "publish:build": "tsc -d --outDir .",
+    "publish:format": "prettier -wu **/*.{d.ts,js}",
+    "prepublishOnly": "run-s publish:**"
   },
   "exports": {
-    "./package.json": "./package.json",
     ".": "./index.js",
-    "./api": "./api/index.js",
-    "./guards": "./guards/index.js",
-    "./utils": "./utils/index.js"
+    "./api": {
+      "import": "./api/index.js"
+    },
+    "./bits": {
+      "import": "./bits/index.js"
+    },
+    "./guards": {
+      "import": "./guards/index.js"
+    },
+    "./utils": {
+      "import": "./utils/index.js"
+    },
+    "./web": {
+      "import": "./web/index.js"
+    },
+    "./package.json": "./package.json",
+    "./tsconfig.json": "./tsconfig.json"
   },
   "repository": {
     "type": "git",
@@ -26,9 +41,10 @@
   "bugs": {
     "url": "https://github.com/devmauss/mauss/issues"
   },
-  "dependencies": {},
   "devDependencies": {
     "@types/node": "^14.14.16",
+    "@types/node-fetch": "^2.5.10",
+    "npm-run-all": "^4.1.5",
     "prettier": "^2.2.1",
     "tslib": "^2.0.3",
     "typescript": "^4.1.2"
