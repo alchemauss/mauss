@@ -1,3 +1,23 @@
+export function binary<T>(
+	sorted: T[],
+	check: {
+		item: (item: T) => false | ((item: T) => any);
+		pointer: (item: T) => boolean;
+	}
+): T | undefined {
+	let start = 0, final = sorted.length - 1; // prettier-ignore
+	while (start <= final) {
+		const midpoint = (start + final) >> 1;
+		const current = sorted[midpoint];
+		const passes = check.item(current);
+		if (passes) return passes(current);
+		const flag = check.pointer(current);
+		start = flag ? start : midpoint + 1;
+		final = flag ? midpoint - 1 : final;
+	}
+	return;
+}
+
 export function minmax(array: number[]): [number, number] {
 	if (!array.length) return [0, 0];
 
