@@ -25,6 +25,9 @@
     "./guards": {
       "import": "./guards/index.js"
     },
+    "./math": {
+      "import": "./math/index.js"
+    },
     "./utils": {
       "import": "./utils/index.js"
     },
