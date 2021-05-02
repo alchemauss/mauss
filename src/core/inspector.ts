@@ -1,11 +1,14 @@
-export const compare: Record<string, any> & {
-	format: { [type: string]: RegExp };
+interface Primitives extends Record<string, any> {
 	boolean: (x: boolean, y: boolean) => number;
 	bigint: (x: bigint, y: bigint) => number;
 	number: (x: number, y: number) => number;
-	date: (x: string, y: string) => number;
 	string: (x: string, y: string) => number;
-} = {
+}
+interface Patterns {
+	date: (x: string, y: string) => number;
+}
+
+export const compare: Primitives & Patterns & Record<'format', Record<keyof Patterns, RegExp>> = {
 	format: { date: /\d{1,4}-\d{1,2}-\d{1,4}/ },
 	boolean: (x, y) => +y - +x,
 	number: (x, y) => y - x,
