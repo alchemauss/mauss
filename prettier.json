@@ -7,12 +7,26 @@
 	"useTabs": true,
 	"overrides": [
 		{
-			"files": ["README.md", "package.json"],
-			"options": { "useTabs": false }
+			"files": ["package*.json"],
+			"options": {
+				"parser": "json",
+				"useTabs": false
+			}
 		},
 		{
-			"files": ["*.yml"],
-			"options": { "singleQuote": false }
+			"files": ["*.md"],
+			"options": {
+				"parser": "markdown",
+				"tabWidth": 4,
+				"useTabs": false
+			}
+		},
+		{
+			"files": ["*.y*ml"],
+			"options": {
+				"parser": "yaml",
+				"singleQuote": false
+			}
 		}
 	]
 }
