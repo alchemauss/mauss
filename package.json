@@ -9,6 +9,9 @@
   "types": "index.d.ts",
   "scripts": {
     "watch": "tsc -w --noEmit",
+    "lint": "run-p lint:**",
+    "lint:code": "tsc --noEmit",
+    "lint:style": "prettier -c src",
     "publish:clean": "git clean -dfx -e node_modules",
     "publish:build": "tsc -d --outDir .",
     "publish:format": "prettier -wu **/*.{d.ts,js}",
