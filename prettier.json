@@ -22,6 +22,16 @@
 			}
 		},
 		{
+			"files": ["*.svelte"],
+			"options": {
+				"svelteSortOrder": "scripts-markup-styles-options",
+				"svelteStrictMode": false,
+				"svelteBracketNewLine": false,
+				"svelteAllowShorthand": true,
+				"svelteIndentScriptAndStyle": true
+			}
+		},
+		{
 			"files": ["*.y*ml"],
 			"options": {
 				"parser": "yaml",
