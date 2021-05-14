@@ -1,7 +1,7 @@
 {
   "name": "mauss",
   "author": "Ignatius Bagus",
-  "description": "Zero-dependency development kit",
+  "description": "Opinionated zero-dependency development kit",
   "version": "0.0.10",
   "license": "MIT",
   "type": "module",
@@ -35,8 +35,10 @@
       "import": "./web/index.js"
     },
     "./package.json": "./package.json",
+    "./prettier.json": "./prettier.json",
     "./tsconfig.json": "./tsconfig.json"
   },
+  "prettier": "./prettier.json",
   "repository": {
     "type": "git",
     "url": "https://github.com/devmauss/mauss.git"
