@@ -1,8 +1,8 @@
 # Mauss ![Total npm downloads](https://img.shields.io/npm/dt/mauss) &middot; ![Published npm version](https://img.shields.io/npm/v/mauss) ![Monthly npm downloads](https://img.shields.io/npm/dm/mauss) ![License](https://img.shields.io/github/license/devmauss/mauss)
 
-> Zero-Dependency Development Toolkit
+> Opinionated Zero-Dependency Development Toolkit
 
-A collection of development tools written in TypeScript.
+A collection of development tools written with TypeScript.
 
 Ever been frustrated when starting up a new project? Feels like there's a lot to setup and prepare even before writing the actual code itself? Perhaps annoyed by having to write the same code to help you do something each time? This might be the library for you.
 
@@ -20,9 +20,7 @@ If there's something you think are essential that is missing and you feel it sho
 
 ***
 
-<h3 align="center"><pre>
-API Documentation
-</pre></h3>
+<h3 align="center"><pre>API Documentation</pre></h3>
 
 ***
 
@@ -34,32 +32,27 @@ The headings refers to the namespaces available to import from. Replace `:util` 
 import { :util } from 'mauss';
 ```
 
-### `cookies`
-
-can only be used in the browser because it needs to access `document` object. Using this in Node will certainly crash the server.
-
-```js
-// This will create a cookie with key of 'token'
-// With the value of 'abc123', valid for 1 day
-cookies.create('token', 'abc123', 1);
-
-// This will return the value of cookie with key 'token'
-// It will return an empty string if it's non-existent
-const token = cookies.get('token');
-
-// This will remove the cookie with key 'token'
-cookies.remove('token');
-```
-
-### `debounce`
+### `debounce/throttle`
 
 ```js
 function search(name) {...}
 
 const dSearch = debounce(search, 500);
+const tSearch = throttle(search, 500);
 
 dSearch('mauss'); // will execute after 500ms
-// will start over if called again before 500ms is up
+tSearch('mauss'); // will execute every 500ms
+```
+
+### `compare/comparator`
+
+compare utility object with multiple methods for various types, and comparator function that can sort any array of object (but only objects).
+
+```js
+compare.string('abc', 'def');
+// and other primitives
+
+[].sort(comparator);
 ```
 
 ## mauss/api
@@ -73,7 +66,7 @@ npm install node-fetch
 You can set a custom rule by calling `init` as early as possible. You can skip this if you're using it exclusively on the browser only.
 
 ```js
-import { init } from 'mauss/utils';
+import { init } from 'mauss/api';
 init({
   host: process.env.NODE_ENV === 'production' ? 'mauss.dev' : 'localhost:3000',
 });
@@ -88,6 +81,51 @@ function check(path) {
   return path[0] !== '/' ? `${base}/${path}` : path.slice(1);
 }
 init({ check }); // Pass the check function
+```
+
+## mauss/bits
+
+```js
+import { :util } from 'mauss/bits';
+```
+
+### `find:binary`
+
+do a binary search on a sorted array with custom item checking and cutoff function.
+
+### `find:minmax`
+
+find the minimum and maximum value in an array of numbers.
+
+```js
+const [min, max] = minmax([0, 1, 2, 3, 4, 5]);
+// min = 0, max = 5
+```
+
+## mauss/guards
+
+Collection of guard functions to pass TypeScript checks.
+
+```js
+import { :util } from 'mauss/guards';
+```
+
+## mauss/math
+
+```js
+import { :util } from 'mauss/math';
+```
+
+### `permutation`
+
+generate all possible permutations from all items in an array.
+
+## mauss/typings
+
+Collection of TypeScript type helpers.
+
+```js
+import { :util } from 'mauss/typings';
 ```
 
 ## mauss/utils
