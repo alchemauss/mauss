@@ -1,7 +1,7 @@
 {
   "name": "mauss",
   "author": "Ignatius Bagus",
-  "description": "Zero-dependency development kit",
+  "description": "Opinionated zero-dependency development kit",
   "version": "0.0.10",
   "license": "MIT",
   "type": "module",
@@ -9,6 +9,9 @@
   "types": "index.d.ts",
   "scripts": {
     "watch": "tsc -w --noEmit",
+    "lint": "run-p lint:**",
+    "lint:code": "tsc --noEmit",
+    "lint:style": "prettier -c src",
     "publish:clean": "git clean -dfx -e node_modules",
     "publish:build": "tsc -d --outDir .",
     "publish:format": "prettier -wu **/*.{d.ts,js}",
@@ -35,8 +38,10 @@
       "import": "./web/index.js"
     },
     "./package.json": "./package.json",
+    "./prettier.json": "./prettier.json",
     "./tsconfig.json": "./tsconfig.json"
   },
+  "prettier": "./prettier.json",
   "repository": {
     "type": "git",
     "url": "https://github.com/devmauss/mauss.git"
@@ -48,7 +53,7 @@
     "@types/node": "^14.14.16",
     "@types/node-fetch": "^2.5.10",
     "npm-run-all": "^4.1.5",
-    "prettier": "^2.2.1",
+    "prettier": "^2.3.0",
     "typescript": "^4.1.2"
   }
 }
