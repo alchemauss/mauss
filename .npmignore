@@ -1,7 +1,3 @@
 .*
-*.ts
+src/
 tests/
-coverage/
-tsconfig.json
-
-!*.d.ts
