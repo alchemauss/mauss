@@ -45,6 +45,10 @@
     "./prettier.json": "./prettier.json",
     "./tsconfig.json": "./tsconfig.json"
   },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node"
+  },
   "prettier": "./prettier.json",
   "repository": {
     "type": "git",

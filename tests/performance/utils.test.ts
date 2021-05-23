@@ -1,5 +1,5 @@
 import { runtime, memory } from '../shared/benchmark';
-import * as utils from '../../utils';
+import * as utils from '../../src/utils';
 
 describe('utils-perf', () => {
 	describe('capitalize', () => {

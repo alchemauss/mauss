@@ -1,4 +1,4 @@
-import * as main from '../../index';
+import * as main from '../../src/math';
 
 describe('permutation', () => {
 	it('returns array with empty array for empty array', () => {
