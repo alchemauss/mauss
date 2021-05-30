@@ -1,12 +1,16 @@
 function cookies(source = typeof window !== 'undefined' ? document.cookie : '') {
 	const map = new Map(source.split(';').map((c) => c.trim().split('=') as [string, string]));
+	for (const [name, value] of map) {
+		const quoted = value[0] === '"' && value.slice(-1) === '"';
+		map.set(name, decodeURIComponent(value.slice(quoted ? 1 : 0, quoted ? -1 : 0)));
+	}
 	return {
 		/**
-		 * Find value of cookie in O(n) complexity
+		 * Get raw value of cookie
 		 * @param name cookie value to get
 		 * @returns the value of cookie name and empty string if it doesn't exist
 		 */
-		find(name: string): string {
+		raw(name: string, trimQuoted = false): string {
 			if (!name || !source) return source;
 			for (let i = 0, c = 0; i < source.length; i++, c = 0) {
 				if (name[c] !== source[i]) continue;
@@ -16,7 +20,9 @@ function cookies(source = typeof window !== 'undefined' ? document.cookie : '') 
 					let end = i + 1;
 					while (source[end] !== ';' && end < source.length) end++;
 					const quoted = source[i + 1] === '"' && source[end] === '"';
-					return source.slice(i + (quoted ? 2 : 1), end - (quoted ? 1 : 0));
+					const inc = quoted && trimQuoted ? 2 : 1;
+					const dec = quoted && trimQuoted ? 1 : 0;
+					return source.slice(i + inc, end - dec);
 				}
 			}
 			return '';
