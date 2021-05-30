@@ -22,7 +22,9 @@ async function send(params: { method: string; path: string; data?: BodyInit; tok
 
 	const opts: RequestInit = { method };
 	opts.headers = {}; // TS workaround for "Object is possibly 'undefined'."
-	if (browser && typeof FormData !== 'undefined' && data instanceof FormData) {
+	if (typeof FormData !== 'undefined' && data instanceof FormData) {
+		opts.body = data;
+	} else if (typeof Blob !== 'undefined' && data instanceof Blob) {
 		opts.body = data;
 	} else if (data) {
 		opts.headers['Content-Type'] = 'application/json';
@@ -60,18 +62,18 @@ export const init = async ({ host, check }: Omit<typeof options, 'fetch'>) => {
 	} else console.warn(module);
 };
 
-export function get(path: string, token?: string) {
+export function get(path: string, token?: string): ReturnType<typeof send> {
 	return send({ method: 'GET', path, token });
 }
 
-export function del(path: string, token?: string) {
+export function del(path: string, token?: string): ReturnType<typeof send> {
 	return send({ method: 'DELETE', path, token });
 }
 
-export function post(path: string, data: any, token?: string) {
+export function post(path: string, data: any, token?: string): ReturnType<typeof send> {
 	return send({ method: 'POST', path, data, token });
 }
 
-export function put(path: string, data: any, token?: string) {
+export function put(path: string, data: any, token?: string): ReturnType<typeof send> {
 	return send({ method: 'PUT', path, data, token });
 }
