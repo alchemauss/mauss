@@ -1,4 +1,4 @@
-function cookies(source = typeof window !== 'undefined' ? document.cookie : '') {
+export function parse(source = typeof window !== 'undefined' ? document.cookie : '') {
 	const map = new Map(source.split(';').map((c) => c.trim().split('=') as [string, string]));
 	for (const [name, value] of map) {
 		const quoted = value[0] === '"' && value.slice(-1) === '"';
@@ -38,7 +38,7 @@ function cookies(source = typeof window !== 'undefined' ? document.cookie : '') 
  * @param options cookie settings, @see CookieOption type definition
  * @returns the complete 'Set-Cookie' value
  */
-cookies.create = function (name: string, value: string, options: CookieOption = {}) {
+export function create(name: string, value: string, options: CookieOption = {}) {
 	const { maxAge, expires, path, domain, sameSite, secure, httpOnly }: CookieOption = {
 		sameSite: 'Lax',
 		secure: false,
@@ -72,27 +72,27 @@ cookies.create = function (name: string, value: string, options: CookieOption = 
 	if (secure || sameSite === 'None') biscuit = `${biscuit}; Secure`;
 
 	return biscuit;
-};
+}
+
 /**
  * @param values object of string pair as name and value for cookies
  * @param options cookie settings, @see CookieOption type definition
  * @returns array of the complete 'Set-Cookie' values
  */
-cookies.bulk = function (values: Record<string, string>, options: CookieOption = {}) {
-	return Object.values(values).map(([name, value]) => this.create(name, value, options));
-};
+export function bulk(values: Record<string, string>, options: CookieOption = {}) {
+	return Object.values(values).map(([name, value]) => create(name, value, options));
+}
+
 /**
  * Automatically remove cookie in browser
  * @param name cookie to expire
  * @returns expiring 'Set-Cookie' value
  */
-cookies.remove = function (name: string): string {
+export function remove(name: string): string {
 	const expire = `${name}=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT`;
 	if (typeof window !== 'undefined') document.cookie = expire;
 	return expire;
-};
-
-export default cookies;
+}
 
 type CookieOption = {
 	/** Expiry, number in days */
