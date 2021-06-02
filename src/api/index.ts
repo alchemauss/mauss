@@ -1,4 +1,13 @@
-const options: { host?: string; check?: (path: string) => string; fetch?: typeof fetch } = {};
+const options: {
+	/** Base url to prefix urls in fetch requests  */
+	host?: string;
+	/**
+	 * Intercepts url before getting passed to fetch
+	 * @param path url received from all api methods
+	 */
+	intercept?: (path: string) => string;
+	fetch?: typeof fetch;
+} = {};
 async function send(
 	relayed: typeof fetch,
 	params: { method: string; path: string; data?: BodyInit; token?: string }
@@ -21,14 +30,14 @@ async function send(
 		opts.headers['Authorization'] = `Bearer ${token}`;
 	}
 
-	const { host: base, check } = options;
+	const { host: base, intercept } = options;
 	/**
-	 * 1: check function precedes everything
+	 * 1: intercept function precedes everything
 	 * 2: use native fetch functionality w/o base
 	 * 3: force base domain for server side fetch
 	 */
 	const url =
-		(check && check(path)) ||
+		(intercept && intercept(path)) ||
 		(browser && (base ? `${base}/${path}` : path)) ||
 		`${base || 'localhost:3000'}/${path}`;
 
@@ -59,26 +68,31 @@ async function acquireFetch() {
 }
 
 const api = {
-	async init({ host, check }: Omit<typeof options, 'fetch'>) {
+	/** Use api with additional options by initializing this function */
+	async init({ host, intercept }: Omit<typeof options, 'fetch'>) {
 		options.host = host && /^https?/.test(host) ? host : '';
-		options.check = typeof check === 'function' ? check : undefined;
+		options.intercept = typeof intercept === 'function' ? intercept : undefined;
 		const module = await tryImport();
 		if (typeof module !== 'string') {
 			options.fetch = module;
 		} else console.warn(module);
 	},
+	/**	GET request with fetch */
 	async get(init: MethodInit, token?: string): SendOutput {
 		const { path, fetch = await acquireFetch() } = typeof init !== 'string' ? init : { path: init };
 		return await send(fetch, { method: 'GET', path, token });
 	},
+	/**	DELETE request with fetch */
 	async del(init: MethodInit, token?: string): SendOutput {
 		const { path, fetch = await acquireFetch() } = typeof init !== 'string' ? init : { path: init };
 		return await send(fetch, { method: 'DELETE', path, token });
 	},
+	/**	POST request with fetch */
 	async post(init: MethodInit, data: any, token?: string): SendOutput {
 		const { path, fetch = await acquireFetch() } = typeof init !== 'string' ? init : { path: init };
 		return await send(fetch, { method: 'POST', path, data, token });
 	},
+	/**	PUT request with fetch */
 	async put(init: MethodInit, data: any, token?: string): SendOutput {
 		const { path, fetch = await acquireFetch() } = typeof init !== 'string' ? init : { path: init };
 		return await send(fetch, { method: 'PUT', path, data, token });

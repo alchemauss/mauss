@@ -57,30 +57,29 @@ compare.string('abc', 'def');
 
 ## mauss/api
 
-This defaults to `fetch` api from browser, but you can also use it on the server-side by first installing the package `node-fetch`.
+This defaults to `fetch` api from browser, but you can also use it on the server-side by first installing the package `node-fetch`. If you're using something like [SvelteKit](https://github.com/sveltejs/kit) that polyfills `fetch` globally, you won't have to worry about installing this.
 
 ```bash
 npm install node-fetch
 ```
 
-You can set a custom rule by calling `init` as early as possible. You can skip this if you're using it exclusively on the browser only.
+You can set a custom rule by calling `init` as early as possible. This is optional and might be useful for pointing to both same and external domain at the same time.
 
 ```js
-import { init } from 'mauss/api';
-init({
+import api from 'mauss/api';
+
+api.init({
   host: process.env.NODE_ENV === 'production' ? 'mauss.dev' : 'localhost:3000',
+
+  intercept(path) { /* returns a value that will be used as url for `fetch(url)` */
+    const base = process.env.NODE_ENV !== 'production'
+      ? 'https://development.url/api'
+      : 'https://production.url/api';
+
+    /* if path starts with '/', point to prod url, else same-domain */
+    return path[0] !== '/' ? `${base}/${path}` : path.slice(1);
+  }
 });
-
-// Setting a custom rule for the url
-function check(path) {
-  const base = process.env.NODE_ENV !== 'production'
-    ? 'https://development.url/api'
-    : 'https://production.url/api';
-
-  // RETURN VALUE will be used as url in `fetch(url)`
-  return path[0] !== '/' ? `${base}/${path}` : path.slice(1);
-}
-init({ check }); // Pass the check function
 ```
 
 ## mauss/bits
