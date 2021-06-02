@@ -1,30 +1,25 @@
-type InitOpts = { host?: string; check?: (path: string) => string };
-type SendParams = { method: string; path: string; data?: BodyInit; token?: string };
-type MaussFetch = (url: string, init?: RequestInit) => Promise<Response>;
-
-const tryImport = async (browser: boolean) => {
-	if (browser) return window.fetch;
-	try {
-		const module = await import('node-fetch');
-		return <MaussFetch>(module.default as any);
-	} catch (err) {
-		console.warn(`Cannot use in server, "node-fetch" not available`);
-		return '';
-	}
-};
-
-const options: InitOpts & { fetch?: MaussFetch } = {};
-async function send({ method, path, data, token }: SendParams) {
+const options: {
+	/** Base url to prefix urls in fetch requests  */
+	host?: string;
+	/**
+	 * Intercepts url before getting passed to fetch
+	 * @param path url received from all api methods
+	 */
+	intercept?: (path: string) => string;
+	fetch?: typeof fetch;
+} = {};
+async function send(
+	relayed: typeof fetch,
+	params: { method: string; path: string; data?: BodyInit; token?: string }
+) {
 	const browser = typeof window !== 'undefined';
-	if (!options.fetch) {
-		const module = await tryImport(browser);
-		if (typeof module !== 'string') options.fetch = module;
-		else if (!browser) return module;
-	}
+	const { method, path, data, token } = params;
 
 	const opts: RequestInit = { method };
-	opts.headers = {}; // Workaround TypeScript not correctly implying if put above
-	if (browser && typeof FormData !== 'undefined' && data instanceof FormData) {
+	opts.headers = {}; // TS workaround for "Object is possibly 'undefined'."
+	if (typeof FormData !== 'undefined' && data instanceof FormData) {
+		opts.body = data;
+	} else if (typeof Blob !== 'undefined' && data instanceof Blob) {
 		opts.body = data;
 	} else if (data) {
 		opts.headers['Content-Type'] = 'application/json';
@@ -35,47 +30,80 @@ async function send({ method, path, data, token }: SendParams) {
 		opts.headers['Authorization'] = `Bearer ${token}`;
 	}
 
-	const { host: base, check } = options;
-	const fetch: MaussFetch = browser ? (window.fetch as any) : options.fetch;
+	const { host: base, intercept } = options;
 	/**
-	 * 1: check function precedes everything
+	 * 1: intercept function precedes everything
 	 * 2: use native fetch functionality w/o base
 	 * 3: force base domain for server side fetch
 	 */
 	const url =
-		(check && check(path)) ||
+		(intercept && intercept(path)) ||
 		(browser && (base ? `${base}/${path}` : path)) ||
 		`${base || 'localhost:3000'}/${path}`;
 
-	const res = await fetch(url, opts);
-	const text = await res.text();
+	const res = await relayed(url, opts);
+	const body = await (res.ok ? res.json() : res.text());
+	const err = res.ok ? undefined : new Error(body);
+	return { body, error: err, response: res };
+}
+
+async function tryImport() {
+	if (typeof window !== 'undefined') return window.fetch;
+	if (typeof fetch !== 'undefined') return fetch;
 	try {
-		return JSON.parse(text);
+		const module = await import('node-fetch');
+		return module.default as unknown as typeof fetch;
 	} catch (err) {
-		return text;
+		return 'Cannot use fetch, "node-fetch" not available';
 	}
 }
+async function acquireFetch() {
+	if (!options.fetch) {
+		const module = await tryImport();
+		if (typeof module !== 'string') {
+			options.fetch = module;
+		} else throw new Error(module);
+	}
+	return options.fetch;
+}
 
-export const init = async ({ host, check }: InitOpts) => {
-	const browser = typeof window !== 'undefined';
-	options.host = host && host.startsWith('http') ? host : undefined;
-	options.check = typeof check === 'function' ? check : undefined;
-	const module = await tryImport(browser);
-	if (typeof module !== 'string') options.fetch = module;
+const api = {
+	/** Use api with additional options by initializing this function */
+	async init({ host, intercept }: Omit<typeof options, 'fetch'>) {
+		options.host = host && /^https?/.test(host) ? host : '';
+		options.intercept = typeof intercept === 'function' ? intercept : undefined;
+		const module = await tryImport();
+		if (typeof module !== 'string') {
+			options.fetch = module;
+		} else console.warn(module);
+	},
+	/**	GET request with fetch */
+	async get(init: MethodInit, token?: string): SendOutput {
+		const { path, fetch = await acquireFetch() } = typeof init !== 'string' ? init : { path: init };
+		return await send(fetch, { method: 'GET', path, token });
+	},
+	/**	DELETE request with fetch */
+	async del(init: MethodInit, token?: string): SendOutput {
+		const { path, fetch = await acquireFetch() } = typeof init !== 'string' ? init : { path: init };
+		return await send(fetch, { method: 'DELETE', path, token });
+	},
+	/**	POST request with fetch */
+	async post(init: MethodInit, data: any, token?: string): SendOutput {
+		const { path, fetch = await acquireFetch() } = typeof init !== 'string' ? init : { path: init };
+		return await send(fetch, { method: 'POST', path, data, token });
+	},
+	/**	PUT request with fetch */
+	async put(init: MethodInit, data: any, token?: string): SendOutput {
+		const { path, fetch = await acquireFetch() } = typeof init !== 'string' ? init : { path: init };
+		return await send(fetch, { method: 'PUT', path, data, token });
+	},
 };
 
-export function get(path: string, token?: string): Promise<Response> {
-	return send({ method: 'GET', path, token });
-}
+export const get = api.get;
+export const del = api.del;
+export const post = api.post;
+export const put = api.put;
+export default api;
 
-export function del(path: string, token?: string): Promise<Response> {
-	return send({ method: 'DELETE', path, token });
-}
-
-export function post(path: string, data: any, token?: string): Promise<Response> {
-	return send({ method: 'POST', path, data, token });
-}
-
-export function put(path: string, data: any, token?: string): Promise<Response> {
-	return send({ method: 'PUT', path, data, token });
-}
+type MethodInit = string | { path: string; fetch?: typeof fetch };
+type SendOutput = Promise<{ body: any; error?: Error; response: Response }>;
