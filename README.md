@@ -200,7 +200,7 @@ import { :util } from 'mauss/web';
 
 ### `cookies`
 
-Handmade cookies for server and client side usage.
+Homemade baked cookies for server and client side usage.
 
 ***
 
