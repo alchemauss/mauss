@@ -9,14 +9,12 @@
 		{
 			"files": ["package*.json"],
 			"options": {
-				"parser": "json",
 				"useTabs": false
 			}
 		},
 		{
 			"files": ["*.md"],
 			"options": {
-				"parser": "markdown",
 				"tabWidth": 4,
 				"useTabs": false
 			}
@@ -34,7 +32,6 @@
 		{
 			"files": ["*.y*ml"],
 			"options": {
-				"parser": "yaml",
 				"singleQuote": false
 			}
 		}
