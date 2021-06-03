@@ -1,5 +1,5 @@
 # mauss changelog
 
-## Unreleased
+## 0.1.0
 
-- Initial public release
+- Initial public alpha release
