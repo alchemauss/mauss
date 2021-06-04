@@ -8,22 +8,32 @@ const options: {
 	intercept?: (path: string) => string;
 	fetch?: typeof fetch;
 } = {};
+
+type SendOptions = { relayed: typeof fetch };
+type SendParams = { method: string; path: string; data?: BodyInit; token?: string };
+type SendOutput = Promise<{ response: Response; body: string | Record<string, any> }>;
 async function send(
-	relayed: typeof fetch,
-	params: { method: string; path: string; data?: BodyInit; token?: string }
-) {
+	{ relayed }: SendOptions,
+	{ method, path, data, token }: SendParams
+): SendOutput {
 	const browser = typeof window !== 'undefined';
-	const { method, path, data, token } = params;
 
 	const opts: RequestInit = { method };
 	opts.headers = {}; // TS workaround for "Object is possibly 'undefined'."
-	if (typeof FormData !== 'undefined' && data instanceof FormData) {
-		opts.body = data;
-	} else if (typeof Blob !== 'undefined' && data instanceof Blob) {
-		opts.body = data;
-	} else if (data) {
-		opts.headers['Content-Type'] = 'application/json';
-		opts.body = JSON.stringify(data);
+	if (data) {
+		if (
+			(typeof Blob !== 'undefined' && data instanceof Blob) ||
+			(typeof FormData !== 'undefined' && data instanceof FormData)
+		) {
+			opts.body = data;
+		} else if (typeof data === 'object') {
+			opts.headers['Content-Type'] = 'application/json';
+			opts.body = JSON.stringify(data);
+		} else if (typeof data === 'string') {
+			opts.headers['Content-Type'] = 'text/plain';
+			opts.headers['Content-Length'] = `${data.length}`;
+			opts.body = data;
+		}
 	}
 
 	if (token) {
@@ -43,67 +53,51 @@ async function send(
 
 	const res = await relayed(url, opts);
 	const body = await (res.ok ? res.json() : res.text());
-	const err = res.ok ? undefined : new Error(body);
-	return { body, error: err, response: res };
+	return { response: res, body };
 }
 
-async function tryImport() {
+function relay() {
 	if (typeof window !== 'undefined') return window.fetch;
 	if (typeof fetch !== 'undefined') return fetch;
-	try {
-		const module = await import('node-fetch');
-		return module.default as unknown as typeof fetch;
-	} catch (err) {
-		return 'Cannot use fetch, "node-fetch" not available';
-	}
-}
-async function acquireFetch() {
-	if (!options.fetch) {
-		const module = await tryImport();
-		if (typeof module !== 'string') {
-			options.fetch = module;
-		} else throw new Error(module);
-	}
-	return options.fetch;
+	if (typeof options.fetch !== 'undefined') return options.fetch;
+	throw new Error('No fetch provided. Use browser only or pass in a fetch function');
 }
 
-const api = {
-	/** Use api with additional options by initializing this function */
-	async init({ host, intercept }: Omit<typeof options, 'fetch'>) {
-		options.host = host && /^https?/.test(host) ? host : '';
-		options.intercept = typeof intercept === 'function' ? intercept : undefined;
-		const module = await tryImport();
-		if (typeof module !== 'string') {
-			options.fetch = module;
-		} else console.warn(module);
-	},
-	/**	GET request with fetch */
-	async get(init: MethodInit, token?: string): SendOutput {
-		const { path, fetch = await acquireFetch() } = typeof init !== 'string' ? init : { path: init };
-		return await send(fetch, { method: 'GET', path, token });
-	},
-	/**	DELETE request with fetch */
-	async del(init: MethodInit, token?: string): SendOutput {
-		const { path, fetch = await acquireFetch() } = typeof init !== 'string' ? init : { path: init };
-		return await send(fetch, { method: 'DELETE', path, token });
-	},
-	/**	POST request with fetch */
-	async post(init: MethodInit, data: any, token?: string): SendOutput {
-		const { path, fetch = await acquireFetch() } = typeof init !== 'string' ? init : { path: init };
-		return await send(fetch, { method: 'POST', path, data, token });
-	},
-	/**	PUT request with fetch */
-	async put(init: MethodInit, data: any, token?: string): SendOutput {
-		const { path, fetch = await acquireFetch() } = typeof init !== 'string' ? init : { path: init };
-		return await send(fetch, { method: 'PUT', path, data, token });
-	},
+type MethodInit = string | { fetch?: typeof fetch; path: string };
+/**	GET request with fetch */
+export const get = async (init: MethodInit, token?: string) => {
+	const { fetch = relay(), path } = typeof init !== 'string' ? init : { path: init };
+	return await send({ relayed: fetch }, { method: 'GET', path, token });
+};
+/**	DELETE request with fetch */
+export const del = async (init: MethodInit, token?: string) => {
+	const { fetch = relay(), path } = typeof init !== 'string' ? init : { path: init };
+	return await send({ relayed: fetch }, { method: 'DELETE', path, token });
+};
+/**	POST request with fetch */
+export const post = async (init: MethodInit, data: any, token?: string) => {
+	const { fetch = relay(), path } = typeof init !== 'string' ? init : { path: init };
+	return await send({ relayed: fetch }, { method: 'POST', path, data, token });
+};
+/**	PUT request with fetch */
+export const put = async (init: MethodInit, data: any, token?: string) => {
+	const { fetch = relay(), path } = typeof init !== 'string' ? init : { path: init };
+	return await send({ relayed: fetch }, { method: 'PUT', path, data, token });
 };
 
-export const get = api.get;
-export const del = api.del;
-export const post = api.post;
-export const put = api.put;
-export default api;
-
-type MethodInit = string | { path: string; fetch?: typeof fetch };
-type SendOutput = Promise<{ body: any; error?: Error; response: Response }>;
+export default {
+	/** Use api with additional options by initializing this function */
+	init({ host, intercept, fetch }: typeof options) {
+		options.host = host && /^https?/.test(host) ? host : '';
+		options.intercept = typeof intercept === 'function' ? intercept : undefined;
+		try {
+			options.fetch = fetch || relay();
+		} catch (error) {
+			if (typeof window === 'undefined') console.warn(error);
+		}
+	},
+	get,
+	del,
+	post,
+	put,
+};
