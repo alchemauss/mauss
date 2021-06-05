@@ -56,13 +56,13 @@ export function create(name: string, value: string, options: CookieOption = {}) 
 	const date = new Date();
 	if (maxAge /** Max-Age has precedence over Expires */) {
 		date.setTime(date.getTime() + maxAge * 24 * 60 * 60 * 1e3);
-		biscuit = `${biscuit}; Max-Age=${date};`;
+		biscuit = `${biscuit}; Max-Age=${date}`;
 	} else if (expires) {
 		date.setTime(date.getTime() + expires * 24 * 60 * 60 * 1e3);
-		biscuit = `${biscuit}; Expires=${date.toUTCString()};`;
+		biscuit = `${biscuit}; Expires=${date.toUTCString()}`;
 	} /** Defaults to expiring in 6 hours */ else {
 		date.setTime(date.getTime() + 6 * 60 * 60 * 1e3);
-		biscuit = `${biscuit}; Expires=${date.toUTCString()};`;
+		biscuit = `${biscuit}; Expires=${date.toUTCString()}`;
 	}
 
 	biscuit = `${biscuit}; Path=${path || '/'}`;

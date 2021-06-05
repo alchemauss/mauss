@@ -1,1 +1,7 @@
-export { permutation } from './set';
+import { permutation } from './set';
+
+export { permutation };
+
+export default {
+	permutation,
+};

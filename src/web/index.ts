@@ -1,1 +1,7 @@
-export * as cookies from './cookies';
+import * as cookies from './cookies';
+
+export { cookies };
+
+export default {
+	cookies,
+};
