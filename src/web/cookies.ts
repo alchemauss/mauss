@@ -94,13 +94,6 @@ export function remove(name: string): string {
 	return expire;
 }
 
-export default {
-	parse,
-	create,
-	bulk,
-	remove,
-};
-
 type CookieOption = {
 	/** Expiry, number in days */
 	expires?: number;
