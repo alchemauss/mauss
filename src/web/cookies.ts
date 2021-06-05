@@ -1,8 +1,12 @@
-export function parse(source = typeof window !== 'undefined' ? document.cookie : '') {
-	const map = new Map(source.split(';').map((c) => c.trim().split('=') as [string, string]));
-	for (const [name, value] of map) {
+export function parse(source?: string) {
+	if (typeof window !== 'undefined') source = document.cookie;
+
+	const jar: Map<string, any> = new Map();
+	for (const cookie of (source && source.split(';')) || []) {
+		if (cookie.trim().slice(-1) === '=') continue;
+		const [name, value] = cookie.trim().split('=');
 		const quoted = value[0] === '"' && value.slice(-1) === '"';
-		map.set(name, decodeURIComponent(value.slice(quoted ? 1 : 0, quoted ? -1 : 0)));
+		jar.set(name, decodeURIComponent(value.slice(quoted ? 1 : 0, quoted ? -1 : 0)));
 	}
 	return {
 		/**
@@ -11,7 +15,7 @@ export function parse(source = typeof window !== 'undefined' ? document.cookie :
 		 * @returns the value of cookie name and empty string if it doesn't exist
 		 */
 		raw(name: string, trimQuoted = false): string {
-			if (!name || !source) return source;
+			if (!name || !source) return '';
 			for (let i = 0, c = 0; i < source.length; i++, c = 0) {
 				if (name[c] !== source[i]) continue;
 				if (i === 0 || source[i - 1] === ' ') {
@@ -27,8 +31,8 @@ export function parse(source = typeof window !== 'undefined' ? document.cookie :
 			}
 			return '';
 		},
-		get: (name: string): string => map.get(name) || '',
-		entries: () => map.entries(),
+		get: (name: string): string => jar.get(name) || '',
+		entries: () => jar.entries(),
 	};
 }
 
