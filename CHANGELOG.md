@@ -1,5 +1,10 @@
 # mauss changelog
 
+## Unreleased
+
+- [#22](https://github.com/devmauss/mauss/pull/22): fix handling empty and undefined cookies
+- [#22](https://github.com/devmauss/mauss/pull/22): add read-only methods for cookies parse
+
 ## 0.1.1
 
 - [#21](https://github.com/devmauss/mauss/pull/21): workaround vite bug for `cookies` and `find`
