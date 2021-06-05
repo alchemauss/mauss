@@ -9,13 +9,10 @@ const options: {
 	fetch?: typeof fetch;
 } = {};
 
-type SendOptions = { relayed: typeof fetch };
+type SendOptions = { fetch: typeof fetch };
 type SendParams = { method: string; path: string; data?: BodyInit; token?: string };
 type SendOutput = Promise<{ response: Response; body: string | Record<string, any> }>;
-async function send(
-	{ relayed }: SendOptions,
-	{ method, path, data, token }: SendParams
-): SendOutput {
+async function send({ fetch }: SendOptions, { method, path, data, token }: SendParams): SendOutput {
 	const browser = typeof window !== 'undefined';
 
 	const opts: RequestInit = { method };
@@ -51,7 +48,7 @@ async function send(
 		(browser && (base ? `${base}/${path}` : path)) ||
 		`${base || 'localhost:3000'}/${path}`;
 
-	const res = await relayed(url, opts);
+	const res = await fetch(url, opts);
 	const body = await (res.ok ? res.json() : res.text());
 	return { response: res, body };
 }
@@ -67,22 +64,22 @@ type MethodInit = string | { fetch?: typeof fetch; path: string };
 /**	GET request with fetch */
 export const get = async (init: MethodInit, token?: string) => {
 	const { fetch = relay(), path } = typeof init !== 'string' ? init : { path: init };
-	return await send({ relayed: fetch }, { method: 'GET', path, token });
+	return await send({ fetch }, { method: 'GET', path, token });
 };
 /**	DELETE request with fetch */
 export const del = async (init: MethodInit, token?: string) => {
 	const { fetch = relay(), path } = typeof init !== 'string' ? init : { path: init };
-	return await send({ relayed: fetch }, { method: 'DELETE', path, token });
+	return await send({ fetch }, { method: 'DELETE', path, token });
 };
 /**	POST request with fetch */
 export const post = async (init: MethodInit, data: any, token?: string) => {
 	const { fetch = relay(), path } = typeof init !== 'string' ? init : { path: init };
-	return await send({ relayed: fetch }, { method: 'POST', path, data, token });
+	return await send({ fetch }, { method: 'POST', path, data, token });
 };
 /**	PUT request with fetch */
 export const put = async (init: MethodInit, data: any, token?: string) => {
 	const { fetch = relay(), path } = typeof init !== 'string' ? init : { path: init };
-	return await send({ relayed: fetch }, { method: 'PUT', path, data, token });
+	return await send({ fetch }, { method: 'PUT', path, data, token });
 };
 
 export default {
