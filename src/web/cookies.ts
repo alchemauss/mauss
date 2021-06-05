@@ -31,17 +31,11 @@ export function parse(source: string | undefined = '') {
 			}
 			return '';
 		},
-		get: (name: string): string => jar.get(name) || '',
-		has: (name: string): boolean => jar.has(name),
-		get entries() {
-			return jar.entries();
-		},
-		get keys() {
-			return jar.keys();
-		},
-		get values() {
-			return jar.values();
-		},
+		has: jar.has,
+		get: jar.get,
+		keys: jar.keys,
+		values: jar.values,
+		entries: jar.entries,
 	};
 }
 
