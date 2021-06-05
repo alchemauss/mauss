@@ -93,7 +93,7 @@ export function create(name: string, value: string, options: CookieOption = {}) 
  * @returns array of the complete 'Set-Cookie' values
  */
 export function bulk(values: Record<string, string>, options: CookieOption = {}) {
-	return Object.values(values).map(([name, value]) => create(name, value, options));
+	return Object.entries(values).map(([name, value]) => create(name, value, options));
 }
 
 /**
