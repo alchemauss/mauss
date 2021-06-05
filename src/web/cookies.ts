@@ -32,7 +32,16 @@ export function parse(source: string | undefined = '') {
 			return '';
 		},
 		get: (name: string): string => jar.get(name) || '',
-		entries: () => jar.entries(),
+		has: (name: string): boolean => jar.has(name),
+		get entries() {
+			return jar.entries();
+		},
+		get keys() {
+			return jar.keys();
+		},
+		get values() {
+			return jar.values();
+		},
 	};
 }
 
