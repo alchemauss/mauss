@@ -1,8 +1,8 @@
-export function parse(source?: string) {
+export function parse(source: string | undefined = '') {
 	if (typeof window !== 'undefined') source = document.cookie;
 
 	const jar: Map<string, any> = new Map();
-	for (const cookie of (source && source.split(';')) || []) {
+	for (const cookie of source ? source.split(';') : []) {
 		if (cookie.trim().slice(-1) === '=') continue;
 		const [name, value] = cookie.trim().split('=');
 		const quoted = value[0] === '"' && value.slice(-1) === '"';
