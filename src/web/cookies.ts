@@ -3,10 +3,12 @@ export function parse(source: string | undefined = '') {
 
 	const jar: Map<string, any> = new Map();
 	for (const cookie of source ? source.split(';') : []) {
-		if (cookie.trim().slice(-1) === '=') continue;
-		const [name, value] = cookie.trim().split('=');
+		const trimmed = cookie.trim();
+		if (!trimmed || trimmed.slice(-1) === '=') continue;
+		const [name, value] = trimmed.split('=');
 		const quoted = value[0] === '"' && value.slice(-1) === '"';
-		jar.set(name, decodeURIComponent(value.slice(quoted ? 1 : 0, quoted ? -1 : 0)));
+		const sliced = value.slice(quoted ? 1 : 0, quoted ? -1 : 0);
+		jar.set(name, decodeURIComponent(sliced));
 	}
 	return {
 		/**
