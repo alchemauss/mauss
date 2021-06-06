@@ -1,5 +1,5 @@
 export function parse(source: string | undefined = '') {
-	if (typeof window !== 'undefined') source = document.cookie;
+	if (!source && typeof window !== 'undefined') source = document.cookie;
 
 	const jar: Map<string, any> = new Map();
 	for (const cookie of source ? source.split(';') : []) {
