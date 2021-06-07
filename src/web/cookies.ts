@@ -1,8 +1,14 @@
-export function parse(source = typeof window !== 'undefined' ? document.cookie : '') {
-	const map = new Map(source.split(';').map((c) => c.trim().split('=') as [string, string]));
-	for (const [name, value] of map) {
+export function parse(source: string | undefined = '') {
+	if (!source && typeof window !== 'undefined') source = document.cookie;
+
+	const jar: Map<string, any> = new Map();
+	for (const cookie of source ? source.split(';') : []) {
+		const trimmed = cookie.trim();
+		if (!trimmed || trimmed.slice(-1) === '=') continue;
+		const [name, value] = trimmed.split('=');
 		const quoted = value[0] === '"' && value.slice(-1) === '"';
-		map.set(name, decodeURIComponent(value.slice(quoted ? 1 : 0, quoted ? -1 : 0)));
+		const sliced = value.slice(quoted ? 1 : 0, quoted ? -1 : 0);
+		jar.set(name, decodeURIComponent(sliced));
 	}
 	return {
 		/**
@@ -11,7 +17,7 @@ export function parse(source = typeof window !== 'undefined' ? document.cookie :
 		 * @returns the value of cookie name and empty string if it doesn't exist
 		 */
 		raw(name: string, trimQuoted = false): string {
-			if (!name || !source) return source;
+			if (!name || !source) return '';
 			for (let i = 0, c = 0; i < source.length; i++, c = 0) {
 				if (name[c] !== source[i]) continue;
 				if (i === 0 || source[i - 1] === ' ') {
@@ -27,8 +33,11 @@ export function parse(source = typeof window !== 'undefined' ? document.cookie :
 			}
 			return '';
 		},
-		get: (name: string): string => map.get(name) || '',
-		entries: () => map.entries(),
+		has: jar.has,
+		get: jar.get,
+		keys: jar.keys,
+		values: jar.values,
+		entries: jar.entries,
 	};
 }
 
@@ -80,7 +89,7 @@ export function create(name: string, value: string, options: CookieOption = {}) 
  * @returns array of the complete 'Set-Cookie' values
  */
 export function bulk(values: Record<string, string>, options: CookieOption = {}) {
-	return Object.values(values).map(([name, value]) => create(name, value, options));
+	return Object.entries(values).map(([name, value]) => create(name, value, options));
 }
 
 /**
