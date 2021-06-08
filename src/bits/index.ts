@@ -1,5 +1,5 @@
-import * as find from './find';
-import * as mutate from './mutate';
+import find from './find';
+import mutate from './mutate';
 
 export { find, mutate };
 
