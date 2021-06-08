@@ -1,9 +1,21 @@
 import find from './find';
 import mutate from './mutate';
 
-export { find, mutate };
+import { shuffle } from './algorithm';
 
-export default {
+export {
+	/** namespace exports */
 	find,
 	mutate,
+	/** algorithm exports */
+	shuffle,
+};
+
+export default {
+	/** namespace exports */
+	find,
+	mutate,
+
+	/** algorithm exports */
+	shuffle,
 };
