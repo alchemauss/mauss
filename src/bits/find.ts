@@ -28,3 +28,8 @@ export function minmax(array: number[]): [number, number] {
 	}
 	return [min, max];
 }
+
+export default {
+	binary,
+	minmax,
+};
