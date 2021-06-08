@@ -4,18 +4,18 @@ import mutate from './mutate';
 import { shuffle } from './algorithm';
 
 export {
-	/** namespace exports */
+	// namespace exports
 	find,
 	mutate,
-	/** algorithm exports */
+	// algorithm exports
 	shuffle,
 };
 
 export default {
-	/** namespace exports */
+	// namespace exports
 	find,
 	mutate,
 
-	/** algorithm exports */
+	// algorithm exports
 	shuffle,
 };
