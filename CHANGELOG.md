@@ -1,6 +1,6 @@
 # mauss changelog
 
-## Unreleased
+## 0.1.2
 
 - [#22](https://github.com/devmauss/mauss/pull/22): fix handling empty and undefined cookies
 - [#22](https://github.com/devmauss/mauss/pull/22): add read-only methods for cookies parse
