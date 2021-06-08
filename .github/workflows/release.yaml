@@ -2,20 +2,21 @@ name: Release-CI
 
 on:
   push:
-    branches:
-      - "master"
+    tags:
+      - "v*"
+    branches-ignore:
+      - "**"
 
 jobs:
   npm-publish:
     runs-on: ubuntu-latest
-    if: "contains(github.event.head_commit.message, '~ v')"
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      - uses: actions/setup-node@v2
         with:
-          node-version: "12.x"
+          node-version: 14
           registry-url: "https://registry.npmjs.org"
-      - name: Install and publish
+      - name: Install & Publish
         run: npm install && npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

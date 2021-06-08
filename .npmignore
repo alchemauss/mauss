@@ -1,5 +1,2 @@
 .*
-*.ts
-tsconfig.json
-
-!*.d.ts
+src
