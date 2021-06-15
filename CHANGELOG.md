@@ -1,5 +1,9 @@
 # mauss changelog
 
+## Unreleased
+
+- fix TypeError on cookies parse object
+
 ## 0.1.2
 
 - [#22](https://github.com/devmauss/mauss/pull/22): fix handling empty and undefined cookies
