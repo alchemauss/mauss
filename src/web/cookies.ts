@@ -33,11 +33,11 @@ export function parse(source: string | undefined = '') {
 			}
 			return '';
 		},
-		has: jar.has,
-		get: jar.get,
-		keys: jar.keys,
-		values: jar.values,
-		entries: jar.entries,
+		has: (key: string) => jar.has(key),
+		get: (key: string) => jar.get(key),
+		keys: () => jar.keys(),
+		values: () => jar.values(),
+		entries: () => jar.entries(),
 	};
 }
 
