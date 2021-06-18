@@ -19,5 +19,5 @@ export type PartialOmit<
  * any properties and only allow one property to be defined
  */
 export type SingleProperty<T> = {
-	[P in keyof T]: { [I in P]: string } & { [Q in Exclude<keyof T, P>]?: undefined };
+	[P in keyof T]: { [I in P]: T[P] } & { [Q in Exclude<keyof T, P>]?: undefined };
 }[keyof T];
