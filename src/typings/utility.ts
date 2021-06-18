@@ -1,9 +1,17 @@
 /**
- * Partially omits object properties
- *
- * Like 'Omit' but makes them optional properties instead
- *
- * Credits: webstrand#8856
+ * Merge an object properties and make all of them optional.
+ * But, when one of it is defined, all of it's other properties
+ * needs to be defined as well.
+ */
+export type OptionalAnnex<T, Annex> = T extends {
+	[P in keyof Annex]: { [Q in P]: Annex[Q] };
+}[keyof Annex]
+	? Annex & T
+	: T;
+
+/**
+ * Partially omits object properties, like {@link Omit} but
+ * makes them optional instead
  */
 export type PartialOmit<
 	T,
