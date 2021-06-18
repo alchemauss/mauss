@@ -13,3 +13,11 @@ export type PartialOmit<
 	} &
 		{ [P in keyof T]?: T[P] }
 > = { [P in keyof U]: U[P] };
+
+/**
+ * Single out a property from an object, receives object of
+ * any properties and only allow one property to be defined
+ */
+export type SingleProperty<T> = {
+	[P in keyof T]: { [I in P]: string } & { [Q in Exclude<keyof T, P>]?: undefined };
+}[keyof T];
