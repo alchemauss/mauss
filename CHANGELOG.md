@@ -1,8 +1,8 @@
 # mauss changelog
 
-## Unreleased
+## 0.1.3
 
-- fix TypeError on cookies parse object
+- [#23](https://github.com/devmauss/mauss/pull/23): fix TypeError on cookies parse object
 
 ## 0.1.2
 
