@@ -28,9 +28,7 @@ export const compare: Comparisons & { wildcard: (x: any, y: any) => number } = {
 	boolean: (x, y) => +y - +x,
 	number: (x, y) => y - x,
 	bigint: (x, y) => (x < y ? -1 : x > y ? 1 : 0),
-	symbol(x, y) {
-		return this.string(x.toString(), y.toString());
-	},
+	symbol: (x, y) => x.toString().localeCompare(y.toString()),
 	string(x, y) {
 		for (const [pattern, exp] of patterns) {
 			const [type] = pattern.split(':') as [Categories];
