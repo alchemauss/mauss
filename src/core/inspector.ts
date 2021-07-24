@@ -3,6 +3,7 @@ interface Primitives extends Record<string, any> {
 	bigint: (x: bigint, y: bigint) => number;
 	number: (x: number, y: number) => number;
 	string: (x: string, y: string) => number;
+	object: (x: object, y: object) => number;
 }
 interface Patterns {
 	date: (x: string, y: string) => number;
@@ -13,14 +14,21 @@ const pattern = {
 };
 
 export const compare: Primitives & Patterns = {
+	date: (x, y) => new Date(y).getTime() - new Date(x).getTime(),
+	// primitives
 	boolean: (x, y) => +y - +x,
 	number: (x, y) => y - x,
 	bigint: (x, y) => (x < y ? -1 : x > y ? 1 : 0),
-	date: (x, y) => new Date(y).getTime() - new Date(x).getTime(),
 	string(x, y) {
 		for (const [type, exp] of Object.entries(pattern))
 			if (exp.test(x) && exp.test(y)) return this[type](x, y);
 		return x.localeCompare(y);
+	},
+	// object + null
+	object(x, y) {
+		if (x === null) return 1;
+		if (y === null) return -1;
+		return comparator(x, y);
 	},
 };
 
