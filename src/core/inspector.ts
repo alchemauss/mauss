@@ -14,6 +14,7 @@ const patterns = [
 	['date:complete', /\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+([+-][0-2]\d:[0-5]\d|Z)/],
 	['date:time', /\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z)/],
 	['date', /\d{4}-[01]\d-[0-3]\d/],
+	['time', /[0-2]\d:[0-5]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z)/],
 ] as const;
 
 type PatternKeys = typeof patterns[number][0];
@@ -22,6 +23,14 @@ type Prefixed<K extends string> = K extends `${infer P}:${string}` ? Filter<P, C
 type Comparisons = Primitives & { [K in Prefixed<PatternKeys>]: (x: string, y: string) => number };
 export const compare: Comparisons = {
 	date: (x, y) => new Date(y).getTime() - new Date(x).getTime(),
+	time(x, y) {
+		const [dx, dy] = [new Date(), new Date()];
+		const [xh, xm, xs] = x.split(':');
+		const [yh, ym, ys] = y.split(':');
+		dx.setHours(+xh, +xm, +xs);
+		dy.setHours(+yh, +ym, +ys);
+		return dy.getTime() - dx.getTime();
+	},
 	// primitives
 	boolean: (x, y) => +y - +x,
 	number: (x, y) => y - x,
