@@ -21,16 +21,9 @@ type PatternKeys = typeof patterns[number][0];
 type Categories = Split<PatternKeys, ':'>[0];
 type Prefixed<K extends string> = K extends `${infer P}:${string}` ? Filter<P, Categories> : K;
 type Comparisons = Primitives & { [K in Prefixed<PatternKeys>]: (x: string, y: string) => number };
-export const compare: Comparisons = {
+export const compare: Comparisons & { wildcard: (x: any, y: any) => number } = {
 	date: (x, y) => new Date(y).getTime() - new Date(x).getTime(),
-	time(x, y) {
-		const [dx, dy] = [new Date(), new Date()];
-		const [xh, xm, xs] = x.split(':');
-		const [yh, ym, ys] = y.split(':');
-		dx.setHours(+xh, +xm, +xs);
-		dy.setHours(+yh, +ym, +ys);
-		return dy.getTime() - dx.getTime();
-	},
+	time: (x, y) => Date.parse(`2017/08/28 ${y}`) - Date.parse(`2017/08/28 ${x}`),
 	// primitives
 	boolean: (x, y) => +y - +x,
 	number: (x, y) => y - x,
@@ -50,6 +43,10 @@ export const compare: Comparisons = {
 		if (x === null) return 1;
 		if (y === null) return -1;
 		return comparator(x, y);
+	},
+	// wildcard *
+	wildcard(x, y) {
+		return 0;
 	},
 };
 
