@@ -1,3 +1,4 @@
+import type { Filter } from '../typings/helper';
 import type { Split } from '../typings/operation';
 
 type Primitives = {
@@ -8,19 +9,17 @@ type Primitives = {
 	symbol: (x: symbol, y: symbol) => number;
 	object: (x: object, y: object) => number;
 };
-type Patterns = {
-	'date:complete': (x: string, y: string) => number;
-	'date:time': (x: string, y: string) => number;
-	date: (x: string, y: string) => number;
-};
-const patterns: Array<[keyof Patterns, RegExp]> = [
+
+const patterns = [
 	['date:complete', /\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+([+-][0-2]\d:[0-5]\d|Z)/],
 	['date:time', /\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z)/],
 	['date', /\d{4}-[01]\d-[0-3]\d/],
-];
+] as const;
 
-type PatternGroups = Pick<Patterns, Split<keyof Patterns, ':'>[0]>;
-type Comparisons = Primitives & PatternGroups;
+type PatternKeys = typeof patterns[number][0];
+type Categories = Split<PatternKeys, ':'>[0];
+type Prefixed<K extends string> = K extends `${infer P}:${string}` ? Filter<P, Categories> : K;
+type Comparisons = Primitives & { [K in Prefixed<PatternKeys>]: (x: string, y: string) => number };
 export const compare: Comparisons = {
 	date: (x, y) => new Date(y).getTime() - new Date(x).getTime(),
 	// primitives
@@ -32,7 +31,7 @@ export const compare: Comparisons = {
 	},
 	string(x, y) {
 		for (const [pattern, exp] of patterns) {
-			const [type] = pattern.split(':') as [keyof PatternGroups];
+			const [type] = pattern.split(':') as [Categories];
 			if (exp.test(x) && exp.test(y)) return this[type](x, y);
 		}
 		return x.localeCompare(y);
@@ -54,6 +53,7 @@ export function comparator(x: Record<string, any>, y: Record<string, any>): numb
 		i < common.length && x[key] !== null && y[key] !== null;
 		key = common[++i], data = typeof x[key]
 	) {
+		if (data === 'undefined' || data === 'function') continue;
 		if (data === 'object') return comparator(x[key], y[key]);
 		if (data in compare) return compare[data](x[key], y[key]);
 	}
