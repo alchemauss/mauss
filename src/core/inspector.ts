@@ -8,14 +8,17 @@ interface Patterns {
 	date: (x: string, y: string) => number;
 }
 
-export const compare: Primitives & Patterns & Record<'format', Record<keyof Patterns, RegExp>> = {
-	format: { date: /\d{1,4}-\d{1,2}-\d{1,4}/ },
+const pattern = {
+	date: /\d{1,4}-\d{1,2}-\d{1,4}/,
+};
+
+export const compare: Primitives & Patterns = {
 	boolean: (x, y) => +y - +x,
 	number: (x, y) => y - x,
 	bigint: (x, y) => (x < y ? -1 : x > y ? 1 : 0),
 	date: (x, y) => new Date(y).getTime() - new Date(x).getTime(),
 	string(x, y) {
-		for (const [type, exp] of Object.entries(this.format))
+		for (const [type, exp] of Object.entries(pattern))
 			if (exp.test(x) && exp.test(y)) return this[type](x, y);
 		return x.localeCompare(y);
 	},
