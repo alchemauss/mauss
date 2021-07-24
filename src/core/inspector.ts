@@ -1,27 +1,40 @@
-interface Primitives extends Record<string, any> {
+import type { Split } from '../typings/operation';
+
+type Primitives = {
 	boolean: (x: boolean, y: boolean) => number;
-	bigint: (x: bigint, y: bigint) => number;
 	number: (x: number, y: number) => number;
 	string: (x: string, y: string) => number;
+	bigint: (x: bigint, y: bigint) => number;
+	symbol: (x: symbol, y: symbol) => number;
 	object: (x: object, y: object) => number;
-}
-interface Patterns {
-	date: (x: string, y: string) => number;
-}
-
-const pattern = {
-	date: /\d{1,4}-\d{1,2}-\d{1,4}/,
 };
+type Patterns = {
+	'date:complete': (x: string, y: string) => number;
+	'date:time': (x: string, y: string) => number;
+	date: (x: string, y: string) => number;
+};
+const patterns: Array<[keyof Patterns, RegExp]> = [
+	['date:complete', /\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+([+-][0-2]\d:[0-5]\d|Z)/],
+	['date:time', /\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z)/],
+	['date', /\d{4}-[01]\d-[0-3]\d/],
+];
 
-export const compare: Primitives & Patterns = {
+type PatternGroups = Pick<Patterns, Split<keyof Patterns, ':'>[0]>;
+type Comparisons = Primitives & PatternGroups;
+export const compare: Comparisons = {
 	date: (x, y) => new Date(y).getTime() - new Date(x).getTime(),
 	// primitives
 	boolean: (x, y) => +y - +x,
 	number: (x, y) => y - x,
 	bigint: (x, y) => (x < y ? -1 : x > y ? 1 : 0),
+	symbol(x, y) {
+		return this.string(x.toString(), y.toString());
+	},
 	string(x, y) {
-		for (const [type, exp] of Object.entries(pattern))
+		for (const [pattern, exp] of patterns) {
+			const [type] = pattern.split(':') as [keyof PatternGroups];
 			if (exp.test(x) && exp.test(y)) return this[type](x, y);
+		}
 		return x.localeCompare(y);
 	},
 	// object + null
