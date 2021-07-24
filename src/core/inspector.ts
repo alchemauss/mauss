@@ -59,7 +59,8 @@ export function comparator(x: Record<string, any>, y: Record<string, any>): numb
 	) {
 		if (data === 'undefined' || data === 'function') continue;
 		if (data === 'object') return comparator(x[key], y[key]);
-		if (data in compare) return compare[data](x[key], y[key]);
+		const constrained: (x: any, y: any) => number = compare[data];
+		if (data in compare) return constrained(x[key], y[key]);
 	}
 	return 0;
 }
