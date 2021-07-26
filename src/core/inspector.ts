@@ -1,7 +1,9 @@
 import type { Filter } from '../typings/helper';
 import type { Split } from '../typings/operation';
 
+type Wildcard = (x: any, y: any) => number;
 type Primitives = {
+	undefined: (x: undefined, y: undefined) => number;
 	boolean: (x: boolean, y: boolean) => number;
 	number: (x: number, y: number) => number;
 	string: (x: string, y: string) => number;
@@ -25,6 +27,7 @@ export const compare: Comparisons & { wildcard: (x: any, y: any) => number } = {
 	date: (x, y) => new Date(y).getTime() - new Date(x).getTime(),
 	time: (x, y) => Date.parse(`2017/08/28 ${y}`) - Date.parse(`2017/08/28 ${x}`),
 	// primitives
+	undefined: (x) => (x ? -1 : 1),
 	boolean: (x, y) => +y - +x,
 	number: (x, y) => y - x,
 	bigint: (x, y) => (x < y ? -1 : x > y ? 1 : 0),
@@ -44,7 +47,19 @@ export const compare: Comparisons & { wildcard: (x: any, y: any) => number } = {
 	},
 	// wildcard *
 	wildcard(x, y) {
-		return 0;
+		if (x == null) return 1;
+		if (y == null) return -1;
+		const [tx, ty] = [typeof x, typeof y];
+		if (tx === 'function') return 0;
+
+		if (tx !== ty) {
+			const cx = JSON.stringify(x);
+			const cy = JSON.stringify(y);
+			return this.string(cx, cy);
+		}
+
+		const constrained: Wildcard = this[tx];
+		return constrained(tx, ty);
 	},
 };
 
@@ -59,7 +74,7 @@ export function comparator(x: Record<string, any>, y: Record<string, any>): numb
 	) {
 		if (data === 'undefined' || data === 'function') continue;
 		if (data === 'object') return comparator(x[key], y[key]);
-		const constrained: (x: any, y: any) => number = compare[data];
+		const constrained: Wildcard = compare[data];
 		if (data in compare) return constrained(x[key], y[key]);
 	}
 	return 0;
