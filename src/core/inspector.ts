@@ -72,7 +72,7 @@ export function comparator(x: Record<string, any>, y: Record<string, any>): numb
 		i < common.length && x[key] !== null && y[key] !== null;
 		key = common[++i], data = typeof x[key]
 	) {
-		if (data === 'undefined' || data === 'function') continue;
+		if (data === 'function') continue;
 		if (data === 'object') return comparator(x[key], y[key]);
 		const constrained: Wildcard = compare[data];
 		if (data in compare) return constrained(x[key], y[key]);
