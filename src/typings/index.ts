@@ -1,3 +1,3 @@
-export type { Typify } from './enhancer';
-export type { Overwrite } from './helper';
-export type { Join, Permutation } from './operation';
+export type { Entries, Typify } from './enhancer';
+export type { Filter, NonEmptyArray, Overwrite, PickByValue } from './helper';
+export type { Join, Permutation, Split } from './operation';
