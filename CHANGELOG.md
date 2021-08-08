@@ -1,6 +1,6 @@
 # mauss changelog
 
-## Unreleased
+## 0.1.4
 
 - [#29](https://github.com/devmauss/mauss/pull/29): improves inspector module
 - [#24](https://github.com/devmauss/mauss/pull/24): updates svelte prettier options
