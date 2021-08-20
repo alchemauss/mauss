@@ -4,7 +4,7 @@
  * needs to be defined as well.
  */
 export type OptionalAnnex<T, Annex> = T extends {
-	[P in keyof Annex]: { [Q in P]: Annex[Q] };
+	[K in keyof Annex]: { [Q in K]: Annex[Q] };
 }[keyof Annex]
 	? Annex & T
 	: T;
@@ -15,17 +15,16 @@ export type OptionalAnnex<T, Annex> = T extends {
  */
 export type PartialOmit<
 	T,
-	K extends keyof T,
-	U extends { [P in Exclude<keyof T, K>]: T[P] } & { [P in keyof T]?: T[P] } = {
-		[P in Exclude<keyof T, K>]: T[P];
-	} &
-		{ [P in keyof T]?: T[P] }
-> = { [P in keyof U]: U[P] };
+	Keys extends keyof T,
+	Saved = { [K in Exclude<keyof T, Keys>]: T[K] },
+	Optional = { [K in keyof T]?: T[K] },
+	Final = Saved & Optional
+> = { [K in keyof Final]: Final[K] };
 
 /**
  * Single out a property from an object, receives object of
  * any properties and only allow one property to be defined
  */
 export type SingleProperty<T> = {
-	[P in keyof T]: { [I in P]: T[P] } & { [Q in Exclude<keyof T, P>]?: undefined };
+	[K in keyof T]: { [I in K]: T[K] } & { [Q in Exclude<keyof T, K>]?: undefined };
 }[keyof T];
