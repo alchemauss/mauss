@@ -13,3 +13,8 @@ export type Permutation<L, Z = L> = [L] extends [never]
 	: L extends L
 	? [L, ...Permutation<Z extends L ? never : Z>]
 	: never;
+
+export type Split<Key extends string, Separator extends string> =
+	Key extends `${infer Prefix}${Separator}${infer Rest}`
+		? [Prefix, ...Split<Rest, Separator>]
+		: [Key];

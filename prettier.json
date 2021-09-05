@@ -22,9 +22,9 @@
 		{
 			"files": ["*.svelte"],
 			"options": {
-				"svelteSortOrder": "scripts-markup-styles-options",
+				"svelteSortOrder": "options-scripts-markup-styles",
 				"svelteStrictMode": false,
-				"svelteBracketNewLine": false,
+				"svelteBracketNewLine": true,
 				"svelteAllowShorthand": true,
 				"svelteIndentScriptAndStyle": true
 			}
