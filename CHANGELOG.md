@@ -1,5 +1,9 @@
 # mauss changelog
 
+## Unreleased
+
+- allow ascending and descending sort order
+
 ## 0.1.4
 
 - [#29](https://github.com/devmauss/mauss/pull/29): improves inspector module
