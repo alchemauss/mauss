@@ -1,4 +1,4 @@
-import type { Filter } from '../typings/helper';
+import type { Filter } from '../typings/enhancer';
 import type { Split } from '../typings/operation';
 
 type Wildcard = (x: any, y: any) => number;

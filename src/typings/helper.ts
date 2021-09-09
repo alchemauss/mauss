@@ -1,4 +1,3 @@
-export type Filter<T, Validator> = T extends Validator ? T : never;
+export type JSONState<T> = { [P in keyof T]: T[P] extends { toJSON: () => infer J } ? J : T[P] };
 export type NonEmptyArray<T> = [T, ...Array<T>];
-export type Overwrite<T, K> = Omit<T, keyof K> & K;
 export type PickByValue<T, V> = Pick<T, { [K in keyof T]: T[K] extends V ? K : never }[keyof T]>;
