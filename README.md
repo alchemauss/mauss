@@ -90,7 +90,7 @@ import { get, post } from 'mauss/api';
 const token = 'jwt:token'; // optional, pass for authenticated request
 
 /* GET example */
-const { response, body, error } = get('auth/profile', token);
+const { response, body, error } = await get('auth/profile', token);
 if (response.ok) {
   console.log(body);  // user data in JSON format
 } else {
@@ -98,7 +98,7 @@ if (response.ok) {
 }
 
 /* POST example */
-const { response, body, error } = post('auth/login', {
+const { response, body, error } = await post('auth/login', {
   email: 'mail@example.com',
   password: 'super_secure_password'
 });
