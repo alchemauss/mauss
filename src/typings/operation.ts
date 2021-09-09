@@ -1,3 +1,6 @@
+/**
+ * Joins a list of string with custom delimiter
+ */
 export type Join<StringList extends readonly string[], Delimiter extends string = '-'> =
 	StringList extends readonly [infer Head, infer Next, ...infer Rest]
 		? Join<
@@ -8,12 +11,18 @@ export type Join<StringList extends readonly string[], Delimiter extends string 
 		? OnlyItem
 		: '';
 
-export type Permutation<L, Z = L> = [L] extends [never]
+/**
+ * Generates a list of tuples from union
+ */
+export type Permutation<Union, Sliced = Union> = [Union] extends [never]
 	? []
-	: L extends L
-	? [L, ...Permutation<Z extends L ? never : Z>]
+	: Union extends Union
+	? [Union, ...Permutation<Sliced extends Union ? never : Sliced>]
 	: never;
 
+/**
+ * Splits a string with custom separator
+ */
 export type Split<Key extends string, Separator extends string> =
 	Key extends `${infer Prefix}${Separator}${infer Rest}`
 		? [Prefix, ...Split<Rest, Separator>]
