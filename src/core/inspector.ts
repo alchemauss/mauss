@@ -27,12 +27,15 @@ export function compare(
 	order: 'asc' | 'dsc'
 ): Comparisons & { wildcard: (x: any, y: any) => number } {
 	const up = order === 'asc';
-	const dt = (d: string) => new Date(d).getTime();
-	const dp = (t: string) => Date.parse(`2017/08/28 ${t}`);
+
+	const dd = (t: string) => `2017/08/28 ${t}`;
+	const dt = (dx: string, dy: string) => new Date(dx).getTime() - new Date(dy).getTime();
+	const dp = (tx: string, ty: string) => Date.parse(dd(tx)) - Date.parse(dd(ty));
+
 	const discriminator = comparator(order);
 	return {
-		date: (x, y) => (up ? dt(x) - dt(y) : dt(y) - dt(x)),
-		time: (x, y) => (up ? dp(x) - dp(y) : dp(y) - dp(x)),
+		date: (x, y) => (up ? dt(x, y) : dt(y, x)),
+		time: (x, y) => (up ? dp(x, y) : dp(y, x)),
 		// primitives
 		undefined: (x) => {
 			const un = x ? 1 : -1;
