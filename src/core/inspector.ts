@@ -23,59 +23,76 @@ type PatternKeys = typeof patterns[number][0];
 type Categories = Split<PatternKeys, ':'>[0];
 type Prefixed<K extends string> = K extends `${infer P}:${string}` ? Filter<P, Categories> : K;
 type Comparisons = Primitives & { [K in Prefixed<PatternKeys>]: (x: string, y: string) => number };
-export const compare: Comparisons & { wildcard: (x: any, y: any) => number } = {
-	date: (x, y) => new Date(y).getTime() - new Date(x).getTime(),
-	time: (x, y) => Date.parse(`2017/08/28 ${y}`) - Date.parse(`2017/08/28 ${x}`),
-	// primitives
-	undefined: (x) => (x ? -1 : 1),
-	boolean: (x, y) => +y - +x,
-	number: (x, y) => y - x,
-	bigint: (x, y) => (x < y ? -1 : x > y ? 1 : 0),
-	symbol: (x, y) => x.toString().localeCompare(y.toString()),
-	string(x, y) {
-		for (const [pattern, exp] of patterns) {
-			const [type] = pattern.split(':') as [Categories];
-			if (exp.test(x) && exp.test(y)) return this[type](x, y);
+export function compare(
+	order: 'asc' | 'dsc'
+): Comparisons & { wildcard: (x: any, y: any) => number } {
+	const up = order === 'asc';
+	const dt = (d: string) => new Date(d).getTime();
+	const dp = (t: string) => Date.parse(`2017/08/28 ${t}`);
+	const discriminator = comparator(order);
+	return {
+		date: (x, y) => (up ? dt(x) - dt(y) : dt(y) - dt(x)),
+		time: (x, y) => (up ? dp(x) - dp(y) : dp(y) - dp(x)),
+		// primitives
+		undefined: (x) => {
+			const un = x ? 1 : -1;
+			return up ? un : -un;
+		},
+		boolean: (x, y) => (up ? +x - +y : +y - +x),
+		number: (x, y) => (up ? x - y : y - x),
+		bigint: (x, y) => {
+			if (x === y) return 0;
+			const vs = x < y ? 1 : -1;
+			return up ? vs : -vs;
+		},
+		symbol: (x, y) => x.toString().localeCompare(y.toString()),
+		string(x, y) {
+			for (const [pattern, exp] of patterns) {
+				const [type] = pattern.split(':') as [Categories];
+				if (exp.test(x) && exp.test(y)) return this[type](x, y);
+			}
+			return up ? x.localeCompare(y) : y.localeCompare(x);
+		},
+		// object + null
+		object(x, y) {
+			if (x === null) return up ? -1 : 1;
+			if (y === null) return up ? 1 : -1;
+			return discriminator(x, y);
+		},
+		// wildcard *
+		wildcard(x, y) {
+			if (x == null) return up ? -1 : 1;
+			if (y == null) return up ? 1 : -1;
+			const [tx, ty] = [typeof x, typeof y];
+			if (tx === 'function') return 0;
+
+			if (tx !== ty) {
+				const cx = JSON.stringify(x);
+				const cy = JSON.stringify(y);
+				return this.string(cx, cy);
+			}
+
+			const constrained: Wildcard = this[tx];
+			return constrained(tx, ty);
+		},
+	};
+}
+
+export function comparator(order: 'asc' | 'dsc') {
+	return (x: Record<string, any>, y: Record<string, any>): number => {
+		const common = [...new Set([...Object.keys(x), ...Object.keys(y)])].filter(
+			(k) => k in x && k in y && typeof x[k] === typeof y[k] && x[k] !== y[k]
+		);
+		for (
+			let i = 0, key = common[i], data = typeof x[key];
+			i < common.length && x[key] !== null && y[key] !== null;
+			key = common[++i], data = typeof x[key]
+		) {
+			if (data === 'function') continue;
+			if (data === 'object') return comparator(order)(x[key], y[key]);
+			const constrained: Wildcard = compare(order)[data];
+			if (data in compare) return constrained(x[key], y[key]);
 		}
-		return x.localeCompare(y);
-	},
-	// object + null
-	object(x, y) {
-		if (x === null) return 1;
-		if (y === null) return -1;
-		return comparator(x, y);
-	},
-	// wildcard *
-	wildcard(x, y) {
-		if (x == null) return 1;
-		if (y == null) return -1;
-		const [tx, ty] = [typeof x, typeof y];
-		if (tx === 'function') return 0;
-
-		if (tx !== ty) {
-			const cx = JSON.stringify(x);
-			const cy = JSON.stringify(y);
-			return this.string(cx, cy);
-		}
-
-		const constrained: Wildcard = this[tx];
-		return constrained(tx, ty);
-	},
-};
-
-export function comparator(x: Record<string, any>, y: Record<string, any>): number {
-	const common = [...new Set([...Object.keys(x), ...Object.keys(y)])].filter(
-		(k) => k in x && k in y && typeof x[k] === typeof y[k] && x[k] !== y[k]
-	);
-	for (
-		let i = 0, key = common[i], data = typeof x[key];
-		i < common.length && x[key] !== null && y[key] !== null;
-		key = common[++i], data = typeof x[key]
-	) {
-		if (data === 'function') continue;
-		if (data === 'object') return comparator(x[key], y[key]);
-		const constrained: Wildcard = compare[data];
-		if (data in compare) return constrained(x[key], y[key]);
-	}
-	return 0;
+		return 0;
+	};
 }
