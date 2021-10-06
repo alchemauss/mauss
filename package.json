@@ -19,24 +19,12 @@
   },
   "exports": {
     ".": "./index.js",
-    "./api": {
-      "import": "./api/index.js"
-    },
-    "./bits": {
-      "import": "./bits/index.js"
-    },
-    "./guards": {
-      "import": "./guards/index.js"
-    },
-    "./math": {
-      "import": "./math/index.js"
-    },
-    "./utils": {
-      "import": "./utils/index.js"
-    },
-    "./web": {
-      "import": "./web/index.js"
-    },
+    "./api": "./api/index.js",
+    "./bits": "./bits/index.js",
+    "./guards": "./guards/index.js",
+    "./math": "./math/index.js",
+    "./utils": "./utils/index.js",
+    "./web": "./web/index.js",
     "./package.json": "./package.json",
     "./prettier.json": "./prettier.json",
     "./tsconfig.json": "./tsconfig.json"
