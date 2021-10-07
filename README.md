@@ -1,4 +1,4 @@
-# Mauss ![Total npm downloads](https://img.shields.io/npm/dt/mauss) &middot; ![Published npm version](https://img.shields.io/npm/v/mauss) ![Monthly npm downloads](https://img.shields.io/npm/dm/mauss) ![License](https://img.shields.io/github/license/devmauss/mauss)
+# Mauss ![Total npm downloads](https://img.shields.io/npm/dt/mauss) &middot; ![Published npm version](https://img.shields.io/npm/v/mauss) ![Monthly npm downloads](https://img.shields.io/npm/dm/mauss) ![License](https://img.shields.io/github/license/alchemauss/mauss)
 
 > Opinionated Zero-Dependency Development Toolkit
 
@@ -14,7 +14,7 @@ npm install mauss
 
 ### Disclaimer
 
-This library is written with DevMauss web projects in mind. Although it's meant to be versatile and can hopefully be used in most situations or use cases, there will most likely be something that this library doesn't cover. Mauss will certainly be updated as it is used in more projects with a variety of use cases.
+Although it's meant to be versatile and can hopefully be used in most situations or use cases, there will most likely be something that this library doesn't cover. Mauss will certainly be updated as it is used in more projects with a variety of use cases.
 
 If there's something you think are essential that is missing and you feel it should be here, please understand that it was specifically excluded to spite you personally. All jokes aside, contributions are welcome! Be it issues or direct PRs.
 

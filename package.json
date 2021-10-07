@@ -36,10 +36,10 @@
   "prettier": "./prettier.json",
   "repository": {
     "type": "git",
-    "url": "https://github.com/devmauss/mauss.git"
+    "url": "https://github.com/alchemauss/mauss.git"
   },
   "bugs": {
-    "url": "https://github.com/devmauss/mauss/issues"
+    "url": "https://github.com/alchemauss/mauss/issues"
   },
   "devDependencies": {
     "@types/node": "^14.14.16",
