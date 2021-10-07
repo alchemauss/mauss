@@ -1,5 +1,10 @@
 # mauss changelog
 
+## Unreleased
+
+- provide deep exports
+- [#32](https://github.com/alchemauss/mauss/pull/32): adds more utility typings
+
 ## 0.1.4
 
 - [#29](https://github.com/alchemauss/mauss/pull/29): improves inspector module

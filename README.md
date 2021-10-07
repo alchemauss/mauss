@@ -14,7 +14,7 @@ npm install mauss
 
 ### Disclaimer
 
-Although it's meant to be versatile and can hopefully be used in most situations or use cases, there will most likely be something that this library doesn't cover. Mauss will certainly be updated as it is used in more projects with a variety of use cases.
+Although it's meant to be versatile, there will most likely be something that this library doesn't cover. Hopefully this can still be useful in most situations, and this will certainly be updated as it is used in more projects with a variety of use cases.
 
 If there's something you think are essential that is missing and you feel it should be here, please understand that it was specifically excluded to spite you personally. All jokes aside, contributions are welcome! Be it issues or direct PRs.
 
@@ -40,8 +40,8 @@ function search(name) {...}
 const dSearch = debounce(search, 500);
 const tSearch = throttle(search, 500);
 
-dSearch('mauss'); // will execute after 500ms
-tSearch('mauss'); // will execute every 500ms
+dSearch('mauss'); // execute after 500ms
+tSearch('mauss'); // execute every 500ms
 ```
 
 ### `compare/comparator`
@@ -52,7 +52,7 @@ compare utility object with multiple methods for various types, and comparator f
 compare.string('abc', 'def');
 // and other primitives
 
-[].sort(comparator);
+[/* data */].sort(comparator);
 ```
 
 ## mauss/api
