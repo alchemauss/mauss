@@ -14,9 +14,9 @@ npm install mauss
 
 ### Disclaimer
 
-Although it's meant to be versatile, there will most likely be something that this library doesn't cover. Hopefully this can still be useful in most situations, and this will certainly be updated as it is used in more projects with a variety of use cases.
+Although it's meant to be versatile, there will most likely be something that this library doesn't cover, but hopefully it can still be useful in most situations.
 
-If there's something you think are essential that is missing and you feel it should be here, please understand that it was specifically excluded to spite you personally. All jokes aside, contributions are welcome! Be it issues or direct PRs.
+There's still a lot of room for improvements, so if there's something you think are essential that is missing and you feel it should be here, feel free to open an issue for it!
 
 ***
 
