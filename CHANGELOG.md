@@ -1,6 +1,6 @@
 # mauss changelog
 
-## Unreleased
+## 0.1.5
 
 - [#38](https://github.com/alchemauss/mauss/pull/38): provide deep export mappings
 - [#32](https://github.com/alchemauss/mauss/pull/32): adds more utility typings
