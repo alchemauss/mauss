@@ -32,6 +32,10 @@ The headings refers to the namespaces available to import from. Replace `:util` 
 import { :util } from 'mauss';
 ```
 
+### `regexp`
+
+A direct replacement for `new RegExp()` with special characters from source string escaped
+
 ### `debounce/throttle`
 
 ```js
