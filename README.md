@@ -202,6 +202,30 @@ import { :util } from 'mauss/web';
 
 Homemade baked cookies for server and client side usage.
 
+### `qpm`
+
+```js
+// https://mauss.dev/reviews
+
+let query = 'anything'; // a reactive variable
+const type = 1;
+
+const updated = qpm({ q: query, type });
+history.replaceState({}, '', updated);
+// https://mauss.dev/reviews?q=anything&type=1
+```
+
+With SvelteKit:
+
+```svelte
+<script>
+  import { browser } from '$app/env';
+  import { goto } from '$app/navigation';
+  $: shareable = qpm({ q: query });
+  $: browser && goto(shareable, { replaceState: true });
+</script>
+```
+
 ***
 
 <h3 align="center"><pre>Mauss | <a href="LICENSE">MIT License</a></pre></h3>
