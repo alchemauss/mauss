@@ -1,5 +1,9 @@
 # mauss changelog
 
+## Unreleased
+
+- [#39](https://github.com/alchemauss/mauss/pull/39): add query string pathname maker
+
 ## 0.1.5
 
 - [#38](https://github.com/alchemauss/mauss/pull/38): provide deep export mappings
