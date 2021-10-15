@@ -34,7 +34,7 @@ import { :util } from 'mauss';
 
 ### `regexp`
 
-A direct replacement for `new RegExp()` with special characters from source string escaped
+A drop-in replacement for `new RegExp()` with special characters from source string escaped
 
 ### `debounce/throttle`
 
