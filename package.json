@@ -28,7 +28,6 @@
     "./utils": "./utils/index.js",
     "./utils/toolbox": "./utils/toolbox.js",
     "./web": "./web/index.js",
-    "./web/cookies": "./web/cookies.js",
     "./package.json": "./package.json",
     "./prettier.json": "./prettier.json",
     "./tsconfig.json": "./tsconfig.json"
