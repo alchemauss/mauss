@@ -1,20 +1,15 @@
-// Helper
-
+export type Entries<T> = Array<{ [K in keyof T]: [keyof PickByValue<T, T[K]>, T[K]] }[keyof T]>;
+export type Filter<T, Validator> = T extends Validator ? T : never;
 /** Infers the return value of toJSON on the properties */
 export type JSONState<T> = { [P in keyof T]: T[P] extends { toJSON: () => infer J } ? J : T[P] };
 export type NonEmptyArray<T> = [T, ...Array<T>];
-export type PickByValue<T, V> = Pick<T, { [K in keyof T]: T[K] extends V ? K : never }[keyof T]>;
-
-// Enhancer
-
-export type Entries<T> = Array<{ [K in keyof T]: [keyof PickByValue<T, T[K]>, T[K]] }[keyof T]>;
-export type Filter<T, Validator> = T extends Validator ? T : never;
 export type Overwrite<A, B> = Omit<A, keyof B> & B;
+export type PickByValue<T, V> = Pick<T, { [K in keyof T]: T[K] extends V ? K : never }[keyof T]>;
 /** Strict properties narrowing and remove Index Signatures */
 export type Strict<T> = { [P in keyof T as {} extends Record<P, any> ? never : P]: T[P] };
 export type Typify<T> = { [P in keyof T]: Typify<T[P]> };
 
-// Operation
+/* <-- Type Level Programming --> */
 
 /** Joins a list of string with custom delimiter */
 export type Join<
