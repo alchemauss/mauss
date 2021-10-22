@@ -1,5 +1,9 @@
 # mauss changelog
 
+## Unreleased
+
+- [#40](https://github.com/alchemauss/mauss/pull/40): add drop-in regexp replacement
+
 ## 0.1.5
 
 - [#38](https://github.com/alchemauss/mauss/pull/38): provide deep export mappings
