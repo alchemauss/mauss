@@ -1,3 +1,17 @@
+export function caseMod(source: string) {
+	const normalized = Array.from(source, (c) =>
+		/[A-Z]/.test(c) ? `-${c.toLowerCase()}` : c.replace(/( |_)+/, '-')
+	).join('');
+	return {
+		get camel() {
+			return normalized;
+		},
+		get capital() {
+			return normalized;
+		},
+	};
+}
+
 export const random = {
 	float(max = 1, min = 0): number {
 		return Math.random() * (max - min) + min;
