@@ -2,7 +2,7 @@
 
 ## Unreleased
 
-- [#44](https://github.com/alchemauss/mauss/pull/44): enabled `checkJs` by default
+- [#44](https://github.com/alchemauss/mauss/pull/44): enable `checkJs` and `resolveJsonModule`
 
 ## 0.1.6
 
