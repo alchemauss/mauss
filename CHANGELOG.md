@@ -1,9 +1,9 @@
 # mauss changelog
 
-## Unreleased
+## 0.1.6
 
-- [#39](https://github.com/alchemauss/mauss/pull/39): add query string pathname maker
 - [#40](https://github.com/alchemauss/mauss/pull/40): add drop-in regexp replacement
+- [#39](https://github.com/alchemauss/mauss/pull/39): add query string pathname maker
 
 ## 0.1.5
 
