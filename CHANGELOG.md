@@ -1,5 +1,9 @@
 # mauss changelog
 
+## Unreleased
+
+- [#44](https://github.com/alchemauss/mauss/pull/44): enable `checkJs` and `resolveJsonModule`
+
 ## 0.1.6
 
 - [#40](https://github.com/alchemauss/mauss/pull/40): add drop-in regexp replacement
