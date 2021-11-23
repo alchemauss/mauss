@@ -1,5 +1,7 @@
 import * as cookies from './cookies';
 
+export { cookies };
+
 /**
  * qpm - Query string Pathname Maker
  * @param bound object with key-value pair to be updated in the URL
@@ -17,9 +19,3 @@ export function qpm(bound: Record<string, string | number | boolean>): string {
 	const path = location.pathname;
 	return kvs ? path + kvs : path;
 }
-
-export { cookies };
-
-export default {
-	cookies,
-};
