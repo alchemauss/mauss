@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- [#47](https://github.com/alchemauss/mauss/pull/47): remove default exports except `api` module
 - [#44](https://github.com/alchemauss/mauss/pull/44): enable `checkJs` and `resolveJsonModule`
 
 ## 0.1.6
