@@ -1,3 +1,8 @@
+/**
+ * unique - transform an array to a set and back to array
+ * @param array items to be inspected
+ * @returns duplicate-free version of the array input
+ */
 export function unique<T extends any[]>(array: T): T[] {
 	return [...new Set(array)];
 }
