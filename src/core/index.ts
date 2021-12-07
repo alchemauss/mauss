@@ -1,3 +1,7 @@
+export function unique<T extends any[]>(array: T): T[] {
+	return [...new Set(array)];
+}
+
 /**
  * regexp - implementation of global RegExp constructor with escaped pattern
  * @param exp pattern in the form of string literal
