@@ -1,4 +1,13 @@
 /**
+ * unique - transform an array to a set and back to array
+ * @param array items to be inspected
+ * @returns duplicate-free version of the array input
+ */
+export function unique<T extends any[]>(array: T): T[] {
+	return [...new Set(array)];
+}
+
+/**
  * regexp - implementation of global RegExp constructor with escaped pattern
  * @param exp pattern in the form of string literal
  * @param flags unique set of characters from `d|g|i|m|s|u|y`
