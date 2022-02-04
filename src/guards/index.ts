@@ -3,8 +3,11 @@ type Nullish = null | undefined;
 type Falsy = 0 | false | EmptyString | Nullish;
 type Primitives = string | number | bigint | boolean | symbol;
 
+/** @returns true if input it not `nullish` or an empty string */
 export const exists = <T>(i: T | EmptyString | Nullish): i is T => !nullish(i) && i !== '';
+/** @returns true if input is `null` or `undefined` */
 export const nullish = <T>(i: T | Primitives): i is T => i == null;
+/** @returns true if input is truthy in general */
 export const truthy = <T>(i: T | EmptyString | Nullish | Falsy): i is T => !!i;
 
 // number guards
