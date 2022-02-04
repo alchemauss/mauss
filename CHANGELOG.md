@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- [#52](https://github.com/alchemauss/mauss/pull/52): add `Only` and `Either` typings
+- [#52](https://github.com/alchemauss/mauss/pull/52): add `uuid` method to random
 - [#48](https://github.com/alchemauss/mauss/pull/48): add `unique` utility function
 - [#47](https://github.com/alchemauss/mauss/pull/47): remove default exports except `api` module
 - [#44](https://github.com/alchemauss/mauss/pull/44): enable `checkJs` and `resolveJsonModule`
