@@ -73,3 +73,12 @@ export type PartialOmit<
 export type SingleProperty<T> = {
 	[P in keyof T]: { [K in P]: T[P] } & { [K in Exclude<keyof T, P>]?: undefined };
 }[keyof T];
+
+/**
+ * Specify tuple of `Size` with items of `T`
+ */
+export type Tuple<
+	T,
+	Size extends number,
+	VirtualArray extends unknown[] = []
+> = VirtualArray['length'] extends Size ? VirtualArray : Tuple<T, Size, [T, ...VirtualArray]>;
