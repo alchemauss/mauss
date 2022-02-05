@@ -16,3 +16,10 @@ export const truthy = <T>(i: T | Falsy): i is T => !!i;
 export const natural = <T>(i: T | Empty): i is T => (typeof i === 'number' ? i > 0 : exists(i));
 /** @returns true if input exists or is a number greater than or equal to 0 */
 export const whole = <T>(i: T | Empty): i is T => (typeof i === 'number' ? i >= 0 : exists(i));
+
+// currying utilities
+/** @returns negation of the guard function passed, e.g. `not(nullish)` */
+export function not<F extends typeof exists | typeof nullish | typeof truthy>(fn: F) {
+	type D = F extends typeof exists ? Primitives : F extends typeof nullish ? Nullish : Empty;
+	return <T>(i: T | D): i is T => !fn(i);
+}
