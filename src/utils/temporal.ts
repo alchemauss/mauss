@@ -10,6 +10,15 @@ export const date = {
 		const diff = relative.getDate() - 1;
 		return this.new(relative.setDate(diff));
 	},
-};
 
-export const time = {};
+	format(date: DateValue, mask = 'dddd, dd mmmm yyyy', base?: 'utc') {
+		if (Number.isNaN((date = this.new(date)))) {
+			throw SyntaxError('Invalid Date');
+		}
+
+		// TODO: tokenize `date` and `base` as object
+		// const tokens = tokenizer({ date, base });
+
+		return mask; /* .replace(/ regex /g, ($) => tokens[$]) */
+	},
+};
