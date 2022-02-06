@@ -1,7 +1,7 @@
 {
   "name": "mauss",
   "author": "Ignatius Bagus",
-  "description": "Opinionated zero-dependency development kit",
+  "description": "Complete and type-safe zero-dependency SDK",
   "version": "0.1.6",
   "license": "MIT",
   "type": "module",
