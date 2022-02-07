@@ -11,6 +11,15 @@
 - ([#47](https://github.com/alchemauss/mauss/pull/47)) remove default exports except `api` module
 - ([#44](https://github.com/alchemauss/mauss/pull/44)) enable `checkJs` and `resolveJsonModule`
 
+### Breaking Changes
+
+- [#44](https://github.com/alchemauss/mauss/pull/44) | Projects that extends `mauss/tsconfig.json` will now have their JS files checked by TS
+- [#47](https://github.com/alchemauss/mauss/pull/47) | All default exports (except `/api`) has been removed, do an import star instead (`import * as module from 'mauss/module'`)
+- [#57](https://github.com/alchemauss/mauss/pull/57) | Guards module has been refactored
+  - `isExists` has been renamed to `truthy`, behaviour stays exactly the same as before
+  - `exists` will actually check if the value exists, everything except `''`, `null`, and `undefined` is `true`
+  - `notNullish` has been reimplemented to `nullish`, to get the previous behaviour, use `not(nullish)` instead
+
 ## 0.1.6
 
 - ([#40](https://github.com/alchemauss/mauss/pull/40)) add drop-in regexp replacement
