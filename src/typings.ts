@@ -84,5 +84,5 @@ export type SingleProperty<T> = {
 export type Tuple<
 	T,
 	Size extends number,
-	VirtualArray extends unknown[] = []
+	VirtualArray extends any[] = []
 > = VirtualArray['length'] extends Size ? VirtualArray : Tuple<T, Size, [T, ...VirtualArray]>;
