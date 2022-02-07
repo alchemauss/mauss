@@ -1,3 +1,5 @@
+import tokenizer from './masks';
+
 type DateValue = string | number | Date;
 export const date = {
 	new: (d?: DateValue) => ((d instanceof Date && d) || d ? new Date(d) : new Date()),
@@ -16,9 +18,10 @@ export const date = {
 			throw SyntaxError('Invalid Date');
 		}
 
-		// TODO: tokenize `date` and `base` as object
-		// const tokens = tokenizer({ date, base });
+		const tokens = tokenizer({ date, base });
 
-		return mask; /* .replace(/ regex /g, ($) => tokens[$]) */
+		return mask.replace(/D{1,4}|M{1,4}|YY(?:YY)?|([hHmsAPap])\1?|Z{1,2}|\[[^\][]*\]/g, ($) =>
+			$ in tokens ? tokens[$ as keyof typeof tokens]() : $.slice(1, $.length - 1)
+		);
 	},
 };
