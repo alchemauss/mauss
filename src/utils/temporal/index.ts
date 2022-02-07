@@ -11,7 +11,7 @@ export const date = {
 		return this.new(relative.setDate(diff));
 	},
 
-	format(date: DateValue, mask = 'dddd, dd mmmm yyyy', base?: 'utc') {
+	format(date: DateValue, mask = 'DDDD, DD MMMM YYYY', base?: 'UTC') {
 		if (Number.isNaN((date = this.new(date)))) {
 			throw SyntaxError('Invalid Date');
 		}
