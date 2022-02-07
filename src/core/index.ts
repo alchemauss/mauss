@@ -1,10 +1,11 @@
-type RestParameters = (...parameters: any) => any;
+import type { AnyFunction, Reverse } from '../typings';
+
 /**
  * inverse - reverses the order of provided arguments to fn parameters
  * @param fn any function with one or more arguments
  * @returns a curried function to take in the arguments
  */
-export function inverse(fn: RestParameters): RestParameters {
+export function inverse<T extends AnyFunction>(fn: T): AnyFunction<Reverse<Parameters<T>>> {
 	return (...parameters) => fn(...parameters.reverse());
 }
 
