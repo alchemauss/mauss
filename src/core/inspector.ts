@@ -11,14 +11,14 @@ type Primitives = {
 	object: (x: object, y: object) => number;
 };
 
-const patterns = [
-	['date:complete', /\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+([+-][0-2]\d:[0-5]\d|Z)/],
-	['date:time', /\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z)/],
-	['date', /\d{4}-[01]\d-[0-3]\d/],
-	['time', /[0-2]\d:[0-5]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z)/],
-] as const;
+const patterns = {
+	'date:complete': /\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+([+-][0-2]\d:[0-5]\d|Z)/,
+	'date:time': /\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z)/,
+	date: /\d{4}-[01]\d-[0-3]\d/,
+	time: /[0-2]\d:[0-5]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z)/,
+};
 
-type PatternKeys = typeof patterns[number][0];
+type PatternKeys = keyof typeof patterns;
 type Categories = Split<PatternKeys, ':'>[0];
 type Prefixed<K extends string> = K extends `${infer P}:${string}` ? Filter<P, Categories> : K;
 type Comparisons = Primitives & { [K in Prefixed<PatternKeys>]: (x: string, y: string) => number };
@@ -32,7 +32,7 @@ export const compare: Comparisons & { wildcard: (x: any, y: any) => number } = {
 	bigint: (x, y) => (x < y ? -1 : x > y ? 1 : 0),
 	symbol: (x, y) => x.toString().localeCompare(y.toString()),
 	string(x, y) {
-		for (const [pattern, exp] of patterns) {
+		for (const [pattern, exp] of Object.entries(patterns)) {
 			const [type] = pattern.split(':') as [Categories];
 			if (exp.test(x) && exp.test(y)) return this[type](x, y);
 		}

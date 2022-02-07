@@ -1,3 +1,5 @@
+/** Generic for making any arbitrary function */
+export type AnyFunction<P extends any[] = any, R = any> = (...parameters: P) => R;
 /** Allow either A or B but not both at the same time */
 export type Either<A, B> = Only<A, B> | Only<B, A>;
 export type Entries<T> = Array<{ [K in keyof T]: [keyof PickByValue<T, T[K]>, T[K]] }[keyof T]>;
@@ -9,6 +11,8 @@ export type NonEmptyArray<T> = [T, ...Array<T>];
 export type Only<U, V> = { [P in keyof U]: U[P] } & Omit<{ [P in keyof V]?: never }, keyof U>;
 export type Overwrite<U, V> = Omit<U, keyof V> & V;
 export type PickByValue<T, V> = Pick<T, { [K in keyof T]: T[K] extends V ? K : never }[keyof T]>;
+/** Reverses any tuple values */
+export type Reverse<T extends any[]> = T extends [infer H, ...infer R] ? [...Reverse<R>, H] : [];
 /** Strict properties narrowing and remove Index Signatures */
 export type Strict<T> = { [P in keyof T as {} extends Record<P, any> ? never : P]: T[P] };
 export type Typify<T> = { [P in keyof T]: Typify<T[P]> };
