@@ -20,7 +20,7 @@ export function unique<T extends any[]>(array: T): T[] {
 
 /**
  * regexp - implementation of global RegExp constructor with escaped pattern
- * @param pattern pattern in the form of string literal
+ * @param pattern passed in the form of string literal
  * @param flags unique set of characters from `d|g|i|m|s|u|y`
  * @returns dynamically constructed RegExp object
  */
