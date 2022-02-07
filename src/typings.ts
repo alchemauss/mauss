@@ -1,3 +1,5 @@
+/** Generic for making any arbitrary function */
+export type AnyFunction<P extends any[] = any, R = any> = (...parameters: P) => R;
 export type Entries<T> = Array<{ [K in keyof T]: [keyof PickByValue<T, T[K]>, T[K]] }[keyof T]>;
 export type Filter<T, Validator> = T extends Validator ? T : never;
 /** Infers the return value of toJSON on the properties */
@@ -5,6 +7,8 @@ export type JSONState<T> = { [P in keyof T]: T[P] extends { toJSON: () => infer 
 export type NonEmptyArray<T> = [T, ...Array<T>];
 export type Overwrite<A, B> = Omit<A, keyof B> & B;
 export type PickByValue<T, V> = Pick<T, { [K in keyof T]: T[K] extends V ? K : never }[keyof T]>;
+/** Reverses any tuple values */
+export type Reverse<T extends any[]> = T extends [infer H, ...infer R] ? [...Reverse<R>, H] : [];
 /** Strict properties narrowing and remove Index Signatures */
 export type Strict<T> = { [P in keyof T as {} extends Record<P, any> ? never : P]: T[P] };
 export type Typify<T> = { [P in keyof T]: Typify<T[P]> };
