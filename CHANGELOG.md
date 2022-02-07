@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- [#57](https://github.com/alchemauss/mauss/pull/57): augmenting `guards` module
 - [#56](https://github.com/alchemauss/mauss/pull/56): add `inverse` core function
 - [#56](https://github.com/alchemauss/mauss/pull/56): add `AnyFunction` and `Reverse` typings
 - [#52](https://github.com/alchemauss/mauss/pull/52): add `Only`, `Either`, and `Tuple` typings
