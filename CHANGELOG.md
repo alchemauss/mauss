@@ -5,6 +5,7 @@
 - ([#57](https://github.com/alchemauss/mauss/pull/57)) augmenting `guards` module
 - ([#56](https://github.com/alchemauss/mauss/pull/56)) add `inverse` core function
 - ([#56](https://github.com/alchemauss/mauss/pull/56)) add `AnyFunction` and `Reverse` typings
+- ([#55](https://github.com/alchemauss/mauss/pull/55)) add `dt` object in `utils` module
 - ([#52](https://github.com/alchemauss/mauss/pull/52)) add `Only`, `Either`, and `Tuple` typings
 - ([#52](https://github.com/alchemauss/mauss/pull/52)) add `uuid` method to random
 - ([#48](https://github.com/alchemauss/mauss/pull/48)) add `unique` utility function
