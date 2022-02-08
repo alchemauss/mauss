@@ -1,5 +1,9 @@
 # mauss changelog
 
+## 0.2.1 - 2022/02/08
+
+- ([#58](https://github.com/alchemauss/mauss/pull/58)) fix `TypeError` in `dt.format` not having reference to `this`
+
 ## 0.2.0 - 2022/02/08
 
 - ([#57](https://github.com/alchemauss/mauss/pull/57)) augmenting `guards` module
