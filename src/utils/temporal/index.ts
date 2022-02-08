@@ -8,7 +8,7 @@ interface TravelOptions {
 	to?: number;
 }
 
-export const date = {
+export const dt = {
 	new: (d?: DateValue) => ((d instanceof Date && d) || d ? new Date(d) : new Date()),
 	get now() {
 		return new Date();

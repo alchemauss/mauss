@@ -1,4 +1,4 @@
-export { date } from './temporal';
+export { dt } from './temporal';
 export { random } from './toolbox';
 
 export const capitalize = (text: string, normalize?: boolean): string =>
