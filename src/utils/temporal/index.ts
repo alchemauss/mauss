@@ -36,6 +36,6 @@ export const date = {
 		const sign = days[0] === '-' ? -1 : 1;
 		const hours = Math.round(+`0.${fragment}` * 24);
 		const epoch = sign * (Math.abs(+days * 24) + hours);
-		return this.new(+from + epoch * 60 * 60 * 1000);
+		return this.new(+from + epoch * /* 1 hour */ 36e5);
 	},
 };
