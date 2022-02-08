@@ -36,7 +36,7 @@ export default ({ date, base }: MaskOptions): Record<MaskToken, () => string> =>
 	const marker = () => (now.hours() < 12 ? 'AM' : 'PM');
 	const timezone = () => {
 		const abs = Math.abs(now.tzo);
-		return { h: Math.floor(abs / 60), m: abs % 60 };
+		return [Math.floor(abs / 60), abs % 60];
 	};
 
 	const sign = now.tzo > 0 ? '-' : '+';
@@ -64,13 +64,13 @@ export default ({ date, base }: MaskOptions): Record<MaskToken, () => string> =>
 		p: marker,
 		A: marker,
 		P: marker,
-		Z: () => `${sign}${timezone().h}`,
+		Z: () => `${sign}${timezone()[0]}`,
 		ZZ: () => {
-			const { h, m } = timezone();
+			const [h, m] = timezone();
 			return `${sign}${p(h)}${p(m)}`;
 		},
 		ZZZ: () => {
-			const { h, m } = timezone();
+			const [h, m] = timezone();
 			return `${sign}${p(h)}:${p(m)}`;
 		},
 	};
