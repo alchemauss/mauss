@@ -172,6 +172,32 @@ capitalize('hI thErE'); // 'HI ThErE'
 capitalize('hI thErE', true); // 'Hi There'
 ```
 
+### `dt`
+
+Simple `date/time` (`dt`) utility object
+
+```ts
+type DateValue = string | number | Date;
+interface TravelOptions {
+	/** relative point of reference to travel */
+	from?: DateValue;
+	/** relative days to travel in number */
+	to: number;
+}
+
+export const dt: {
+  readonly now: Date;
+  new(d?: DateValue): Date;
+  format(date: DateValue, mask?: string, base?: 'UTC'): string;
+  travel({ from, to }: TravelOptions): Date;
+}
+```
+
+- `dt.now` is a shortcut to `new Date()`
+- `dt.new` is a function `(date?: DateValue) => Date` that optionally takes in a `DateValue` to be converted into a `Date` object
+- `dt.format` is a function `(date: DateValue, mask = 'DDDD, DD MMMM YYYY', base?: 'UTC') => string` that takes in a `DateValue`, optionally a mask that defaults to `'DDDD, DD MMMM YYYY'`, and optionally `'UTC'` as the last argument
+- `dt.travel` is a function `({ from, to }) => Date` that takes in a `{ from, to }` object with `from` property being optional
+
 ### `tryNumber`
 
 will check an input and convert to number when applicable, otherwise it will return the input as is.
