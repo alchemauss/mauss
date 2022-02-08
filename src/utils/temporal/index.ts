@@ -25,7 +25,7 @@ export const dt = {
 		const tokens = tokenizer({ date, base });
 
 		return mask.replace(
-			/D{1,4}|M{1,4}|YY(?:YY)?|([hHmsAPap])\1?|Z{1,2}|\[([^\]\[]|\[[^\[\]]*\])*\]/g,
+			/D{1,4}|M{1,4}|YY(?:YY)?|([hHmsAPap])\1?|Z{1,3}|\[([^\]\[]|\[[^\[\]]*\])*\]/g,
 			($) => ($ in tokens ? tokens[$ as keyof typeof tokens]() : $.slice(1, $.length - 1))
 		);
 	},
