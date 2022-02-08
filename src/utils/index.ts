@@ -1,6 +1,5 @@
-import { random } from './toolbox';
-
-export { random };
+export { dt } from './temporal';
+export { random } from './toolbox';
 
 interface CapitalizeOptions {
 	/** only capitalize the very first letter */
