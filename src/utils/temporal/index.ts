@@ -9,9 +9,12 @@ interface TravelOptions {
 }
 
 export const dt = {
-	new: (d?: DateValue) => ((d instanceof Date && d) || d ? new Date(d) : new Date()),
 	get now() {
 		return new Date();
+	},
+	new(d?: DateValue) {
+		if (d instanceof Date) return d;
+		return d ? new Date(d) : this.now;
 	},
 
 	format(date: DateValue, mask = 'DDDD, DD MMMM YYYY', base?: 'UTC') {
