@@ -2,7 +2,12 @@
 
 ## Unreleased
 
+- ([#59](https://github.com/alchemauss/mauss/pull/59)) add super compact tz offset, allowing from 1 up to 3 `Z`s
 - ([#58](https://github.com/alchemauss/mauss/pull/58)) fix `TypeError` in `dt.format` not having reference to `this`
+
+### Notes
+
+- [#59](https://github.com/alchemauss/mauss/pull/59) | Allow `Z` to be defined from 1 up to 3 times in `dt.format` mask, with `Z` only showing the hour without padded zeros
 
 ## 0.2.0 - 2022/02/08
 
