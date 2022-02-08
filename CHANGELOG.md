@@ -1,6 +1,6 @@
 # mauss changelog
 
-## 0.2.1 - 2022/02/08
+## Unreleased
 
 - ([#58](https://github.com/alchemauss/mauss/pull/58)) fix `TypeError` in `dt.format` not having reference to `this`
 
