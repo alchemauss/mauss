@@ -1,6 +1,6 @@
 # mauss changelog
 
-## Unreleased
+## 0.2.0 - 2022/02/08
 
 - ([#57](https://github.com/alchemauss/mauss/pull/57)) augmenting `guards` module
 - ([#56](https://github.com/alchemauss/mauss/pull/56)) add `inverse` core function
