@@ -5,7 +5,7 @@ interface TravelOptions {
 	/** relative point of reference to travel */
 	from?: DateValue;
 	/** relative days to travel in number */
-	to?: number;
+	to: number;
 }
 
 export const dt = {
@@ -30,7 +30,7 @@ export const dt = {
 		);
 	},
 
-	travel({ from, to }: TravelOptions = {}) {
+	travel({ from, to }: TravelOptions) {
 		if (Number.isNaN((from = this.new(from)))) {
 			throw SyntaxError('Invalid Date');
 		}
