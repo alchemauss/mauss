@@ -173,7 +173,7 @@ interface CapitalizeOptions {
 	/** convert the remaining word to lowercase */
 	normalize?: boolean;
 }
-export function capitalize(text: string, options: CapitalizeOptions): string;
+export function capitalize(text: string, options?: CapitalizeOptions): string;
 ```
 
 ```js
