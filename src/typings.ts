@@ -1,10 +1,18 @@
+/** Generic for making any arbitrary function */
+export type AnyFunction<P extends any[] = any, R = any> = (...parameters: P) => R;
+/** Allow either A or B but not both at the same time */
+export type Either<A, B> = Only<A, B> | Only<B, A>;
 export type Entries<T> = Array<{ [K in keyof T]: [keyof PickByValue<T, T[K]>, T[K]] }[keyof T]>;
 export type Filter<T, Validator> = T extends Validator ? T : never;
 /** Infers the return value of toJSON on the properties */
 export type JSONState<T> = { [P in keyof T]: T[P] extends { toJSON: () => infer J } ? J : T[P] };
 export type NonEmptyArray<T> = [T, ...Array<T>];
-export type Overwrite<A, B> = Omit<A, keyof B> & B;
+/** Disallow any properties from V when defining U */
+export type Only<U, V> = { [P in keyof U]: U[P] } & Omit<{ [P in keyof V]?: never }, keyof U>;
+export type Overwrite<U, V> = Omit<U, keyof V> & V;
 export type PickByValue<T, V> = Pick<T, { [K in keyof T]: T[K] extends V ? K : never }[keyof T]>;
+/** Reverses any tuple values */
+export type Reverse<T extends any[]> = T extends [infer H, ...infer R] ? [...Reverse<R>, H] : [];
 /** Strict properties narrowing and remove Index Signatures */
 export type Strict<T> = { [P in keyof T as {} extends Record<P, any> ? never : P]: T[P] };
 export type Typify<T> = { [P in keyof T]: Typify<T[P]> };
@@ -69,3 +77,12 @@ export type PartialOmit<
 export type SingleProperty<T> = {
 	[P in keyof T]: { [K in P]: T[P] } & { [K in Exclude<keyof T, P>]?: undefined };
 }[keyof T];
+
+/**
+ * Specify tuple of `Size` with items of `T`
+ */
+export type Tuple<
+	T,
+	Size extends number,
+	VirtualArray extends any[] = []
+> = VirtualArray['length'] extends Size ? VirtualArray : Tuple<T, Size, [T, ...VirtualArray]>;
