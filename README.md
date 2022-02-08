@@ -166,10 +166,22 @@ import { :util } from 'mauss/utils';
 
 ### `capitalize`
 
+```ts
+interface CapitalizeOptions {
+	/** only capitalize the very first letter */
+	cap?: boolean;
+	/** convert the remaining word to lowercase */
+	normalize?: boolean;
+}
+export function capitalize(text: string, options?: CapitalizeOptions): string;
+```
+
 ```js
 capitalize('hi there'); // 'Hi There'
 capitalize('hI thErE'); // 'HI ThErE'
-capitalize('hI thErE', true); // 'Hi There'
+capitalize('hI thErE', { cap: true }); // 'HI thErE'
+capitalize('hI thErE', { normalize: true }); // 'Hi There'
+capitalize('hI thErE', { cap: true, normalize: true }); // 'Hi there'
 ```
 
 ### `tryNumber`

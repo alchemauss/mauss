@@ -5,6 +5,7 @@
 - ([#57](https://github.com/alchemauss/mauss/pull/57)) augmenting `guards` module
 - ([#56](https://github.com/alchemauss/mauss/pull/56)) add `inverse` core function
 - ([#56](https://github.com/alchemauss/mauss/pull/56)) add `AnyFunction` and `Reverse` typings
+- ([#54](https://github.com/alchemauss/mauss/pull/54)) rework `capitalize` options
 - ([#52](https://github.com/alchemauss/mauss/pull/52)) add `Only`, `Either`, and `Tuple` typings
 - ([#52](https://github.com/alchemauss/mauss/pull/52)) add `uuid` method to random
 - ([#48](https://github.com/alchemauss/mauss/pull/48)) add `unique` utility function
@@ -15,6 +16,7 @@
 
 - [#44](https://github.com/alchemauss/mauss/pull/44) | Projects that extends `mauss/tsconfig.json` will now have their JS files checked by TS
 - [#47](https://github.com/alchemauss/mauss/pull/47) | All default exports (except `/api`) has been removed, do an import star instead (`import * as module from 'mauss/module'`)
+- [#54](https://github.com/alchemauss/mauss/pull/54) | Second parameter of `capitalize` now receives an object, with all values being optional
 - [#57](https://github.com/alchemauss/mauss/pull/57) | Guards module has been refactored
   - `isExists` has been renamed to `truthy`, behaviour stays exactly the same as before
   - `exists` will actually check if the value exists, everything except `''`, `null`, and `undefined` is `true`
