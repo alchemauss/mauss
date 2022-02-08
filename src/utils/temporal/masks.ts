@@ -23,13 +23,13 @@ type MaskOptions = { date: Date; base?: 'UTC' };
 export default ({ date, base }: MaskOptions): Record<MaskToken, () => string> => {
 	const method = base === 'UTC' ? 'getUTC' : 'get';
 	const now = {
-		date: date[`${method}Date`],
-		day: date[`${method}Day`],
-		month: date[`${method}Month`],
-		year: date[`${method}FullYear`],
-		hours: date[`${method}Hours`],
-		minutes: date[`${method}Minutes`],
-		seconds: date[`${method}Seconds`],
+		date: () => date[`${method}Date`](),
+		day: () => date[`${method}Day`](),
+		month: () => date[`${method}Month`](),
+		year: () => date[`${method}FullYear`](),
+		hours: () => date[`${method}Hours`](),
+		minutes: () => date[`${method}Minutes`](),
+		seconds: () => date[`${method}Seconds`](),
 		tzo: base === 'UTC' ? 0 : date.getTimezoneOffset(),
 	};
 
