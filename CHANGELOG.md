@@ -1,6 +1,6 @@
 # mauss changelog
 
-## Unreleased
+## 0.2.1 - 2022/02/09
 
 - ([#59](https://github.com/alchemauss/mauss/pull/59)) add super compact tz offset, allowing from 1 up to 3 `Z`s
 - ([#58](https://github.com/alchemauss/mauss/pull/58)) fix `TypeError` in `dt.format` not having reference to `this`
