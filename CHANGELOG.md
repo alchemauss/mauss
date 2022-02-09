@@ -1,5 +1,9 @@
 # mauss changelog
 
+## Unreleased
+
+- fix `new` property getting mixed-up as constructor for `dt`
+
 ## 0.2.1 - 2022/02/09
 
 - ([#59](https://github.com/alchemauss/mauss/pull/59)) add super compact tz offset, allowing from 1 up to 3 `Z`s
