@@ -34,13 +34,12 @@ export default ({ date, base }: MaskOptions): Record<MaskToken, () => string> =>
 	};
 
 	const marker = () => (now.hours() < 12 ? 'AM' : 'PM');
-	const timezone = (colon = '') => {
-		const sign = now.tzo > 0 ? '-' : '+';
+	const timezone = () => {
 		const abs = Math.abs(now.tzo);
-		const h = p(Math.floor(abs / 60));
-		const m = p(abs % 60);
-		return `${sign}${h}${colon}${m}`;
+		return [Math.floor(abs / 60), abs % 60];
 	};
+
+	const sign = now.tzo > 0 ? '-' : '+';
 
 	return {
 		D: () => s(now.date()),
@@ -65,8 +64,15 @@ export default ({ date, base }: MaskOptions): Record<MaskToken, () => string> =>
 		p: marker,
 		A: marker,
 		P: marker,
-		Z: () => timezone(),
-		ZZ: () => timezone(':'),
+		Z: () => `${sign}${timezone()[0]}`,
+		ZZ: () => {
+			const [h, m] = timezone();
+			return `${sign}${p(h)}${p(m)}`;
+		},
+		ZZZ: () => {
+			const [h, m] = timezone();
+			return `${sign}${p(h)}:${p(m)}`;
+		},
 	};
 };
 
@@ -79,7 +85,7 @@ type TokenSeconds = 's' | 'ss';
 /** time marker, AM / PM */
 type TokenMarker = 'a' | 'p' | 'A' | 'P';
 /** timezone offset */
-type TokenOffset = 'Z' | 'ZZ';
+type TokenOffset = 'Z' | 'ZZ' | 'ZZZ';
 type MaskToken =
 	| TokenDays
 	| TokenMonths
