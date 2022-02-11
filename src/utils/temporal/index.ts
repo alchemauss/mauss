@@ -12,7 +12,7 @@ export const dt = {
 	get now() {
 		return new Date();
 	},
-	new(d?: DateValue) {
+	new: function (d?: DateValue) {
 		if (d instanceof Date) return d;
 		return d ? new Date(d) : this.now;
 	},
