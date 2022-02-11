@@ -7,7 +7,7 @@ export const random = {
 		return Math.floor(this.float(max, min));
 	},
 	bool(): boolean {
-		return !!this.int();
+		return this.float() < 0.5;
 	},
 	array(length: number, max: number, min = 0): Array<number> {
 		return Array.from({ length }, () => this.int(max, min));
