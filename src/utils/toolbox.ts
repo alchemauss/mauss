@@ -1,9 +1,9 @@
 export const random = {
 	float(max = 1, min = 0): number {
+		[min, max] = [Math.ceil(min), Math.floor(max)];
 		return Math.random() * (max - min) + min;
 	},
 	int(max = 1, min = 0): number {
-		[min, max] = [Math.ceil(min), Math.floor(max)];
 		return Math.floor(this.float(max, min));
 	},
 	bool(): boolean {
