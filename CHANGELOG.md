@@ -1,6 +1,6 @@
 # mauss changelog
 
-## Unreleased
+## 0.2.2 - 2022/02/11
 
 - ([#61](https://github.com/alchemauss/mauss/pull/61)) fix mismatched `unique` return type
 - ([#60](https://github.com/alchemauss/mauss/pull/60)) fix `new` property getting mixed-up as constructor for `dt`
