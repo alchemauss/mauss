@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- ([#61](https://github.com/alchemauss/mauss/pull/61)) fix mismatched `unique` return type
 - ([#60](https://github.com/alchemauss/mauss/pull/60)) fix `new` property getting mixed-up as constructor for `dt`
 
 ## 0.2.1 - 2022/02/09

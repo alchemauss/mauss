@@ -14,7 +14,7 @@ export function inverse<T extends AnyFunction>(fn: T): AnyFunction<Reverse<Param
  * @param array items to be inspected
  * @returns duplicate-free version of the array input
  */
-export function unique<T extends any[]>(array: T): T[] {
+export function unique<T>(array: T[]): T[] {
 	return [...new Set(array)];
 }
 
