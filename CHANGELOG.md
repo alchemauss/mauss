@@ -3,6 +3,7 @@
 ## Unreleased
 
 - ([#63](https://github.com/alchemauss/mauss/pull/63)) fix bool generator in `random`
+- ([#63](https://github.com/alchemauss/mauss/pull/63)) add `Flexible` typings
 
 ## 0.2.2 - 2022/02/11
 
