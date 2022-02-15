@@ -1,6 +1,6 @@
 # Mauss ![Total npm downloads](https://img.shields.io/npm/dt/mauss) &middot; ![Published npm version](https://img.shields.io/npm/v/mauss) ![Monthly npm downloads](https://img.shields.io/npm/dm/mauss) ![License](https://img.shields.io/github/license/alchemauss/mauss)
 
-> Declarative Type-Safe Zero-Dependency SDK
+> A declarative approach to a fast and efficient type-safe SDK
 
 A collection of development tools written with TypeScript.
 
