@@ -1,7 +1,6 @@
 import type { Primitives } from '../typings';
-import * as cookies from './cookies';
 
-export { cookies };
+export * as cookies from './cookies';
 
 /**
  * qpm - query string maker
