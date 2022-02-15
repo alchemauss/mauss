@@ -4,12 +4,12 @@ import * as cookies from './cookies';
 export { cookies };
 
 /**
- * qpm - query string pathname maker
+ * qpm - query string maker
  * @param bound object with key-value pair to be updated in the URL
  * @param prefix string to prepend on the final output
  * @returns final query string
  */
-export function qpm(bound: Record<string, Exclude<Primitives, symbol>>, prefix = ''): string {
+export function qsm(bound: Record<string, Exclude<Primitives, symbol>>, prefix = ''): string {
 	const enc = encodeURIComponent;
 
 	let final = '';
