@@ -1,4 +1,4 @@
-import type { Nullish, Primitives } from '../typings';
+import type { Nullish, FullPrimitives as Primitives } from '../typings';
 
 type EmptyString = '';
 type Empty = EmptyString | Nullish;
