@@ -3,12 +3,11 @@ import type { Primitives } from '../typings';
 export * as cookies from './cookies';
 
 /**
- * qpm - query string maker
+ * qpm - query string encoder
  * @param bound object with key-value pair to be updated in the URL
- * @param prefix string to prepend on the final output
  * @returns final query string
  */
-export function qsm(bound: Record<string, Exclude<Primitives, symbol>>, prefix = ''): string {
+export function qse(bound: Record<string, Exclude<Primitives, symbol>>): string {
 	const enc = encodeURIComponent;
 
 	let final = '';
@@ -22,5 +21,5 @@ export function qsm(bound: Record<string, Exclude<Primitives, symbol>>, prefix =
 		final += `${enc(k)}=${enc(v)}`;
 	}
 
-	return prefix + final;
+	return final;
 }
