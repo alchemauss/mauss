@@ -3,6 +3,8 @@
 ## Unreleased
 
 - ([#64](https://github.com/alchemauss/mauss/pull/64)) remove `svelteBracketNewLine` option from prettier config
+- ([#63](https://github.com/alchemauss/mauss/pull/63)) add `Flexible` typings
+- ([#63](https://github.com/alchemauss/mauss/pull/63)) fix bool generator in `random`
 
 ## 0.2.2 - 2022/02/11
 
