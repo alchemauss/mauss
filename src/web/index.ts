@@ -1,13 +1,13 @@
-import type { Primitives } from '../typings';
+import type { PlainPrimitives } from '../typings';
 
 export * as cookies from './cookies';
 
 /**
- * qpm - query string encoder
+ * qse - query string encoder
  * @param bound object with key-value pair to be updated in the URL
  * @returns final query string
  */
-export function qse(bound: Record<string, Exclude<Primitives, symbol>>): string {
+export function qse(bound: Record<string, PlainPrimitives>): string {
 	const enc = encodeURIComponent;
 
 	let final = '';
