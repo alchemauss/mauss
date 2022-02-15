@@ -1,3 +1,16 @@
+/* <-- Basic Typings --> */
+
+/** Nullish values, which are only `null` and `undefined` */
+export type Nullish = null | undefined;
+/** Primitives from `typeof` as their actual type */
+export type Primitives = string | number | bigint | boolean | symbol;
+/** Primitive values from `typeof` as string union */
+export type TypePrimitive = 'string' | 'number' | 'bigint' | 'boolean' | 'symbol';
+/** The complete values from `typeof` as string union */
+export type TypeTable = TypePrimitive | 'undefined' | 'object' | 'function';
+
+/* <-- Compact Type Helpers --> */
+
 /** Generic for making any arbitrary function */
 export type AnyFunction<P extends any[] = any, R = any> = (...parameters: P) => R;
 /** Allow either A or B but not both at the same time */

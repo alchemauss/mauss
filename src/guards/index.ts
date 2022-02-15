@@ -1,8 +1,8 @@
+import type { Nullish, Primitives } from '../typings';
+
 type EmptyString = '';
-type Nullish = null | undefined;
 type Empty = EmptyString | Nullish;
 type Falsy = 0 | false | EmptyString | Nullish;
-type Primitives = string | number | bigint | boolean | symbol;
 
 /** @returns true if input it not `nullish` or an empty string */
 export const exists = <T>(i: T | Empty): i is T => !nullish(i) && i !== '';
