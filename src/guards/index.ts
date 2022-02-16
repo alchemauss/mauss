@@ -4,7 +4,7 @@ type EmptyString = '';
 type Empty = EmptyString | Nullish;
 type Falsy = 0 | false | EmptyString | Nullish;
 
-/** @returns true if input it not `nullish` or an empty string */
+/** @returns true if input is not `nullish` or an empty string */
 export const exists = <T>(i: T | Empty): i is T => !nullish(i) && i !== '';
 /** @returns true if input is `null` or `undefined` */
 export const nullish = <T>(i: T | Primitives): i is T => i == null;

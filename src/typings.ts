@@ -24,6 +24,8 @@ export type AnyFunction<P extends any[] = any, R = any> = (...parameters: P) => 
 export type Either<A, B> = Only<A, B> | Only<B, A>;
 export type Entries<T> = Array<{ [K in keyof T]: [keyof PickByValue<T, T[K]>, T[K]] }[keyof T]>;
 export type Filter<T, Validator> = T extends Validator ? T : never;
+/** Allow autocompletion of union in addition to arbitrary values */
+export type Flexible<Union extends T, T = string> = Union | (T & Record<never, never>);
 /** Infers the return value of toJSON on the properties */
 export type JSONState<T> = { [P in keyof T]: T[P] extends { toJSON: () => infer J } ? J : T[P] };
 export type NonEmptyArray<T> = [T, ...Array<T>];
