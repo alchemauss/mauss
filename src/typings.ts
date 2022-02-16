@@ -21,6 +21,12 @@ export type Typify<T> = { [P in keyof T]: Typify<T[P]> };
 
 /* <-- Type Level Programming --> */
 
+export type IntersectUnion<U> = (
+	/** distributive conditional type */ U extends any ? (_: U) => void : never
+) extends (_: /** conditional type inference */ infer Intersection) => void
+	? Intersection
+	: never;
+
 /** Joins a list of string with custom delimiter */
 export type Join<
 	StringList extends readonly string[],
