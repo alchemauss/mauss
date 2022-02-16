@@ -21,6 +21,7 @@ export type Typify<T> = { [P in keyof T]: Typify<T[P]> };
 
 /* <-- Type Level Programming --> */
 
+/** Convert Union to Intersection */
 export type IntersectUnion<U> = (
 	/** distributive conditional type */ U extends any ? (_: U) => void : never
 ) extends (_: /** conditional type inference */ infer Intersection) => void
