@@ -18,6 +18,8 @@ export type Reverse<T extends any[]> = T extends [infer H, ...infer R] ? [...Rev
 /** Strict properties narrowing and remove Index Signatures */
 export type Strict<T> = { [P in keyof T as {} extends Record<P, any> ? never : P]: T[P] };
 export type Typify<T> = { [P in keyof T]: Typify<T[P]> };
+/** Any function that has exactly one parameter */
+export type UnaryFunction<P = any, R = any> = (parameter: P) => R;
 
 /* <-- Type Level Programming --> */
 
