@@ -8,6 +8,7 @@ export type Filter<T, Validator> = T extends Validator ? T : never;
 export type Flexible<Union extends T, T = string> = Union | (T & Record<never, never>);
 /** Infers the return value of toJSON on the properties */
 export type JSONState<T> = { [P in keyof T]: T[P] extends { toJSON: () => infer J } ? J : T[P] };
+export type Last<T extends any[], Fallback = never> = T extends [...any[], infer L] ? L : Fallback;
 export type NonEmptyArray<T> = [T, ...Array<T>];
 /** Disallow any properties from V when defining U */
 export type Only<U, V> = { [P in keyof U]: U[P] } & Omit<{ [P in keyof V]?: never }, keyof U>;
