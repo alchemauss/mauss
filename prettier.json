@@ -30,7 +30,9 @@
 		},
 		{
 			"files": ["*.y*ml"],
-			"options": {}
+			"options": {
+				"useTabs": false
+			}
 		}
 	]
 }
