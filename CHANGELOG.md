@@ -1,5 +1,13 @@
 # mauss changelog
 
+## Unreleased
+
+- ([#XX](https://github.com/alchemauss/mauss/pull/XX)) change `.y*ml` prettier formatting options
+
+### Breaking Changes
+
+- [#XX](https://github.com/alchemauss/mauss/pull/XX) | Prettier for `.y*ml` files will now format with spaces and single quotes
+
 ## 0.2.3 - 2022/02/17
 
 - ([#64](https://github.com/alchemauss/mauss/pull/64)) remove `svelteBracketNewLine` option from prettier config
@@ -35,7 +43,7 @@
 
 ### Breaking Changes
 
-- [#44](https://github.com/alchemauss/mauss/pull/44) | Projects that extends `mauss/tsconfig.json` will now have their JS files checked by TS
+- [#44](44) | Projects that extends `mauss/tsconfig.json` will now have their JS files checked by TS
 - [#47](https://github.com/alchemauss/mauss/pull/47) | All default exports (except `/api`) has been removed, do an import star instead (`import * as module from 'mauss/module'`)
 - [#54](https://github.com/alchemauss/mauss/pull/54) | Second parameter of `capitalize` now receives an object, with all values being optional
 - [#57](https://github.com/alchemauss/mauss/pull/57) | Guards module has been refactored
