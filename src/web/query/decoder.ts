@@ -25,7 +25,7 @@ type QueryDecoder<Query extends string> = Query extends `${infer Leading}${infer
  * @param qs query string of a URL with or without the leading `?`
  * @returns mapped object of decoded query string
  */
-export function qsd<Q extends string>(qs: Q) {
+export default function qsd<Q extends string>(qs: Q) {
 	if (qs[0] === '?') qs = qs.slice(1) as Q;
 	if (!qs) return {} as QueryDecoder<Q>;
 
