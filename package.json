@@ -1,8 +1,8 @@
 {
   "name": "mauss",
   "author": "Ignatius Bagus",
-  "description": "Opinionated zero-dependency development kit",
-  "version": "0.0.11",
+  "description": "Declarative type-safe zero-dependency SDK",
+  "version": "0.2.3",
   "license": "MIT",
   "type": "module",
   "main": "index.js",
@@ -23,24 +23,15 @@
   },
   "exports": {
     ".": "./index.js",
-    "./api": {
-      "import": "./api/index.js"
-    },
-    "./bits": {
-      "import": "./bits/index.js"
-    },
-    "./guards": {
-      "import": "./guards/index.js"
-    },
-    "./math": {
-      "import": "./math/index.js"
-    },
-    "./utils": {
-      "import": "./utils/index.js"
-    },
-    "./web": {
-      "import": "./web/index.js"
-    },
+    "./api": "./api/index.js",
+    "./bits": "./bits/index.js",
+    "./bits/find": "./bits/find.js",
+    "./guards": "./guards/index.js",
+    "./math": "./math/index.js",
+    "./math/set": "./math/set.js",
+    "./utils": "./utils/index.js",
+    "./utils/toolbox": "./utils/toolbox.js",
+    "./web": "./web/index.js",
     "./package.json": "./package.json",
     "./prettier.json": "./prettier.json",
     "./tsconfig.json": "./tsconfig.json"
@@ -52,10 +43,10 @@
   "prettier": "./prettier.json",
   "repository": {
     "type": "git",
-    "url": "https://github.com/devmauss/mauss.git"
+    "url": "https://github.com/alchemauss/mauss.git"
   },
   "bugs": {
-    "url": "https://github.com/devmauss/mauss/issues"
+    "url": "https://github.com/alchemauss/mauss/issues"
   },
   "devDependencies": {
     "@types/jest": "^26.0.20",

@@ -1,6 +1,6 @@
-# Mauss ![Total npm downloads](https://img.shields.io/npm/dt/mauss) &middot; ![Published npm version](https://img.shields.io/npm/v/mauss) ![Monthly npm downloads](https://img.shields.io/npm/dm/mauss) ![License](https://img.shields.io/github/license/devmauss/mauss)
+# Mauss ![Total npm downloads](https://img.shields.io/npm/dt/mauss) &middot; ![Published npm version](https://img.shields.io/npm/v/mauss) ![Monthly npm downloads](https://img.shields.io/npm/dm/mauss) ![License](https://img.shields.io/github/license/alchemauss/mauss)
 
-> Opinionated Zero-Dependency Development Toolkit
+> Declarative Type-Safe Zero-Dependency SDK
 
 A collection of development tools written with TypeScript.
 
@@ -14,9 +14,9 @@ npm install mauss
 
 ### Disclaimer
 
-This library is written with DevMauss web projects in mind. Although it's meant to be versatile and can hopefully be used in most situations or use cases, there will most likely be something that this library doesn't cover. Mauss will certainly be updated as it is used in more projects with a variety of use cases.
+Although it's meant to be versatile, there will most likely be something that this library doesn't cover, but hopefully it can still be useful in most situations.
 
-If there's something you think are essential that is missing and you feel it should be here, please understand that it was specifically excluded to spite you personally. All jokes aside, contributions are welcome! Be it issues or direct PRs.
+There's still a lot of room for improvements, so if there's something you think are essential that is missing and you feel it should be here, feel free to open an issue for it!
 
 ***
 
@@ -32,6 +32,10 @@ The headings refers to the namespaces available to import from. Replace `:util` 
 import { :util } from 'mauss';
 ```
 
+### `regexp`
+
+A drop-in replacement for `new RegExp()` with special characters from source string escaped
+
 ### `debounce/throttle`
 
 ```js
@@ -40,8 +44,8 @@ function search(name) {...}
 const dSearch = debounce(search, 500);
 const tSearch = throttle(search, 500);
 
-dSearch('mauss'); // will execute after 500ms
-tSearch('mauss'); // will execute every 500ms
+dSearch('mauss'); // execute after 500ms
+tSearch('mauss'); // execute every 500ms
 ```
 
 ### `compare/comparator`
@@ -52,35 +56,61 @@ compare utility object with multiple methods for various types, and comparator f
 compare.string('abc', 'def');
 // and other primitives
 
-[].sort(comparator);
+[/* data */].sort(comparator);
 ```
 
 ## mauss/api
 
-This defaults to `fetch` api from browser, but you can also use it on the server-side by first installing the package `node-fetch`.
+This defaults to `fetch` api from browser, but you can also use it on the server-side by first installing the package `node-fetch`. If you're using something like [SvelteKit](https://github.com/sveltejs/kit) that polyfills `fetch` globally, you won't have to worry about installing this.
 
 ```bash
 npm install node-fetch
 ```
 
-You can set a custom rule by calling `init` as early as possible. You can skip this if you're using it exclusively on the browser only.
+You can set a custom rule by calling `init` as early as possible. This is optional and might be useful for pointing to both same and external domain at the same time.
 
 ```js
-import { init } from 'mauss/api';
-init({
+import api from 'mauss/api';
+
+api.init({
   host: process.env.NODE_ENV === 'production' ? 'mauss.dev' : 'localhost:3000',
+
+  intercept(path) { /* returns a value that will be used as url for `fetch(url)` */
+    const base = process.env.NODE_ENV !== 'production'
+      ? 'https://development.url/api'
+      : 'https://production.url/api';
+
+    /* if path starts with '/', point to prod url, else same-domain */
+    return path[0] !== '/' ? `${base}/${path}` : path.slice(1);
+  }
 });
+```
 
-// Setting a custom rule for the url
-function check(path) {
-  const base = process.env.NODE_ENV !== 'production'
-    ? 'https://development.url/api'
-    : 'https://production.url/api';
+All the available exported API can be passed a url string or object of `{ path, fetch }`. This is especially useful for users working with [`load` function in SvelteKit](https://kit.svelte.dev/docs#loading-input-fetch) as `fetch` can be passed down the api call.
 
-  // RETURN VALUE will be used as url in `fetch(url)`
-  return path[0] !== '/' ? `${base}/${path}` : path.slice(1);
+```js
+import { get, post } from 'mauss/api';
+
+const token = 'jwt:token'; // optional, pass for authenticated request
+
+/* GET example */
+const { response, body, error } = await get('auth/profile', token);
+if (response.ok) {
+  console.log(body);  // user data in JSON format
+} else {
+  console.log(error); // error message in string
 }
-init({ check }); // Pass the check function
+
+/* POST example */
+const { response, body, error } = await post('auth/login', {
+  email: 'mail@example.com',
+  password: 'super_secure_password'
+});
+if (response.ok) {
+  console.log(body);  // response body
+} else {
+  console.log(error); // error message
+}
 ```
 
 ## mauss/bits
@@ -89,11 +119,11 @@ init({ check }); // Pass the check function
 import { :util } from 'mauss/bits';
 ```
 
-### `find:binary`
+### `find.binary`
 
 do a binary search on a sorted array with custom item checking and cutoff function.
 
-### `find:minmax`
+### `find.minmax`
 
 find the minimum and maximum value in an array of numbers.
 
@@ -136,20 +166,58 @@ import { :util } from 'mauss/utils';
 
 ### `capitalize`
 
+```ts
+interface CapitalizeOptions {
+	/** only capitalize the very first letter */
+	cap?: boolean;
+	/** convert the remaining word to lowercase */
+	normalize?: boolean;
+}
+export function capitalize(text: string, options?: CapitalizeOptions): string;
+```
+
 ```js
 capitalize('hi there'); // 'Hi There'
 capitalize('hI thErE'); // 'HI ThErE'
-capitalize('hI thErE', true); // 'Hi There'
+capitalize('hI thErE', { cap: true }); // 'HI thErE'
+capitalize('hI thErE', { normalize: true }); // 'Hi There'
+capitalize('hI thErE', { cap: true, normalize: true }); // 'Hi there'
 ```
 
-### `checkNum`
+### `dt`
 
-will check an input and return a parsed number if it is one, otherwise it will return the input as is.
+Simple `date/time` (`dt`) utility object
+
+```ts
+type DateValue = string | number | Date;
+interface TravelOptions {
+	/** relative point of reference to travel */
+	from?: DateValue;
+	/** relative days to travel in number */
+	to: number;
+}
+
+export const dt: {
+  readonly now: Date;
+  new(d?: DateValue): Date;
+  format(date: DateValue, mask?: string, base?: 'UTC'): string;
+  travel({ from, to }: TravelOptions): Date;
+}
+```
+
+- `dt.now` is a shortcut to `new Date()`
+- `dt.new` is a function `(date?: DateValue) => Date` that optionally takes in a `DateValue` to be converted into a `Date` object
+- `dt.format` is a function `(date: DateValue, mask = 'DDDD, DD MMMM YYYY', base?: 'UTC') => string` that takes in a `DateValue`, optionally a mask that defaults to `'DDDD, DD MMMM YYYY'`, and optionally `'UTC'` as the last argument
+- `dt.travel` is a function `({ from, to }) => Date` that takes in a `{ from, to }` object with `from` property being optional
+
+### `tryNumber`
+
+will check an input and convert to number when applicable, otherwise it will return the input as is.
 
 ```js
-checkNum('0');  // 0
-checkNum(0);    // 0
-checkNum('1H'); // '1H'
+tryNumber('0');  // 0
+tryNumber(0);    // 0
+tryNumber('1H'); // '1H'
 ```
 
 ### `random`
@@ -164,6 +232,40 @@ random.int(9, 1); // 1 - 8
 const data = { a: {}, b: 1, c: [3] };
 // returns a random value from an object
 random.key(data); // a || 1 || [3]
+```
+
+## mauss/web
+
+```js
+import { :util } from 'mauss/web';
+```
+
+### `cookies`
+
+Homemade baked cookies for server and client side usage.
+
+### `qpm`
+
+```js
+// https://mauss.dev/reviews
+
+let query = 'anything'; // a reactive variable
+const type = 1;
+
+const updated = qpm({ q: query, type });
+history.replaceState({}, '', updated);
+// https://mauss.dev/reviews?q=anything&type=1
+```
+
+With SvelteKit:
+
+```svelte
+<script>
+  import { browser } from '$app/env';
+  import { goto } from '$app/navigation';
+  $: shareable = qpm({ q: query });
+  $: browser && goto(shareable, { replaceState: true });
+</script>
 ```
 
 ***

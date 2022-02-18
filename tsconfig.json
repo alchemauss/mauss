@@ -3,11 +3,13 @@
 		// Project Options
 		"target": "ES2017",
 		"module": "ES2020",
+		"checkJs": true,
 		"isolatedModules": true,
 
 		// Module Resolution
 		"moduleResolution": "Node",
 		"esModuleInterop": true,
+		"resolveJsonModule": true,
 		"allowSyntheticDefaultImports": true,
 
 		// Linter Checks

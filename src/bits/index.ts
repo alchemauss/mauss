@@ -1,1 +1,3 @@
-export * as find from './find';
+import * as find from './find';
+
+export { find };
