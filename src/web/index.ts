@@ -44,6 +44,7 @@ export function qsd(qs: string) {
 	const qar = qs.split('&');
 	for (let i = 0; i < qar.length; i++) {
 		const [k, v] = qar[i].split('=');
+		if (v === undefined) continue;
 		const item = dqs[k]; // satisfy TS
 		if (!dqs[k] && (dqs[k] = dec(v))) continue;
 		if (!Array.isArray(item)) dqs[k] = [item];
