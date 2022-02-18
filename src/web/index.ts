@@ -8,7 +8,7 @@ export * as cookies from './cookies';
  * @param bound object with key-value pair to be updated in the URL
  * @returns final query string
  */
-export function qse(bound: Record<string, Primitives>): string {
+export function qse(bound: Record<any, Primitives>): string {
 	const enc = encodeURIComponent;
 
 	let final = '';
@@ -40,7 +40,7 @@ export function qsd(qs: string) {
 		return ['true', 'false'].includes(s) ? s[0] === 't' : tryNumber(s);
 	};
 
-	const dqs: Record<string, PotArray<Primitives>> = {};
+	const dqs: Record<any, PotArray<Primitives>> = {};
 	const qar = qs.split('&');
 	for (let i = 0; i < qar.length; i++) {
 		const [k, v] = qar[i].split('=');
