@@ -11,10 +11,10 @@ export type TypePrimitive = 'string' | 'number' | 'bigint' | 'boolean' | 'symbol
 /** The complete values from `typeof` as string union */
 export type TypeTable = TypePrimitive | 'undefined' | 'object' | 'function';
 
-/* <-- Type Expanders: Prefixed with `Pot` for Potentially --> */
+/* <-- Type Expanders: Prefixed with `Also` --> */
 
-/** Expand T to potentially be an array */
-export type PotArray<T> = T | T[];
+/** Expand T to also be an array */
+export type AlsoArray<T> = T | T[];
 
 /* <-- Compact Type Helpers --> */
 

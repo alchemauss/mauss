@@ -1,4 +1,4 @@
-import type { Flatten, Intersection, PotArray, Primitives } from '../../typings';
+import type { AlsoArray, Flatten, Intersection, Primitives } from '../../typings';
 import { tryNumber } from '../../utils';
 
 type CombineExisting<
@@ -35,7 +35,7 @@ export default function qsd<Q extends string>(qs: Q) {
 		return ['true', 'false'].includes(s) ? s[0] === 't' : tryNumber(s);
 	};
 
-	const dqs: Record<any, PotArray<Primitives>> = {};
+	const dqs: Record<any, AlsoArray<Primitives>> = {};
 	const qar = qs.split('&');
 	for (let i = 0; i < qar.length; i++) {
 		const [k, v] = qar[i].split('=');
