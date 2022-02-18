@@ -1,4 +1,4 @@
-import type { AnyFunction, Reverse } from '../typings';
+import type { AnyFunction, Reverse } from 'mauss/typings';
 
 /**
  * inverse - reverses the order of provided arguments to fn parameters
