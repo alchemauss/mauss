@@ -43,6 +43,15 @@ export type Typify<T> = { [P in keyof T]: Typify<T[P]> };
 
 /* <-- Type Level Programming --> */
 
+/** Flattens any array recursively */
+export type Flatten<List extends any[], Memory extends any[] = []> = List extends []
+	? /** return Memory if List is empty */ Memory
+	: List extends [infer Head, ...infer Rest]
+	? Head extends any[] // check for nested array
+		? Flatten<[...Head, ...Rest], Memory>
+		: Flatten<Rest, [...Memory, Head]>
+	: never;
+
 /** Joins a list of string with custom delimiter */
 export type Join<
 	StringList extends readonly string[],

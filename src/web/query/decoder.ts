@@ -1,4 +1,4 @@
-import type { Intersection, PotArray, Primitives } from '../../typings';
+import type { Flatten, Intersection, PotArray, Primitives } from '../../typings';
 import { tryNumber } from '../../utils';
 
 type CombineExisting<
@@ -7,7 +7,7 @@ type CombineExisting<
 	Duplicate = Intersection<A, B>
 > = Omit<A, keyof Duplicate> &
 	Omit<B, keyof Duplicate> & {
-		[P in keyof Duplicate]: [A[P], B[P]];
+		[P in keyof Duplicate]: Flatten<[A[P], B[P]]>;
 	};
 
 type QueryDecoder<Query extends string> = Query extends `${infer Leading}${infer Rest}`
