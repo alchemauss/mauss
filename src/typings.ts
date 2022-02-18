@@ -1,4 +1,4 @@
-/* <-- Basic Typings --> */
+/* <-- Basic Typing Aliases --> */
 
 /** Nullish values, which are only `null` and `undefined` */
 export type Nullish = null | undefined;
@@ -26,6 +26,8 @@ export type Entries<T> = Array<{ [K in keyof T]: [keyof PickByValue<T, T[K]>, T[
 export type Filter<T, Validator> = T extends Validator ? T : never;
 /** Allow autocompletion of union in addition to arbitrary values */
 export type Flexible<Union extends T, T = string> = Union | (T & Record<never, never>);
+/** Pick the properties of A that also exists in B */
+export type Intersection<A, B> = Pick<A, Extract<keyof A, keyof B> & Extract<keyof B, keyof A>>;
 /** Infers the return value of toJSON on the properties */
 export type JSONState<T> = { [P in keyof T]: T[P] extends { toJSON: () => infer J } ? J : T[P] };
 export type NonEmptyArray<T> = [T, ...Array<T>];
@@ -88,8 +90,7 @@ export type PartialOmit<
 	T,
 	Keys extends keyof T,
 	Saved = { [P in Exclude<keyof T, Keys>]: T[P] },
-	Optional = { [P in keyof T]?: T[P] },
-	Final = Saved & Optional
+	Final = Saved & { [P in keyof T]?: T[P] }
 > = { [P in keyof Final]: Final[P] };
 
 /**

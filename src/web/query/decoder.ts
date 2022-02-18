@@ -1,11 +1,20 @@
-import type { PotArray, Primitives } from '../../typings';
+import type { Intersection, PotArray, Primitives } from '../../typings';
 import { tryNumber } from '../../utils';
+
+type CombineExisting<
+	A extends Record<any, any>,
+	B extends Record<any, any>,
+	Duplicate = Intersection<A, B>
+> = Omit<A, keyof Duplicate> &
+	Omit<B, keyof Duplicate> & {
+		[P in keyof Duplicate]: [A[P], B[P]];
+	};
 
 type QueryDecoder<Query extends string> = Query extends `${infer Leading}${infer Rest}`
 	? Leading extends '?'
 		? QueryDecoder<Rest>
 		: `${Leading}${Rest}` extends `${infer Param}&${infer Next}`
-		? QueryDecoder<Param> & QueryDecoder<Next>
+		? CombineExisting<QueryDecoder<Param>, QueryDecoder<Next>>
 		: `${Leading}${Rest}` extends `${infer Key}=${infer Value}`
 		? Record<Key, Value>
 		: {}
