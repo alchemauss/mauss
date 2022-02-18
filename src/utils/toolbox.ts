@@ -1,23 +1,3 @@
-const TABLE = {
-	// TODO: find out different (more efficient) ways to generate HEX table
-	HEX: Array.from({ length: 256 }, (_, i) => (i + 256).toString(16).slice(1)),
-};
-export const generator = {
-	oid(n = 16) {
-		let idx = 0;
-		let str = '';
-		return () => {
-			if (!str || idx === 256) {
-				str = '';
-				idx = Math.floor((1 + n) / 2);
-				while (idx--) str += TABLE.HEX[random.int(256)];
-				str = str.slice((idx = 0), n - 2);
-			}
-			return str + TABLE.HEX[idx++];
-		};
-	},
-};
-
 export const random = {
 	float(max = 1, min = 0): number {
 		[min, max] = [Math.ceil(min), Math.floor(max)];
