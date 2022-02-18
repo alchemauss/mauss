@@ -13,4 +13,5 @@ export function capitalize(text: string, { cap, normalize }: CapitalizeOptions =
 	return text.replace(/(?:^|\s)\S/g, (a) => a.toUpperCase());
 }
 
-export const tryNumber = <T>(text: T): T | number => (Number.isNaN(+text) ? text : +text);
+export const tryNumber = <T>(text: T, fallback = text): T | number =>
+	Number.isNaN(+text) ? fallback : +text;
