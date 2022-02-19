@@ -1,7 +1,7 @@
 import { readFileSync } from 'fs';
 import { performance } from 'perf_hooks';
 
-const file = `${process.cwd()}/tests/shared/data.json`;
+const file = `${process.cwd()}/test/shared/data.json`;
 const data = JSON.parse(readFileSync(file, 'utf-8'));
 
 export default function snapshot(fn: (input: string) => boolean) {
