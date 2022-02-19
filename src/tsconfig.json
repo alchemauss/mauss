@@ -1,7 +1,4 @@
 {
 	"extends": "../tsconfig.json",
-	"compilerOptions": {
-		"module": "ES2022"
-	},
-	"exclude": ["node_modules", "**/*.spec.ts", "**/*.type.ts"]
+	"exclude": ["node_modules", "**/*.spec.ts", "**/types.spec.ts"]
 }
