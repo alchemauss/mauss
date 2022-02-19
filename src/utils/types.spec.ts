@@ -1,7 +1,8 @@
-// import { tryNumber } from '.';
+import { tryNumber } from '.';
 
-// declare function expect<T>(v: T): void;
+declare function expect<T>(v: T): void;
 
+expect<number | ''>(tryNumber(''));
 // expect<''>(tryNumber(''));
 // expect<number>(tryNumber(0));
 // expect<number>(tryNumber(1));
