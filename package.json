@@ -8,18 +8,16 @@
   "main": "index.js",
   "types": "index.d.ts",
   "scripts": {
+    "clean": "git add * && git clean -dfx -e node_modules",
     "test": "npm run test:unit && npm run test:perf",
     "test:unit": "uvu -r tsm src \"(spec\\.ts)\"",
     "test:perf": "uvu -r tsm test",
-    "lint": "run-p lint:**",
+    "lint": "npm run lint:code & npm run lint:style",
     "lint:code": "tsc --noEmit",
     "lint:style": "prettier -c src",
-    "check:clean": "npm run publish:clean -- -n",
-    "publish:clean": "git clean -dfx -e node_modules",
-    "publish:build": "tsc --project src",
-    "publish:format": "prettier -wu **/*.{d.ts,js}",
-    "prepublishOnly": "run-s publish:**",
-    "postpublish": "npm run publish:clean"
+    "pub:build": "tsc --project src",
+    "pub:format": "prettier -wu **/*.{d.ts,js}",
+    "prepublishOnly": "npm run pub:build && npm run pub:format"
   },
   "exports": {
     ".": "./index.js",
