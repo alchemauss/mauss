@@ -14,6 +14,7 @@
     "lint": "run-p lint:**",
     "lint:code": "tsc --noEmit",
     "lint:style": "prettier -c src",
+    "check:clean": "npm run publish:clean -- -n",
     "publish:clean": "git clean -dfx -e node_modules",
     "publish:build": "tsc --project src",
     "publish:format": "prettier -wu **/*.{d.ts,js}",
