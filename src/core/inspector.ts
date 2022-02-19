@@ -1,4 +1,4 @@
-import type { Filter, Split } from 'mauss/typings';
+import type { Filter, Split } from '../typings';
 
 type Wildcard = (x: any, y: any) => number;
 type Primitives = {
