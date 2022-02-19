@@ -9,9 +9,9 @@
   "types": "index.d.ts",
   "scripts": {
     "watch": "tsc -w",
-    "test": "jest --verbose",
-    "test:summary": "jest",
-    "test:coverage": "jest --coverage",
+    "test": "npm run test:unit && npm run test:perf",
+    "test:unit": "uvu -r tsm src \"(spec\\.ts)\"",
+    "test:perf": "uvu -r tsm test",
     "lint": "run-p lint:**",
     "lint:code": "tsc --noEmit",
     "lint:style": "prettier -c src",
@@ -36,10 +36,6 @@
     "./prettier.json": "./prettier.json",
     "./tsconfig.json": "./tsconfig.json"
   },
-  "jest": {
-    "preset": "ts-jest",
-    "testEnvironment": "node"
-  },
   "prettier": "./prettier.json",
   "repository": {
     "type": "git",
@@ -55,6 +51,7 @@
     "npm-run-all": "^4.1.5",
     "prettier": "^2.3.0",
     "tsm": "^2.2.1",
-    "typescript": "^4.1.2"
+    "typescript": "^4.1.2",
+    "uvu": "^0.5.3"
   }
 }
