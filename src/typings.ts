@@ -1,5 +1,5 @@
 /** Generic for making any arbitrary function */
-export type AnyFunction<P extends any[] = any, R = any> = (...parameters: P) => R;
+export type AnyFunction<P extends any[] = any[], R = any> = (...parameters: P) => R;
 /** Allow either A or B but not both at the same time */
 export type Either<A, B> = Only<A, B> | Only<B, A>;
 export type Entries<T> = Array<{ [K in keyof T]: [keyof PickByValue<T, T[K]>, T[K]] }[keyof T]>;
