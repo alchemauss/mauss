@@ -21,10 +21,14 @@ const patterns = {
 type PatternKeys = keyof typeof patterns;
 type Categories = Split<PatternKeys, ':'>[0];
 type Prefixed<K extends string> = K extends `${infer P}:${string}` ? Filter<P, Categories> : K;
-type Comparisons = Primitives & { [K in Prefixed<PatternKeys>]: (x: string, y: string) => number };
+type Patterned = { [K in Prefixed<PatternKeys>]: (x: string, y: string) => number };
+type Comparisons = Primitives & Patterned;
 export const compare: Comparisons & { wildcard: (x: any, y: any) => number } = {
 	date: (x, y) => new Date(y).getTime() - new Date(x).getTime(),
 	time: (x, y) => Date.parse(`2017/08/28 ${y}`) - Date.parse(`2017/08/28 ${x}`),
+	array(x, y) {
+		return 0;
+	},
 	// primitives
 	undefined: (x) => (x ? -1 : 1),
 	boolean: (x, y) => +y - +x,
