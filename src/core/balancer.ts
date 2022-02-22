@@ -1,4 +1,6 @@
-export function debounce(fn: any, time = 300) {
+import type { AnyFunction } from '../typings';
+
+export function debounce<F extends AnyFunction>(fn: F, time = 300) {
 	let timeout: NodeJS.Timeout;
 	return (...args: any[]) => {
 		if (timeout) clearTimeout(timeout);
@@ -6,7 +8,7 @@ export function debounce(fn: any, time = 300) {
 	};
 }
 
-export function throttle(fn: any, time = 300) {
+export function throttle<F extends AnyFunction>(fn: F, time = 300) {
 	let wait = false;
 	return (...args: any[]) => {
 		if (wait) return;
