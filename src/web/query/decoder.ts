@@ -16,7 +16,7 @@ type QueryDecoder<Query extends string> = Query extends `${infer Leading}${infer
 		: `${Leading}${Rest}` extends `${infer Param}&${infer Next}`
 		? CombineExisting<QueryDecoder<Param>, QueryDecoder<Next>>
 		: `${Leading}${Rest}` extends `${infer Key}=${infer Value}`
-		? Record<Key, Value>
+		? { [K in Key]: Value }
 		: {}
 	: {};
 
