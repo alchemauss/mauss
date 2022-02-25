@@ -5,7 +5,7 @@ import type { Primitives } from '../../typings';
  * @param bound object with key-value pair to be updated in the URL
  * @returns final query string
  */
-export default function qse(bound: Record<any, Primitives>): string {
+export default function qse(bound: { [K in string | number]?: Primitives }): string {
 	const enc = encodeURIComponent;
 
 	let final = '';
