@@ -9,7 +9,7 @@
   "types": "index.d.ts",
   "scripts": {
     "clean": "git add * && git clean -dfx -e node_modules",
-    "test": "npm run test:unit && npm run test:perf",
+    "test": "npm run test:unit",
     "test:unit": "uvu -r tsm src \"(spec\\.ts)\"",
     "lint": "npm run lint:code && npm run lint:style",
     "lint:code": "tsc --noEmit",
