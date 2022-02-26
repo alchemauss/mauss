@@ -11,7 +11,6 @@
     "clean": "git add * && git clean -dfx -e node_modules",
     "test": "npm run test:unit && npm run test:perf",
     "test:unit": "uvu -r tsm src \"(spec\\.ts)\"",
-    "test:perf": "uvu -r tsm test",
     "lint": "npm run lint:code && npm run lint:style",
     "lint:code": "tsc --noEmit",
     "lint:style": "prettier -c src",
