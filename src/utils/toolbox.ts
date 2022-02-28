@@ -12,11 +12,11 @@ export const random = {
 	array(length: number, max: number, min = 0): Array<number> {
 		return Array.from({ length }, () => this.int(max, min));
 	},
-	key<T>(dict: Record<string, T>): string {
+	key(dict: Record<any, any>): string {
 		const keys = Object.keys(dict);
 		return keys[this.int(keys.length)];
 	},
-	val<T>(dict: Record<string, T>): T {
+	val<T>(dict: Record<any, T>): T {
 		const values = Object.values(dict);
 		return values[this.int(values.length)];
 	},

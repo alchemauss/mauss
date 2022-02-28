@@ -1,6 +1,6 @@
 # mauss changelog
 
-## Unreleased
+## 0.2.3 - 2022/02/17
 
 - ([#64](https://github.com/alchemauss/mauss/pull/64)) remove `svelteBracketNewLine` option from prettier config
 - ([#63](https://github.com/alchemauss/mauss/pull/63)) add `Flexible` typings
