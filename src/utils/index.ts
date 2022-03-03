@@ -29,12 +29,7 @@ export function tryNumber<Input extends Possibilities, Fallback = Input>(
 	input: Input,
 	fallback: Fallback = input as unknown as Fallback
 ) {
-	type TryReturned = Input extends string
-		? TryValidator<Input>
-		: Input extends number
-		? number
-		: Input extends null
-		? 0
-		: Fallback;
+	type Narrow<Other> = Other extends number | null ? number : Fallback;
+	type TryReturned = Input extends string ? TryValidator<Input> : Narrow<Input>;
 	return (Number.isNaN(+input) ? fallback : +input) as TryReturned;
 }
