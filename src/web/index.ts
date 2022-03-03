@@ -1,6 +1,4 @@
-import * as cookies from './cookies';
-
-export { cookies };
+export * as cookies from './cookies';
 
 /**
  * qpm - Query string Pathname Maker

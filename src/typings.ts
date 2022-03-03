@@ -1,5 +1,5 @@
-/** Generic for making any arbitrary function */
-export type AnyFunction<P extends any[] = any, R = any> = (...parameters: P) => R;
+/** Any function that has an arbitrary amount of parameters */
+export type AnyFunction<P extends any[] = any[], R = any> = (...parameters: P) => R;
 /** Allow either A or B but not both at the same time */
 export type Either<A, B> = Only<A, B> | Only<B, A>;
 export type Entries<T> = Array<{ [K in keyof T]: [keyof PickByValue<T, T[K]>, T[K]] }[keyof T]>;
@@ -90,7 +90,7 @@ export type SingleProperty<T> = {
  * Specify tuple of `Size` with items of `T`
  */
 export type Tuple<
-	T,
 	Size extends number,
-	VirtualArray extends any[] = []
-> = VirtualArray['length'] extends Size ? VirtualArray : Tuple<T, Size, [T, ...VirtualArray]>;
+	T extends any[] = [],
+	Virtual extends any[] = []
+> = Virtual['length'] extends Size ? Virtual : Tuple<Size, T, [T, ...Virtual]>;
