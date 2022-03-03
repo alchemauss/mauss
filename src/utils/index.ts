@@ -24,7 +24,17 @@ type TryValidator<Text extends string> = Text extends `${infer Character}${infer
 		: Text
 	: Text;
 
-export function tryNumber<T extends string | number>(text: T, fallback = text) {
-	type TryReturned = T extends string ? TryValidator<T> : number;
-	return (Number.isNaN(+text) ? fallback : +text) as TryReturned;
+type Possibilities = string | number | null | undefined;
+export function tryNumber<Input extends Possibilities, Fallback = Input>(
+	input: Input,
+	fallback: Fallback = input as unknown as Fallback
+) {
+	type TryReturned = Input extends string
+		? TryValidator<Input>
+		: Input extends number
+		? number
+		: Input extends null
+		? 0
+		: Fallback;
+	return (Number.isNaN(+input) ? fallback : +input) as TryReturned;
 }
