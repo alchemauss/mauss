@@ -15,19 +15,29 @@ basics[0]('change two letter for two words', () => {
 
 // --- tryNumber ---
 
-basics[1]('convert numbers properly', () => {
+basics[1]('convert to numbers', () => {
+	assert.equal(utils.tryNumber(null), 0);
 	assert.equal(utils.tryNumber('0'), 0);
 	assert.equal(utils.tryNumber('1'), 1);
 	assert.equal(utils.tryNumber('-1'), -1);
 	assert.equal(utils.tryNumber('1e3'), 1e3);
 });
 
-basics[1]('convert strings as-is', () => {
+basics[1]('fallback to original value as-is', () => {
 	assert.equal(utils.tryNumber('a'), 'a');
 	assert.equal(utils.tryNumber('a1a'), 'a1a');
 	assert.equal(utils.tryNumber('1a1'), '1a1');
 	assert.equal(utils.tryNumber('-1a'), '-1a');
 	assert.equal(utils.tryNumber('-1e'), '-1e');
+
+	const dyn: string = 'dynamic';
+	assert.equal(utils.tryNumber(dyn), 'dynamic');
+	assert.equal(utils.tryNumber(undefined), undefined);
+});
+
+basics[1]('fallback to provided as expected', () => {
+	assert.equal(utils.tryNumber('a', 0), 0);
+	assert.equal(utils.tryNumber('a', 1), 1);
 });
 
 basics.forEach((v) => v.run());

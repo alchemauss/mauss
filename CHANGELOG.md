@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- ([#81](https://github.com/alchemauss/mauss/pull/81)) add fallback parameter to `tryNumber`
 - ([#72](https://github.com/alchemauss/mauss/pull/72)) strongly infer `inverse` return type
 - ([#72](https://github.com/alchemauss/mauss/pull/72)) add `UnaryFunction` typings
 - ([#72](https://github.com/alchemauss/mauss/pull/72)) fix default generic value of `AnyFunction` typing
