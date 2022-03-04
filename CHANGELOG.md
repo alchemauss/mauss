@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- ([#81](https://github.com/alchemauss/mauss/pull/81)) add fallback parameter to `tryNumber`
 - ([#73](https://github.com/alchemauss/mauss/pull/73)) add `pipe` function in core module
 - ([#72](https://github.com/alchemauss/mauss/pull/72)) strongly infer `inverse` return type
 - ([#72](https://github.com/alchemauss/mauss/pull/72)) add `UnaryFunction` typings
