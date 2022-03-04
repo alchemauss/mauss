@@ -1,6 +1,6 @@
 import { test } from 'uvu';
 import assert from 'uvu/assert';
-import { pipe } from './pipe';
+import pipe from './pipe';
 
 const name = <T extends { name: string }>(v: T) => v.name;
 const cap = (v: string) => v.toUpperCase();

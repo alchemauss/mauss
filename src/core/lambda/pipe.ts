@@ -9,7 +9,7 @@ type Validator<
 		: never // will never reach here, condition always satisfies
 	: Functions;
 
-export function pipe<F extends Constraint[]>(...functions: Validator<F>) {
+export default function pipe<F extends Constraint[]>(...functions: Validator<F>) {
 	type InitialType = Parameters<F[0]>[0];
 	type FinalType = ReturnType<Last<F, any>>;
 	return (arg: InitialType): FinalType => {
