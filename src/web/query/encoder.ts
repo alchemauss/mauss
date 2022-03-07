@@ -1,7 +1,7 @@
 import type { Nullish, Primitives } from '../../typings';
 
 type BoundValues = Nullish | Primitives;
-type Bound = { [k: string | number]: BoundValues | BoundValues[] };
+type Bound = { [k: string | number]: BoundValues | readonly BoundValues[] };
 
 /**
  * qse - query string encoder
@@ -27,7 +27,7 @@ export default function qse<T extends Bound>(bound: T): string {
 			continue;
 		}
 
-		final += `${k}=${enc(v)}`;
+		final += `${k}=${enc(v as Primitives)}`;
 	}
 
 	return final;
