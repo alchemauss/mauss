@@ -1,2 +1,3 @@
 export * as cookies from './cookies';
-export { qsd, qse } from './query';
+export { default as qsd } from './query/decoder';
+export { default as qse } from './query/encoder';
