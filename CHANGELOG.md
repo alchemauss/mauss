@@ -2,6 +2,14 @@
 
 ## Unreleased
 
+- ([#81](https://github.com/alchemauss/mauss/pull/81)) add fallback parameter to `tryNumber`
+- ([#72](https://github.com/alchemauss/mauss/pull/72)) strongly infer `inverse` return type
+- ([#72](https://github.com/alchemauss/mauss/pull/72)) add `UnaryFunction` typings
+- ([#72](https://github.com/alchemauss/mauss/pull/72)) fix default generic value of `AnyFunction` typing
+- ([#72](https://github.com/alchemauss/mauss/pull/72)) reverse generic order of `Tuple` and only require the size
+
+## 0.2.3 - 2022/02/17
+
 - ([#64](https://github.com/alchemauss/mauss/pull/64)) remove `svelteBracketNewLine` option from prettier config
 - ([#63](https://github.com/alchemauss/mauss/pull/63)) add `Flexible` typings
 - ([#63](https://github.com/alchemauss/mauss/pull/63)) fix bool generator in `random`
