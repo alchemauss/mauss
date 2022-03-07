@@ -35,7 +35,7 @@ basic('filters numbers that are whole', () => {
 
 basic.run();
 
-// --- not() suite ---
+// ---- not() suite ----
 
 const inverse = suite('not(guards)');
 
