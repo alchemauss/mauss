@@ -2,11 +2,16 @@
 
 ## Unreleased
 
-- ([#XX](https://github.com/alchemauss/mauss/pull/XX)) change `.y*ml` prettier formatting options
+- ([#81](https://github.com/alchemauss/mauss/pull/81)) add fallback parameter to `tryNumber`
+- ([#79](https://github.com/alchemauss/mauss/pull/79)) change `.y*ml` prettier formatting options
+- ([#72](https://github.com/alchemauss/mauss/pull/72)) strongly infer `inverse` return type
+- ([#72](https://github.com/alchemauss/mauss/pull/72)) add `UnaryFunction` typings
+- ([#72](https://github.com/alchemauss/mauss/pull/72)) fix default generic value of `AnyFunction` typing
+- ([#72](https://github.com/alchemauss/mauss/pull/72)) reverse generic order of `Tuple` and only require the size
 
 ### Breaking Changes
 
-- [#XX](https://github.com/alchemauss/mauss/pull/XX) | Prettier for `.y*ml` files will now format with spaces and single quotes
+- [#79](https://github.com/alchemauss/mauss/pull/79) | Prettier for `.y*ml` files will now format with spaces and single quotes
 
 ## 0.2.3 - 2022/02/17
 
@@ -43,7 +48,7 @@
 
 ### Breaking Changes
 
-- [#44](44) | Projects that extends `mauss/tsconfig.json` will now have their JS files checked by TS
+- [#44](https://github.com/alchemauss/mauss/pull/44) | Projects that extends `mauss/tsconfig.json` will now have their JS files checked by TS
 - [#47](https://github.com/alchemauss/mauss/pull/47) | All default exports (except `/api`) has been removed, do an import star instead (`import * as module from 'mauss/module'`)
 - [#54](https://github.com/alchemauss/mauss/pull/54) | Second parameter of `capitalize` now receives an object, with all values being optional
 - [#57](https://github.com/alchemauss/mauss/pull/57) | Guards module has been refactored
