@@ -10,7 +10,9 @@ type CombineExisting<
 		[P in keyof Duplicate]: Flatten<[A[P], B[P]]>;
 	};
 
-type QueryDecoder<Query extends string> = Query extends `${infer Leading}${infer Rest}`
+type QueryDecoder<Query extends string> = string extends Query
+	? Record<string, string | string[]>
+	: Query extends `${infer Leading}${infer Rest}`
 	? Leading extends '?'
 		? QueryDecoder<Rest>
 		: `${Leading}${Rest}` extends `${infer Param}&${infer Next}`
