@@ -4,7 +4,7 @@ import * as utils from '.';
 
 const basics = [suite('capitalize'), suite('tryNumber')];
 
-// --- capitalize ---
+// ---- capitalize ----
 
 basics[0]('change one letter for one word', () => {
 	assert.equal(utils.capitalize('hello'), 'Hello');
@@ -13,7 +13,7 @@ basics[0]('change two letter for two words', () => {
 	assert.equal(utils.capitalize('hello world'), 'Hello World');
 });
 
-// --- tryNumber ---
+// ---- tryNumber ----
 
 basics[1]('convert to numbers', () => {
 	assert.equal(utils.tryNumber(null), 0);

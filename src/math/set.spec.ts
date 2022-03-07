@@ -57,7 +57,7 @@ basics[0]('correctly permute 4 words and returns array of results', () => {
 
 basics.forEach((v) => v.run());
 
-// --- mutated suite ---
+// ---- mutated suite ----
 
 const advanced = [suite('permutation+fn')];
 
