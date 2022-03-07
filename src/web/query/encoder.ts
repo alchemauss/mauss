@@ -1,7 +1,7 @@
 import type { Nullish, Primitives } from '../../typings';
 
 type BoundValues = Nullish | Primitives;
-type Bound = { [k: string | number]: BoundValues | readonly BoundValues[] };
+type Bound = { [k: string | number]: BoundValues | BoundValues[] };
 
 /**
  * qse - query string encoder
@@ -13,13 +13,21 @@ export default function qse<T extends Bound>(bound: T): string {
 
 	let final = '';
 	for (let [k, v] of Object.entries(bound)) {
-		if (typeof v !== 'string') {
-			if (v == null) continue;
-			v = v.toString();
+		if (v == null || (typeof v === 'string' && !(v = v.trim()))) continue;
+		if ((k = enc(k)) && final) final += '&';
+
+		if (Array.isArray(v)) {
+			let pointer = 0;
+			while (pointer < v.length) {
+				if (pointer) final += '&';
+				const item = v[pointer++];
+				if (item == null) continue;
+				final += `${k}=${enc(item)}`;
+			}
+			continue;
 		}
-		if (!(v = v.trim())) continue;
-		if (final) final += '&';
-		final += `${enc(k)}=${enc(v)}`;
+
+		final += `${k}=${enc(v)}`;
 	}
 
 	return final;
