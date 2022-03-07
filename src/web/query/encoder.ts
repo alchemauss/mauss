@@ -1,11 +1,14 @@
-import type { Primitives } from '../../typings';
+import type { Nullish, Primitives } from '../../typings';
+
+type BoundValues = Nullish | Primitives;
+type Bound = { [k: string | number]: BoundValues | readonly BoundValues[] };
 
 /**
  * qse - query string encoder
  * @param bound object with key-value pair to be updated in the URL
  * @returns final query string
  */
-export default function qse(bound: { [K in string | number]?: Primitives }): string {
+export default function qse<T extends Bound>(bound: T): string {
 	const enc = encodeURIComponent;
 
 	let final = '';
