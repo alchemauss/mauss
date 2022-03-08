@@ -1,5 +1,20 @@
 # mauss changelog
 
+## Unreleased
+
+- ([#86](https://github.com/alchemauss/mauss/pull/86)) strongly type `debounce` and `throttle`
+- ([#81](https://github.com/alchemauss/mauss/pull/81)) add fallback parameter to `tryNumber`
+- ([#79](https://github.com/alchemauss/mauss/pull/79)) change `.y*ml` prettier formatting options
+- ([#73](https://github.com/alchemauss/mauss/pull/73)) add `pipe` function in core module
+- ([#72](https://github.com/alchemauss/mauss/pull/72)) strongly infer `inverse` return type
+- ([#72](https://github.com/alchemauss/mauss/pull/72)) add `UnaryFunction` typings
+- ([#72](https://github.com/alchemauss/mauss/pull/72)) fix default generic value of `AnyFunction` typing
+- ([#72](https://github.com/alchemauss/mauss/pull/72)) reverse generic order of `Tuple` and only require the size
+
+### Breaking Changes
+
+- [#79](https://github.com/alchemauss/mauss/pull/79) | Prettier for `.y*ml` files will now format with spaces and single quotes
+
 ## 0.2.3 - 2022/02/17
 
 - ([#64](https://github.com/alchemauss/mauss/pull/64)) remove `svelteBracketNewLine` option from prettier config
