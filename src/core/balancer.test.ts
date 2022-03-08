@@ -1,4 +1,4 @@
-import { UnaryFunction } from '../typings';
+import type { UnaryFunction } from '../typings';
 import { debounce, throttle } from './balancer';
 
 declare function expect<T>(v: T): void;
