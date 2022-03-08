@@ -9,11 +9,15 @@
 - ([#72](https://github.com/alchemauss/mauss/pull/72)) strongly infer `inverse` return type
 - ([#72](https://github.com/alchemauss/mauss/pull/72)) add `UnaryFunction` typings
 - ([#72](https://github.com/alchemauss/mauss/pull/72)) fix default generic value of `AnyFunction` typing
-- ([#72](https://github.com/alchemauss/mauss/pull/72)) reverse generic order of `Tuple` and only require the size
+- ([#72](https://github.com/alchemauss/mauss/pull/72)) change generic order of `Tuple` and only require the size
+- ([#65](https://github.com/alchemauss/mauss/pull/65)) change `qpm` to `qse` in `/web` module
+- ([#65](https://github.com/alchemauss/mauss/pull/65)) add query string decoder in `/web` module
 
 ### Breaking Changes
 
 - [#79](https://github.com/alchemauss/mauss/pull/79) | Prettier for `.y*ml` files will now format with spaces and single quotes
+- [#72](https://github.com/alchemauss/mauss/pull/72) | Generic order for `Tuple` is reversed and reduced to only require the final size
+- [#65](https://github.com/alchemauss/mauss/pull/65) | Query string encoder (previously query string pathname maker) is now platform agnostic and does not rely on `window.location`, and returns the generated query string without the leading `?`
 
 ## 0.2.3 - 2022/02/17
 
