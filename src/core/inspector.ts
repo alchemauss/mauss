@@ -62,7 +62,7 @@ export const compare: Comparisons & { wildcard: (x: any, y: any) => number } = {
 	},
 };
 
-export function comparator(x: Record<string, any>, y: Record<string, any>): number {
+export function comparator(x: Record<any, any>, y: Record<any, any>): number {
 	const common = [...new Set([...Object.keys(x), ...Object.keys(y)])].filter(
 		(k) => k in x && k in y && typeof x[k] === typeof y[k] && x[k] !== y[k]
 	);
