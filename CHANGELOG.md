@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- ([#86](https://github.com/alchemauss/mauss/pull/86)) strongly type `debounce` and `throttle`
 - ([#81](https://github.com/alchemauss/mauss/pull/81)) add fallback parameter to `tryNumber`
 - ([#79](https://github.com/alchemauss/mauss/pull/79)) change `.y*ml` prettier formatting options
 - ([#73](https://github.com/alchemauss/mauss/pull/73)) add `pipe` function in core module
