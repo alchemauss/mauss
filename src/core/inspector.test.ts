@@ -1,6 +1,6 @@
 import { compare } from './inspector';
 
-let maybe: boolean;
+let maybe: boolean = false;
 
 compare.key('name')({ name: 'abc' }, { name: 'def', foo: maybe ? 1 : undefined });
 
