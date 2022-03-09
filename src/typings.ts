@@ -27,6 +27,10 @@ export type UnaryFunction<P = any, R = any> = (parameter: P) => R;
 
 /* <-- Type Level Programming --> */
 
+export type Extend<Size extends number, List extends any[] = []> = List['length'] extends Size
+	? List
+	: Extend<Size, [...List, any]>;
+
 /** Joins a list of string with custom delimiter */
 export type Join<
 	StringList extends readonly string[],
@@ -46,6 +50,18 @@ export type Permutation<Union, Sliced = Union> = [Union] extends [never]
 	: Union extends Union
 	? [Union, ...Permutation<Sliced extends Union ? never : Sliced>]
 	: never;
+
+/** Define a union of tuple that accepts a progressively increasing (LTR) items */
+export type Progressive<List extends any[]> = List extends [...infer Rest, any]
+	? List | (Rest['length'] extends 1 ? Rest : Progressive<Rest>)
+	: List;
+
+export type Slice<List extends any[], Start extends number = 0> = List extends [
+	...Extend<Start>,
+	...infer Sliced
+]
+	? Sliced
+	: [];
 
 /** Splits a string with custom separator */
 export type Split<
