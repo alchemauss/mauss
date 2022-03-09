@@ -1,4 +1,24 @@
-/** Any function that has an arbitrary amount of parameters */
+/* <-- Basic Typing Aliases --> */
+
+/** Nullish values, which are only `null` and `undefined` */
+export type Nullish = null | undefined;
+/** Basic primitives consisting of `string`, `number`, and `boolean` */
+export type Primitives = string | number | boolean;
+/** Primitives from `typeof` as their actual type */
+export type FullPrimitives = Primitives | bigint | symbol;
+/** Primitive values from `typeof` as string union */
+export type TypePrimitive = 'string' | 'number' | 'bigint' | 'boolean' | 'symbol';
+/** The complete values from `typeof` as string union */
+export type TypeTable = TypePrimitive | 'undefined' | 'object' | 'function';
+
+/* <-- Type Expanders: Prefixed with `Also` --> */
+
+/** Expand T to also be an array */
+export type AlsoArray<T> = T | T[];
+
+/* <-- Compact Type Helpers --> */
+
+/** Generic for making any arbitrary function */
 export type AnyFunction<P extends any[] = any[], R = any> = (...parameters: P) => R;
 /** Allow either A or B but not both at the same time */
 export type Either<A, B> = Only<A, B> | Only<B, A>;
@@ -8,6 +28,8 @@ export type Filter<T, Validator> = T extends Validator ? T : never;
 export type First<T extends any[], Fallback = never> = T extends [infer F, ...any[]] ? F : Fallback;
 /** Allow autocompletion of union in addition to arbitrary values */
 export type Flexible<Union extends T, T = string> = Union | (T & Record<never, never>);
+/** Pick the properties of A that also exists in B */
+export type Intersection<A, B> = Pick<A, Extract<keyof A, keyof B> & Extract<keyof B, keyof A>>;
 /** Infers the return value of toJSON on the properties */
 export type JSONState<T> = { [P in keyof T]: T[P] extends { toJSON: () => infer J } ? J : T[P] };
 /** Get the last item from an array, fallback defaults to `never` */
@@ -30,6 +52,15 @@ export type UnaryFunction<P = any, R = any> = (parameter: P) => R;
 export type Extend<Size extends number, List extends any[] = []> = List['length'] extends Size
 	? List
 	: Extend<Size, [...List, any]>;
+
+/** Flattens any array recursively */
+export type Flatten<List extends any[], Memory extends any[] = []> = List extends []
+	? /** return Memory if List is empty */ Memory
+	: List extends [infer Head, ...infer Rest]
+	? Head extends any[] // check for nested array
+		? Flatten<[...Head, ...Rest], Memory>
+		: Flatten<Rest, [...Memory, Head]>
+	: never;
 
 /** Joins a list of string with custom delimiter */
 export type Join<
@@ -90,8 +121,7 @@ export type PartialOmit<
 	T,
 	Keys extends keyof T,
 	Saved = { [P in Exclude<keyof T, Keys>]: T[P] },
-	Optional = { [P in keyof T]?: T[P] },
-	Final = Saved & Optional
+	Final = Saved & { [P in keyof T]?: T[P] }
 > = { [P in keyof Final]: Final[P] };
 
 /**
