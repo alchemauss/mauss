@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- ([#90](https://github.com/alchemauss/mauss/pull/90)) add `curry` function in core module
 - ([#86](https://github.com/alchemauss/mauss/pull/86)) strongly type `debounce` and `throttle`
 - ([#81](https://github.com/alchemauss/mauss/pull/81)) add fallback parameter to `tryNumber`
 - ([#79](https://github.com/alchemauss/mauss/pull/79)) change `.y*ml` prettier formatting options
