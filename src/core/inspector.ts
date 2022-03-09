@@ -1,4 +1,4 @@
-import type { Filter, Split } from '../typings';
+import type { Filter, Split, WhenAny, WhenUnknown } from '../typings';
 
 const patterns = {
 	'date:complete': /\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+([+-][0-2]\d:[0-5]\d|Z)/,
@@ -17,8 +17,14 @@ type Primitives = {
 	symbol(x: symbol, y: symbol): number;
 	object(x: object, y: object): number;
 };
+
 type Customized = {
-	key(k: string): <T extends Record<string, any>>(x: T, y: T) => number;
+	key<Identifier extends string>(
+		identifier: Identifier
+	): <X extends Record<string, any>, Y extends Record<string, any>>(
+		x: WhenAny<X[Identifier], never, WhenUnknown<X[Identifier], never, X>>,
+		y: WhenAny<Y[Identifier], never, WhenUnknown<Y[Identifier], never, Y>>
+	) => number;
 };
 
 type PatternKeys = keyof typeof patterns;
@@ -73,8 +79,6 @@ export const compare: Comparisons & { wildcard(x: any, y: any): number } = {
 		return constrained(tx, ty);
 	},
 };
-
-compare;
 
 export function comparator(x: Record<any, any>, y: Record<any, any>): number {
 	const common = [...new Set([...Object.keys(x), ...Object.keys(y)])].filter(
