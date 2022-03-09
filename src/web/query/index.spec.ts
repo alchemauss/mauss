@@ -1,13 +1,17 @@
 import { suite } from 'uvu';
 import assert from 'uvu/assert';
+
 import qsd from './decoder';
 import qse from './encoder';
 
-const basics = [suite('query:decoder'), suite('query:encoder')];
+const basics = {
+	decoder: suite('query:decoder'),
+	encoder: suite('query:encoder'),
+};
 
 // ---- decoder ----
 
-basics[0]('decode query string to object', () => {
+basics.decoder('decode query string to object', () => {
 	const pairs = [
 		['?hi=mom&hello=world', { hi: 'mom', hello: 'world' }],
 		['fam=mom&fam=dad&fam=sis', { fam: ['mom', 'dad', 'sis'] }],
@@ -21,7 +25,7 @@ basics[0]('decode query string to object', () => {
 
 // ---- encoder ----
 
-basics[1]('encode object to query string', () => {
+basics.encoder('encode object to query string', () => {
 	let payload: string = 'dynamic';
 	const pairs = [
 		[{ hi: 'mom', hello: 'world' }, 'hi=mom&hello=world'],
@@ -34,4 +38,4 @@ basics[1]('encode object to query string', () => {
 	}
 });
 
-basics.forEach((v) => v.run());
+Object.values(basics).forEach((v) => v.run());
