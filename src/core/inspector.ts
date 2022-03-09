@@ -1,5 +1,12 @@
 import type { Filter, Split } from '../typings';
 
+const patterns = {
+	'date:complete': /\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+([+-][0-2]\d:[0-5]\d|Z)/,
+	'date:time': /\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z)/,
+	date: /\d{4}-[01]\d-[0-3]\d/,
+	time: /[0-2]\d:[0-5]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z)/,
+};
+
 type Wildcard = (x: any, y: any) => number;
 type Primitives = {
 	undefined: (x: undefined, y: undefined) => number;
@@ -11,20 +18,15 @@ type Primitives = {
 	object: (x: object, y: object) => number;
 };
 
-const patterns = {
-	'date:complete': /\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+([+-][0-2]\d:[0-5]\d|Z)/,
-	'date:time': /\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z)/,
-	date: /\d{4}-[01]\d-[0-3]\d/,
-	time: /[0-2]\d:[0-5]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z)/,
-};
-
 type PatternKeys = keyof typeof patterns;
 type Categories = Split<PatternKeys, ':'>[0];
 type Prefixed<K extends string> = K extends `${infer P}:${string}` ? Filter<P, Categories> : K;
-type Comparisons = Primitives & { [K in Prefixed<PatternKeys>]: (x: string, y: string) => number };
+type Patterned = { [K in Prefixed<PatternKeys>]: (x: string, y: string) => number };
+type Comparisons = Primitives & Patterned;
 export const compare: Comparisons & { wildcard: (x: any, y: any) => number } = {
 	date: (x, y) => new Date(y).getTime() - new Date(x).getTime(),
 	time: (x, y) => Date.parse(`2017/08/28 ${y}`) - Date.parse(`2017/08/28 ${x}`),
+
 	// primitives
 	undefined: (x) => (x ? -1 : 1),
 	boolean: (x, y) => +y - +x,
