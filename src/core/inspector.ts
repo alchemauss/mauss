@@ -9,13 +9,13 @@ const patterns = {
 
 type Wildcard = (x: any, y: any) => number;
 type Primitives = {
-	undefined: (x: undefined, y: undefined) => number;
-	boolean: (x: boolean, y: boolean) => number;
-	number: (x: number, y: number) => number;
-	string: (x: string, y: string) => number;
-	bigint: (x: bigint, y: bigint) => number;
-	symbol: (x: symbol, y: symbol) => number;
-	object: (x: object, y: object) => number;
+	undefined(x: undefined, y: undefined): number;
+	boolean(x: boolean, y: boolean): number;
+	number(x: number, y: number): number;
+	string(x: string, y: string): number;
+	bigint(x: bigint, y: bigint): number;
+	symbol(x: symbol, y: symbol): number;
+	object(x: object, y: object): number;
 };
 type Customized = {
 	key(k: string): <T extends Record<string, any>>(x: T, y: T) => number;
@@ -26,7 +26,7 @@ type Categories = Split<PatternKeys, ':'>[0];
 type Prefixed<K extends string> = K extends `${infer P}:${string}` ? Filter<P, Categories> : K;
 type Patterned = { [K in Prefixed<PatternKeys>]: (x: string, y: string) => number };
 type Comparisons = Primitives & Customized & Patterned;
-export const compare: Comparisons & { wildcard: (x: any, y: any) => number } = {
+export const compare: Comparisons & { wildcard(x: any, y: any): number } = {
 	// patterned
 	date: (x, y) => new Date(y).getTime() - new Date(x).getTime(),
 	time: (x, y) => Date.parse(`2017/08/28 ${y}`) - Date.parse(`2017/08/28 ${x}`),
@@ -73,6 +73,8 @@ export const compare: Comparisons & { wildcard: (x: any, y: any) => number } = {
 		return constrained(tx, ty);
 	},
 };
+
+compare;
 
 export function comparator(x: Record<any, any>, y: Record<any, any>): number {
 	const common = [...new Set([...Object.keys(x), ...Object.keys(y)])].filter(
