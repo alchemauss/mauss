@@ -17,15 +17,24 @@ type Primitives = {
 	symbol: (x: symbol, y: symbol) => number;
 	object: (x: object, y: object) => number;
 };
+type Customized = {
+	key(k: string): <T extends Record<string, any>>(x: T, y: T) => number;
+};
 
 type PatternKeys = keyof typeof patterns;
 type Categories = Split<PatternKeys, ':'>[0];
 type Prefixed<K extends string> = K extends `${infer P}:${string}` ? Filter<P, Categories> : K;
 type Patterned = { [K in Prefixed<PatternKeys>]: (x: string, y: string) => number };
-type Comparisons = Primitives & Patterned;
+type Comparisons = Primitives & Customized & Patterned;
 export const compare: Comparisons & { wildcard: (x: any, y: any) => number } = {
+	// patterned
 	date: (x, y) => new Date(y).getTime() - new Date(x).getTime(),
 	time: (x, y) => Date.parse(`2017/08/28 ${y}`) - Date.parse(`2017/08/28 ${x}`),
+
+	// customized
+	key(k) {
+		return (x, y) => this.object(x[k], y[k]);
+	},
 
 	// primitives
 	undefined: (x) => (x ? -1 : 1),
@@ -40,6 +49,7 @@ export const compare: Comparisons & { wildcard: (x: any, y: any) => number } = {
 		}
 		return x.localeCompare(y);
 	},
+
 	// object + null
 	object(x, y) {
 		if (x === null) return 1;
