@@ -27,7 +27,7 @@ export function parse(source: CookieInput = '') {
 		if (!trimmed || trimmed.slice(-1) === '=') continue;
 		const [name, value] = trimmed.split('=');
 		const quoted = value[0] === '"' && value.slice(-1) === '"';
-		const sliced = value.slice(quoted ? 1 : 0, quoted ? -1 : 0);
+		const sliced = value.slice(quoted ? 1 : 0, quoted ? -1 : void 0);
 		jar[name] = decodeURIComponent(sliced);
 	}
 	return {
