@@ -1,4 +1,7 @@
-interface CookieOption {
+/** Possible cookie inputs, `null | undefined` from headers */
+type CookieInput = string | null | undefined;
+
+interface CookieOptions {
 	/** Expiry, number in days */
 	expires?: number;
 	/** MaxAge, number in days */
@@ -15,7 +18,7 @@ interface CookieOption {
 	sameSite?: 'Strict' | 'Lax' | 'None';
 }
 
-export function parse(source: string | undefined = '') {
+export function parse(source: CookieInput = '') {
 	if (!source && typeof window !== 'undefined') source = document.cookie;
 
 	const jar: Map<string, any> = new Map();
@@ -41,7 +44,7 @@ export function parse(source: string | undefined = '') {
  * @param name cookie value to get
  * @returns the value of cookie name and empty string if it doesn't exist
  */
-export function raw(source: string, name: string, trimQuoted = false): string {
+export function raw(source: CookieInput, name: string, trimQuoted = false): string {
 	if (!name || !source) return '';
 	for (let i = 0, c = 0; i < source.length; i++, c = 0) {
 		if (name[c] !== source[i]) continue;
@@ -62,11 +65,11 @@ export function raw(source: string, name: string, trimQuoted = false): string {
 /**
  * @param name name for cookie
  * @param value value to be saved as cookie name
- * @param options cookie settings, @see CookieOption type definition
+ * @param options cookie settings, @see CookieOptions type definition
  * @returns the complete 'Set-Cookie' value
  */
-export function create(name: string, value: string, options: CookieOption = {}) {
-	const { maxAge, expires, path, domain, sameSite, secure, httpOnly }: CookieOption = {
+export function create(name: string, value: string, options: CookieOptions = {}) {
+	const { maxAge, expires, path, domain, sameSite, secure, httpOnly }: CookieOptions = {
 		sameSite: 'Lax',
 		secure: false,
 		httpOnly: true,
@@ -103,10 +106,10 @@ export function create(name: string, value: string, options: CookieOption = {}) 
 
 /**
  * @param values object of string pair as name and value for cookies
- * @param options cookie settings, @see CookieOption type definition
+ * @param options cookie settings, @see CookieOptions type definition
  * @returns array of the complete 'Set-Cookie' values
  */
-export function bulk(values: Record<string, string>, options: CookieOption = {}) {
+export function bulk(values: Record<string, string>, options: CookieOptions = {}) {
 	return Object.entries(values).map(([name, value]) => create(name, value, options));
 }
 
