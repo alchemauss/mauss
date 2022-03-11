@@ -21,21 +21,21 @@ interface CookieOptions {
 export function parse(source: CookieInput = '') {
 	if (!source && typeof window !== 'undefined') source = document.cookie;
 
-	const jar: Map<string, any> = new Map();
+	const jar = Object.create(null);
 	for (const cookie of source ? source.split(';') : []) {
 		const trimmed = cookie.trim();
 		if (!trimmed || trimmed.slice(-1) === '=') continue;
 		const [name, value] = trimmed.split('=');
 		const quoted = value[0] === '"' && value.slice(-1) === '"';
 		const sliced = value.slice(quoted ? 1 : 0, quoted ? -1 : 0);
-		jar.set(name, decodeURIComponent(sliced));
+		jar[name] = decodeURIComponent(sliced);
 	}
 	return {
-		has: (key: string) => jar.has(key),
-		get: (key: string) => jar.get(key),
-		keys: () => jar.keys(),
-		values: () => jar.values(),
-		entries: () => jar.entries(),
+		has: (key: string) => key in jar,
+		get: (key: string) => jar[key],
+		keys: () => Object.keys(jar),
+		values: () => Object.values(jar),
+		entries: () => Object.entries(jar),
 	};
 }
 
