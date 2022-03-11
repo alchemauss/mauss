@@ -1,3 +1,20 @@
+interface CookieOption {
+	/** Expiry, number in days */
+	expires?: number;
+	/** MaxAge, number in days */
+	maxAge?: number;
+	/** Domain, default to current document URL */
+	domain?: string;
+	/** Path, defaults to '/' */
+	path?: string;
+	/** HttpOnly, defaults to false */
+	secure?: boolean;
+	/** HttpOnly, defaults to true */
+	httpOnly?: boolean;
+	/** SameSite, defaults to 'Strict' */
+	sameSite?: 'Strict' | 'Lax' | 'None';
+}
+
 export function parse(source: string | undefined = '') {
 	if (!source && typeof window !== 'undefined') source = document.cookie;
 
@@ -11,34 +28,35 @@ export function parse(source: string | undefined = '') {
 		jar.set(name, decodeURIComponent(sliced));
 	}
 	return {
-		/**
-		 * Get raw value of cookie
-		 * @param name cookie value to get
-		 * @returns the value of cookie name and empty string if it doesn't exist
-		 */
-		raw(name: string, trimQuoted = false): string {
-			if (!name || !source) return '';
-			for (let i = 0, c = 0; i < source.length; i++, c = 0) {
-				if (name[c] !== source[i]) continue;
-				if (i === 0 || source[i - 1] === ' ') {
-					while (source[i] !== '=' && name[c++] === source[i++]);
-					if (source[i] !== '=') continue;
-					let end = i + 1;
-					while (source[end] !== ';' && end < source.length) end++;
-					const quoted = source[i + 1] === '"' && source[end] === '"';
-					const inc = quoted && trimQuoted ? 2 : 1;
-					const dec = quoted && trimQuoted ? 1 : 0;
-					return source.slice(i + inc, end - dec);
-				}
-			}
-			return '';
-		},
 		has: (key: string) => jar.has(key),
 		get: (key: string) => jar.get(key),
 		keys: () => jar.keys(),
 		values: () => jar.values(),
 		entries: () => jar.entries(),
 	};
+}
+
+/**
+ * Get raw value of cookie
+ * @param name cookie value to get
+ * @returns the value of cookie name and empty string if it doesn't exist
+ */
+export function raw(source: string, name: string, trimQuoted = false): string {
+	if (!name || !source) return '';
+	for (let i = 0, c = 0; i < source.length; i++, c = 0) {
+		if (name[c] !== source[i]) continue;
+		if (i === 0 || source[i - 1] === ' ') {
+			while (source[i] !== '=' && name[c++] === source[i++]);
+			if (source[i] !== '=') continue;
+			let end = i + 1;
+			while (source[end] !== ';' && end < source.length) end++;
+			const quoted = source[i + 1] === '"' && source[end] === '"';
+			const inc = quoted && trimQuoted ? 2 : 1;
+			const dec = quoted && trimQuoted ? 1 : 0;
+			return source.slice(i + inc, end - dec);
+		}
+	}
+	return '';
 }
 
 /**
@@ -102,20 +120,3 @@ export function remove(name: string): string {
 	if (typeof window !== 'undefined') document.cookie = expire;
 	return expire;
 }
-
-type CookieOption = {
-	/** Expiry, number in days */
-	expires?: number;
-	/** MaxAge, number in days */
-	maxAge?: number;
-	/** Domain, default to current document URL */
-	domain?: string;
-	/** Path, defaults to '/' */
-	path?: string;
-	/** HttpOnly, defaults to false */
-	secure?: boolean;
-	/** HttpOnly, defaults to true */
-	httpOnly?: boolean;
-	/** SameSite, defaults to 'Strict' */
-	sameSite?: 'Strict' | 'Lax' | 'None';
-};
