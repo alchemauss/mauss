@@ -42,10 +42,12 @@ export function parse(source: CookieInput = '') {
 
 /**
  * Get raw value of cookie
- * @param name cookie value to get
+ * @param source cookie source to parse
+ * @param name cookie name to search for
+ * @param trim remove quotes in cookie value, if there is any
  * @returns the value of cookie name and empty string if it doesn't exist
  */
-export function raw(source: CookieInput, name: string, trimQuoted = false): string {
+export function raw(source: CookieInput, name: string, trim = false): string {
 	if (!name || !source) return '';
 	for (let i = 0, c = 0; i < source.length; i++, c = 0) {
 		if (name[c] !== source[i]) continue;
@@ -55,9 +57,9 @@ export function raw(source: CookieInput, name: string, trimQuoted = false): stri
 			let end = i + 1;
 			while (source[end] !== ';' && end < source.length) end++;
 			const quoted = source[i + 1] === '"' && source[end] === '"';
-			const inc = quoted && trimQuoted ? 2 : 1;
-			const dec = quoted && trimQuoted ? 1 : 0;
-			return source.slice(i + inc, end - dec);
+			i += trim && quoted ? 2 : 1;
+			if (trim && quoted) end -= 1;
+			return source.slice(i, end);
 		}
 	}
 	return '';
