@@ -21,7 +21,8 @@ interface CookieOptions {
 export function parse(source: CookieInput = '') {
 	if (!source && typeof window !== 'undefined') source = document.cookie;
 
-	const jar = Object.create(null);
+	type CookieJar = Record<string, string | undefined>;
+	const jar: CookieJar = Object.create(null);
 	for (const cookie of source ? source.split(';') : []) {
 		const trimmed = cookie.trim();
 		if (!trimmed || trimmed.slice(-1) === '=') continue;
