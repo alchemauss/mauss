@@ -41,14 +41,14 @@ export function parse(source: CookieInput = '') {
 }
 
 /**
- * Get raw value of cookie
+ * Locates a cookie and immediately returns the raw value
  * @param source cookie source to parse
  * @param name cookie name to search for
  * @param trim remove quotes in cookie value, if there is any
  * @returns the value of cookie name and empty string if it doesn't exist
  */
-export function raw(source: CookieInput, name: string, trim = false): string {
-	if (!name || !source) return '';
+export function raw(source: CookieInput, name: string, trim = false) {
+	if (!name || !source) return void 0;
 	for (let i = 0, c = 0; i < source.length; i++, c = 0) {
 		if (name[c] !== source[i]) continue;
 		if (i === 0 || source[i - 1] === ' ') {
@@ -62,13 +62,13 @@ export function raw(source: CookieInput, name: string, trim = false): string {
 			return source.slice(i, end);
 		}
 	}
-	return '';
+	return void 0;
 }
 
 /**
  * @param name name for cookie
  * @param value value to be saved as cookie name
- * @param options cookie settings, @see CookieOptions type definition
+ * @param options cookie settings
  * @returns the complete 'Set-Cookie' value
  */
 export function create(name: string, value: string, options: CookieOptions = {}) {
