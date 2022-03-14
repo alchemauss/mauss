@@ -25,11 +25,19 @@ export function parse(source: CookieInput = '') {
 	const jar: CookieJar = Object.create(null);
 	for (const cookie of source ? source.split(';') : []) {
 		const trimmed = cookie.trim();
-		if (!trimmed || trimmed.slice(-1) === '=') continue;
-		const [name, value] = trimmed.split('=');
-		const quoted = value[0] === '"' && value.slice(-1) === '"';
-		const sliced = value.slice(quoted ? 1 : 0, quoted ? -1 : void 0);
-		jar[name] = decodeURIComponent(sliced);
+		const delimiter = trimmed.indexOf('=');
+		if (!trimmed || delimiter === trimmed.length - 1) continue;
+
+		const name = trimmed.slice(0, delimiter).trim();
+		let value = trimmed.slice(delimiter + 1).trim();
+		const quotes = value[0] === value[value.length - 1];
+		if (value[0] === '"' && quotes) value = value.slice(1, -1);
+
+		try {
+			jar[name] = decodeURIComponent(value);
+		} catch (error) {
+			jar[name] = value; // assign value as-is
+		}
 	}
 	return {
 		has: (key: string) => key in jar,
@@ -72,12 +80,15 @@ export function raw(source: CookieInput, name: string, trim = false) {
  * @returns the complete 'Set-Cookie' value
  */
 export function create(name: string, value: string, options: CookieOptions = {}) {
-	const { maxAge, expires, path, domain, sameSite, secure, httpOnly }: CookieOptions = {
-		sameSite: 'Lax',
-		secure: false,
-		httpOnly: true,
-		...options,
-	};
+	const {
+		path = '/',
+		domain,
+		maxAge,
+		expires = 6,
+		sameSite = 'Lax',
+		secure = false,
+		httpOnly = true,
+	} = options;
 
 	if (/[\s\t()<>@,;:\\"/\[\]?={}\u0080-\u00ff]/.test(name)) {
 		name = name.replace(/[\s\t]/g, '-').replace(/-+/g, '-');
@@ -98,7 +109,7 @@ export function create(name: string, value: string, options: CookieOptions = {})
 		biscuit = `${biscuit}; Expires=${date.toUTCString()}`;
 	}
 
-	biscuit = `${biscuit}; Path=${path || '/'}`;
+	biscuit = `${biscuit}; Path=${path}`;
 	biscuit = `${biscuit}; SameSite=${sameSite || 'Lax'}`;
 	if (domain) biscuit = `${biscuit}; Domain=${domain}`;
 	if (httpOnly) biscuit = `${biscuit}; HttpOnly`;
