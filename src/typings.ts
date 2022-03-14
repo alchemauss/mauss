@@ -1,8 +1,3 @@
-/* <-- Type Expanders: Prefixed with `Also` --> */
-
-/** Expand T to also be an array */
-export type AlsoArray<T> = T | T[];
-
 /* <-- Compact Type Helpers --> */
 
 /** Generic for making any arbitrary function */
