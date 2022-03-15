@@ -1,5 +1,6 @@
 /* <-- Type Level Programming --> */
 
+/** Extends a list to a certain specified length */
 export type Extend<Size extends number, List extends any[] = []> = List['length'] extends Size
 	? List
 	: Extend<Size, [...List, any]>;
@@ -38,6 +39,7 @@ export type Progressive<List extends any[]> = List extends [...infer Rest, any]
 	? List | (Rest['length'] extends 1 ? Rest : Progressive<Rest>)
 	: List;
 
+/** Slices a list beginning from the starting index */
 export type Slice<List extends any[], Start extends number = 0> = List extends [
 	...Extend<Start>,
 	...infer Sliced

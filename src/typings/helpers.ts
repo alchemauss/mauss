@@ -6,8 +6,10 @@ export type AnyFunction<P extends any[] = any[], R = any> = (...parameters: P) =
 /** Allow either A or B but not both at the same time */
 export type Either<A, B> = Only<A, B> | Only<B, A>;
 
+/** Strongly-type array of tuple from object in `Object.entries` */
 export type Entries<T> = Array<{ [K in keyof T]: [keyof PickByValue<T, T[K]>, T[K]] }[keyof T]>;
 
+/** Remove type from T that does not satisfy type of Validator */
 export type Filter<T, Validator> = T extends Validator ? T : never;
 
 /** Get the first item from an array, fallback defaults to `never` */
@@ -25,13 +27,16 @@ export type JSONState<T> = { [P in keyof T]: T[P] extends { toJSON: () => infer 
 /** Get the last item from an array, fallback defaults to `never` */
 export type Last<T extends any[], Fallback = never> = T extends [...any[], infer L] ? L : Fallback;
 
+/** Defines a type with at least one item */
 export type NonEmptyArray<T> = [T, ...Array<T>];
 
 /** Disallow any properties from V when defining U */
 export type Only<U, V> = { [P in keyof U]: U[P] } & Omit<{ [P in keyof V]?: never }, keyof U>;
 
+/** Overwrite properties in U with values from V */
 export type Overwrite<U, V> = Omit<U, keyof V> & V;
 
+/** Pick the properties of T that satisfies type of V */
 export type PickByValue<T, V> = Pick<T, { [K in keyof T]: T[K] extends V ? K : never }[keyof T]>;
 
 /** Reverses any tuple values */
@@ -40,6 +45,7 @@ export type Reverse<T extends any[]> = T extends [infer H, ...infer R] ? [...Rev
 /** Strict properties narrowing and remove Index Signatures */
 export type Strict<T> = { [P in keyof T as {} extends Record<P, any> ? never : P]: T[P] };
 
+/** Workaround for a type not fulfilling index signature constraint */
 export type Typify<T> = { [P in keyof T]: Typify<T[P]> };
 
 /** Any function that has exactly one parameter */
