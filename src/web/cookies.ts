@@ -56,19 +56,25 @@ export function parse(source: CookieInput = '') {
  * @returns the value of cookie name and empty string if it doesn't exist
  */
 export function raw(source: CookieInput, name: string, trim = false) {
-	if (!name || !source) return void 0;
+	if (!source || !name) return void 0;
 	for (let i = 0, c = 0; i < source.length; i++, c = 0) {
-		if (name[c] !== source[i]) continue;
-		if (i === 0 || source[i - 1] === ' ') {
-			while (source[i] !== '=' && name[c++] === source[i++]);
-			if (source[i] !== '=') continue;
-			let end = i + 1;
-			while (source[end] !== ';' && end < source.length) end++;
-			const quoted = source[i + 1] === '"' && source[end] === '"';
-			i += trim && quoted ? 2 : 1;
-			if (trim && quoted) end -= 1;
-			return source.slice(i, end);
+		if (source[i] !== name[0]) continue;
+		let matched = true;
+		while (matched && source[i] !== '=') {
+			matched = source[i++] === name[c++];
+			if (c === name.length) {
+				while (source[i] === ' ') i++;
+				matched = source[i] === '=';
+			}
 		}
+		if (!matched) continue;
+
+		let end = i + 1;
+		while (source[end] !== ';' && end < source.length) end++;
+		const quoted = source[i + 1] === '"' && source[end] === '"';
+		i += trim && quoted ? 2 : 1;
+		if (trim && quoted) end -= 1;
+		return source.slice(i, end);
 	}
 	return void 0;
 }
