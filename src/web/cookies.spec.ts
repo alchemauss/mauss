@@ -52,4 +52,32 @@ basics.parse('parse ignore missing values', () => {
 // 	assert.equal(set, `foo=bar; Expires=${now}; Path=/; SameSite=Lax; HttpOnly`);
 // });
 
+// ---- raw ----
+
+basics.raw('raw basic input', () => {
+	const header = 'foo=bar;hi=mom;hello=world';
+	assert.equal(cookies.raw(header, 'foo'), 'bar');
+	assert.equal(cookies.raw(header, 'hi'), 'mom');
+	assert.equal(cookies.raw(header, 'hello'), 'world');
+});
+basics.raw('raw ignore spaces', () => {
+	const header = 'foo   = bar;  hi=  mom';
+	assert.equal(cookies.raw(header, 'foo'), ' bar');
+	assert.equal(cookies.raw(header, 'hi'), '  mom');
+});
+basics.raw('raw handle quoted', () => {
+	const header = 'foo="bar=123&hi=mom"';
+	assert.equal(cookies.raw(header, 'foo'), '"bar=123&hi=mom"');
+});
+basics.raw('raw escaped values', () => {
+	const header = 'foo=%20%22%2c%2f%3b';
+	assert.equal(cookies.raw(header, 'foo'), '%20%22%2c%2f%3b');
+});
+basics.raw('raw return empty values', () => {
+	const header = 'foo=;bar= ;huh';
+	assert.ok(!cookies.raw(header, 'foo'));
+	assert.ok(cookies.raw(header, 'bar'));
+	assert.ok(!cookies.raw(header, 'huh'));
+});
+
 Object.values(basics).forEach((v) => v.run());
