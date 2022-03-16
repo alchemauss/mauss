@@ -46,11 +46,26 @@ basics.parse('parse ignore missing values', () => {
 
 // ---- create ----
 
-// basics.create('generate Set-Cookie value', () => {
-// 	const set = cookies.create('foo', 'bar', { expires: 0 });
-// 	const now = new Date().toUTCString();
-// 	assert.equal(set, `foo=bar; Expires=${now}; Path=/; SameSite=Lax; HttpOnly`);
-// });
+basics.create('generate Set-Cookie value to set cookie', () => {
+	const value = cookies.create('foo', 'bar');
+	assert.match(value, /foo=bar; Expires=(.*); Path=\/; SameSite=Lax; HttpOnly/);
+});
+
+// ---- remove ----
+
+basics.remove('generate Set-Cookie value to remove cookie', () => {
+	const value = cookies.remove('foo');
+	assert.match(value, /foo=; Path=\/; Expires=Thu, 01 Jan 1970 00:00:01 GMT/);
+});
+
+// ---- bulk ----
+
+basics.bulk('bulk generate Set-Cookie values', () => {
+	const data = { foo: 'bar' };
+	for (const value of cookies.bulk(data)) {
+		assert.match(value, /(.*)=(.*); Expires=(.*); Path=\/; SameSite=Lax; HttpOnly/);
+	}
+});
 
 // ---- raw ----
 
