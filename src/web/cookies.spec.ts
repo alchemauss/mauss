@@ -18,6 +18,16 @@ basics.parse('parse basic input', () => {
 	assert.equal(jar.get('hi'), 'mom');
 	assert.equal(jar.get('hello'), 'world');
 });
+basics.parse('parse nullish header', () => {
+	let header: null | undefined = null;
+	const jar = cookies.parse(header);
+	assert.ok(!jar.has('foo'));
+	assert.ok(!jar.has('hi'));
+	assert.ok(!jar.has('hello'));
+	assert.equal(jar.get('foo'), undefined);
+	assert.equal(jar.get('hi'), undefined);
+	assert.equal(jar.get('hello'), undefined);
+});
 basics.parse('parse ignore spaces', () => {
 	const jar = cookies.parse('foo   = bar;  hi=     mom');
 	assert.equal(jar.get('foo'), 'bar');
@@ -74,6 +84,12 @@ basics.raw('raw basic input', () => {
 	assert.equal(cookies.raw(header, 'foo'), 'bar');
 	assert.equal(cookies.raw(header, 'hi'), 'mom');
 	assert.equal(cookies.raw(header, 'hello'), 'world');
+});
+basics.raw('raw nullish header', () => {
+	let header: null | undefined = null;
+	assert.ok(!cookies.raw(header, 'foo'));
+	assert.ok(!cookies.raw(header, 'hi'));
+	assert.ok(!cookies.raw(header, 'hello'));
 });
 basics.raw('raw ignore spaces', () => {
 	const header = 'foo   = bar;  hi=  mom';
