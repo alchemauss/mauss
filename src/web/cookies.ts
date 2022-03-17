@@ -2,19 +2,39 @@
 type CookieInput = string | null | undefined;
 
 interface CookieOptions {
-	/** Expiry, number in days */
+	/**
+	 * Expiry in days
+	 * @default 6
+	 */
 	expires?: number;
-	/** MaxAge, number in days */
+	/**
+	 * MaxAge in days
+	 * @default undefined */
 	maxAge?: number;
-	/** Domain, default to current document URL */
+	/**
+	 * Domain
+	 * @default undefined
+	 */
 	domain?: string;
-	/** Path, defaults to '/' */
+	/**
+	 * Path
+	 * @default '/'
+	 */
 	path?: string;
-	/** HttpOnly, defaults to false */
+	/**
+	 * HttpOnly
+	 * @default false
+	 */
 	secure?: boolean;
-	/** HttpOnly, defaults to true */
+	/**
+	 * HttpOnly
+	 * @default true
+	 */
 	httpOnly?: boolean;
-	/** SameSite, defaults to 'Strict' */
+	/**
+	 * SameSite
+	 * @default 'Strict'
+	 */
 	sameSite?: 'Strict' | 'Lax' | 'None';
 }
 
@@ -85,8 +105,10 @@ export function raw(source: CookieInput, name: string, trim = false) {
  * @param options cookie settings
  * @returns the complete 'Set-Cookie' value
  */
-export function create(name: string, value: string, options: CookieOptions = {}) {
-	const {
+export function create(
+	name: string,
+	value: string,
+	{
 		path = '/',
 		domain,
 		maxAge,
@@ -94,8 +116,8 @@ export function create(name: string, value: string, options: CookieOptions = {})
 		sameSite = 'Lax',
 		secure = false,
 		httpOnly = true,
-	} = options;
-
+	}: CookieOptions = {}
+) {
 	if (/[\s\t()<>@,;:\\"/\[\]?={}\u0080-\u00ff]/.test(name)) {
 		name = name.replace(/[\s\t]/g, '-').replace(/-+/g, '-');
 		name = name.replace(/[()<>@,;:\\"/\[\]?={}\u0080-\u00ff]/g, '');
@@ -126,7 +148,7 @@ export function create(name: string, value: string, options: CookieOptions = {})
 
 /**
  * @param values object of string pair as name and value for cookies
- * @param options cookie settings, @see CookieOptions type definition
+ * @param options cookie settings
  * @returns array of the complete 'Set-Cookie' values
  */
 export function bulk(values: Record<string, string>, options: CookieOptions = {}) {
