@@ -105,45 +105,45 @@ export function raw(source: CookieInput, name: string, trim = false) {
  * @param options cookie settings
  * @returns the complete 'Set-Cookie' value
  */
-export function create(
-	name: string,
-	value: string,
-	{
-		path = '/',
-		domain,
-		maxAge,
-		expires = 6,
-		sameSite = 'Lax',
-		secure = false,
-		httpOnly = true,
-	}: CookieOptions = {}
-) {
-	if (/[\s\t()<>@,;:\\"/\[\]?={}\u0080-\u00ff]/.test(name)) {
-		name = name.replace(/[\s\t]/g, '-').replace(/-+/g, '-');
-		name = name.replace(/[()<>@,;:\\"/\[\]?={}\u0080-\u00ff]/g, '');
-		console.warn(`Illegal cookie name, creating "${name}" instead`);
-	}
+export function create({
+	path = '/',
+	domain,
+	maxAge,
+	expires = 6,
+	sameSite = 'Lax',
+	secure = false,
+	httpOnly = true,
+}: CookieOptions = {}) {
+	let crumbs = `; Path=${path}`;
+	crumbs += `; SameSite=${sameSite}`;
+	if (domain) crumbs += `; Domain=${domain}`;
+	if (httpOnly) crumbs += `; HttpOnly`;
+	if (secure || sameSite === 'None') crumbs += `; Secure`;
 
-	let biscuit = `${name}=${encodeURIComponent(value)}`;
-	const date = new Date();
-	if (maxAge /** Max-Age has precedence over Expires */) {
-		date.setTime(date.getTime() + maxAge * 24 * 60 * 60 * 1e3);
-		biscuit = `${biscuit}; Max-Age=${date}`;
-	} else if (expires) {
-		date.setTime(date.getTime() + expires * 24 * 60 * 60 * 1e3);
-		biscuit = `${biscuit}; Expires=${date.toUTCString()}`;
-	} /** Defaults to expiring in 6 hours */ else {
-		date.setTime(date.getTime() + 6 * 60 * 60 * 1e3);
-		biscuit = `${biscuit}; Expires=${date.toUTCString()}`;
-	}
+	const HOUR = 36e5; // ONE HOUR (60 * 60 * 1e3)
 
-	biscuit = `${biscuit}; Path=${path}`;
-	biscuit = `${biscuit}; SameSite=${sameSite || 'Lax'}`;
-	if (domain) biscuit = `${biscuit}; Domain=${domain}`;
-	if (httpOnly) biscuit = `${biscuit}; HttpOnly`;
-	if (secure || sameSite === 'None') biscuit = `${biscuit}; Secure`;
+	return (name: string, value: string) => {
+		if (/[\s\t()<>@,;:\\"/\[\]?={}\u0080-\u00ff]/.test(name)) {
+			name = name.replace(/[\s\t]/g, '-').replace(/-+/g, '-');
+			name = name.replace(/[()<>@,;:\\"/\[\]?={}\u0080-\u00ff]/g, '');
+			console.warn(`Illegal cookie name, creating "${name}" instead`);
+		}
 
-	return biscuit;
+		let biscuit = `${name}=${encodeURIComponent(value)}`;
+		const date = new Date();
+		if (maxAge /** Max-Age has precedence over Expires */) {
+			date.setTime(date.getTime() + maxAge * 24 * HOUR);
+			biscuit = `${biscuit}; Max-Age=${date}`;
+		} else if (expires) {
+			date.setTime(date.getTime() + expires * 24 * HOUR);
+			biscuit = `${biscuit}; Expires=${date.toUTCString()}`;
+		} /** Defaults to expiring in 6 hours */ else {
+			date.setTime(date.getTime() + 6 * HOUR);
+			biscuit = `${biscuit}; Expires=${date.toUTCString()}`;
+		}
+
+		return `${biscuit}${crumbs}`;
+	};
 }
 
 /**
@@ -152,7 +152,8 @@ export function create(
  * @returns array of the complete 'Set-Cookie' values
  */
 export function bulk(values: Record<string, string>, options: CookieOptions = {}) {
-	return Object.entries(values).map(([name, value]) => create(name, value, options));
+	const printer = create(options);
+	return Object.entries(values).map(([name, value]) => printer(name, value));
 }
 
 /**

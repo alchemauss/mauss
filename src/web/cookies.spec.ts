@@ -57,8 +57,13 @@ basics.parse('parse ignore missing values', () => {
 // ---- create ----
 
 basics.create('generate Set-Cookie value to set cookie', () => {
-	const value = cookies.create('foo', 'bar');
+	const value = cookies.create()('foo', 'bar');
 	assert.match(value, /foo=bar; Expires=(.*); Path=\/; SameSite=Lax; HttpOnly/);
+});
+basics.create('set Secure attribute for SameSite=None', () => {
+	const printer = cookies.create({ sameSite: 'None' });
+	const value = printer('foo', 'bar');
+	assert.match(value, /foo=bar; Expires=(.*); Path=\/; SameSite=None; HttpOnly; Secure/);
 });
 
 // ---- remove ----
