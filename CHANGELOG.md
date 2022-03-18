@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- ([#95](https://github.com/alchemauss/mauss/pull/95)) overhaul `cookies` namespace in web module
 - ([#90](https://github.com/alchemauss/mauss/pull/90)) add `curry` function in core module
 - ([#86](https://github.com/alchemauss/mauss/pull/86)) strongly type `debounce` and `throttle`
 - ([#81](https://github.com/alchemauss/mauss/pull/81)) add fallback parameter to `tryNumber`
@@ -16,6 +17,9 @@
 
 ### Breaking Changes
 
+- [#95](https://github.com/alchemauss/mauss/pull/95) | Overhauled `cookies` namespace
+  - `raw` method is now a standalone function outside of parsed object
+  - `create` is now a curried function that takes in the options first
 - [#79](https://github.com/alchemauss/mauss/pull/79) | Prettier for `.y*ml` files will now format with spaces and single quotes
 - [#72](https://github.com/alchemauss/mauss/pull/72) | Generic order for `Tuple` is reversed and reduced to only require the final size
 - [#65](https://github.com/alchemauss/mauss/pull/65) | Query string encoder (previously query string pathname maker) is now platform agnostic and does not rely on `window.location`, and returns the generated query string without the leading `?`
