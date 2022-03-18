@@ -22,8 +22,8 @@ type Customized = {
 	key<Identifier extends string>(
 		identifier: Identifier
 	): <X extends Record<string, any>, Y extends Record<string, any>>(
-		x: WhenAny<X[Identifier], never, WhenUnknown<X[Identifier], never, X>>,
-		y: WhenAny<Y[Identifier], never, WhenUnknown<Y[Identifier], never, Y>>
+		x: WhenAny<X[Identifier], X, WhenUnknown<X[Identifier], never, X>>,
+		y: WhenAny<Y[Identifier], Y, WhenUnknown<Y[Identifier], never, Y>>
 	) => number;
 };
 
