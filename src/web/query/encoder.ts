@@ -6,9 +6,13 @@ type Bound = { [k: string | number]: BoundValues | readonly BoundValues[] };
 /**
  * qse - query string encoder
  * @param bound object with key-value pair to be updated in the URL
+ * @param transformer function that is applied to the final string if it exists
  * @returns final query string
  */
-export default function qse<T extends Bound>(bound: T): string {
+export default function qse<T extends Bound>(
+	bound: T,
+	transformer = (final: string) => final
+): string {
 	const enc = encodeURIComponent;
 
 	let final = '';
@@ -30,5 +34,5 @@ export default function qse<T extends Bound>(bound: T): string {
 		final += `${k}=${enc(v as Primitives)}`;
 	}
 
-	return final;
+	return final ? transformer(final) : final;
 }
