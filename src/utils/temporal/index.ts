@@ -23,6 +23,9 @@ const word = {
 	],
 };
 
+const str = (v: DateValue) => `${v}`;
+const pad = (v: DateValue, len = 2) => str(v).padStart(len, '0');
+
 const REGEX = /D{1,4}|M{1,4}|YY(?:YY)?|([hHmsAPap])\1?|Z{1,3}|\[([^\]\[]|\[[^\[\]]*\])*\]/g;
 interface FormatOptions {
 	base?: 'UTC';
@@ -37,16 +40,6 @@ export function format({ base }: FormatOptions = {}) {
 		hours: (d) => d[`${method}Hours`](),
 		minutes: (d) => d[`${method}Minutes`](),
 		seconds: (d) => d[`${method}Seconds`](),
-		tzo: (d) => (base === 'UTC' ? 0 : d.getTimezoneOffset()),
-	};
-
-	const s = (v: string | number | Date) => `${v}`;
-	const p = (v: string | number, len = 2) => s(v).padStart(len, '0');
-
-	const marker = (d: Date) => (now.hours(d) < 12 ? 'AM' : 'PM');
-	const timezone = (d: Date) => {
-		const abs = Math.abs(now.tzo(d));
-		return [Math.floor(abs / 60), abs % 60];
 	};
 
 	return (date?: DateValue) => {
@@ -55,48 +48,45 @@ export function format({ base }: FormatOptions = {}) {
 			throw SyntaxError('Invalid Date');
 		}
 
+		const tzo = base === 'UTC' ? 0 : check.getTimezoneOffset();
+		const marker = now.hours(check) < 12 ? 'AM' : 'PM';
+		const timezone = [Math.floor(Math.abs(tzo) / 60), Math.abs(tzo) % 60];
 		const sign = now.tzo(check) > 0 ? '-' : '+';
+
 		const tokens = {
-			D: () => s(now.date(check)),
-			DD: () => p(now.date(check)),
+			D: () => str(now.date(check)),
+			DD: () => pad(now.date(check)),
 			DDD: () => word.days[now.day(check)].slice(0, 3),
 			DDDD: () => word.days[now.day(check)],
-			M: () => s(now.month(check) + 1),
-			MM: () => p(now.month(check) + 1),
+			M: () => str(now.month(check) + 1),
+			MM: () => pad(now.month(check) + 1),
 			MMM: () => word.months[now.month(check)].slice(0, 3),
 			MMMM: () => word.months[now.month(check)],
-			YY: () => s(now.year(check)).slice(2),
-			YYYY: () => s(now.year(check)),
-			H: () => s(now.hours(check)),
-			HH: () => p(now.hours(check)),
-			h: () => s(now.hours(check) % 12 || 12),
-			hh: () => p(now.hours(check) % 12 || 12),
-			m: () => s(now.minutes(check)),
-			mm: () => p(now.minutes(check)),
-			s: () => s(now.seconds(check)),
-			ss: () => p(now.seconds(check)),
+			YY: () => str(now.year(check)).slice(2),
+			YYYY: () => str(now.year(check)),
+			H: () => str(now.hours(check)),
+			HH: () => pad(now.hours(check)),
+			h: () => str(now.hours(check) % 12 || 12),
+			hh: () => pad(now.hours(check) % 12 || 12),
+			m: () => str(now.minutes(check)),
+			mm: () => pad(now.minutes(check)),
+			str: () => str(now.seconds(check)),
+			ss: () => pad(now.seconds(check)),
 			a: marker,
 			p: marker,
 			A: marker,
 			P: marker,
-			Z: () => `${sign}${timezone(check)[0]}`,
-			ZZ: () => {
-				const [h, m] = timezone(check);
-				return `${sign}${p(h)}${p(m)}`;
-			},
-			ZZZ: () => {
-				const [h, m] = timezone(check);
-				return `${sign}${p(h)}:${p(m)}`;
-			},
+			Z: () => `${sign}${timezone[0]}`,
+			ZZ: () => `${sign}${pad(timezone[0])}${timezone[1]}`,
+			ZZZ: () => `${sign}${pad(timezone[0])}:${timezone[1]}`,
 		};
 
-		function replacer($: string, d: Date) {
-			const exe = tokens[$ as keyof typeof tokens];
-			return exe ? exe(d) : $.slice(1, $.length - 1);
-		}
-
-		return function (mask = 'DDDD, DD MMMM YYYY') {
-			return mask.replace(REGEX, ($) => replacer($, check));
+		return (mask = 'DDDD, DD MMMM YYYY') => {
+			return mask.replace(REGEX, ($) => {
+				const exe = tokens[$ as keyof typeof tokens];
+				if (typeof exe === 'string') return exe;
+				return exe ? exe() : $.slice(1, $.length - 1);
+			});
 		};
 	};
 }
