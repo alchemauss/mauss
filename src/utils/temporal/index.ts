@@ -51,7 +51,7 @@ export function format({ base }: FormatOptions = {}) {
 		const tzo = base === 'UTC' ? 0 : check.getTimezoneOffset();
 		const marker = now.hours(check) < 12 ? 'AM' : 'PM';
 		const timezone = [Math.floor(Math.abs(tzo) / 60), Math.abs(tzo) % 60];
-		const sign = now.tzo(check) > 0 ? '-' : '+';
+		const sign = tzo > 0 ? '-' : '+';
 
 		const tokens = {
 			D: () => str(now.date(check)),
