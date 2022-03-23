@@ -26,7 +26,6 @@ const word = {
 const str = (v: DateValue) => `${v}`;
 const pad = (v: DateValue, len = 2) => str(v).padStart(len, '0');
 
-const REGEX = /D{1,4}|M{1,4}|YY(?:YY)?|([hHmsAPap])\1?|Z{1,3}|\[([^\]\[]|\[[^\[\]]*\])*\]/g;
 interface FormatOptions {
 	base?: 'UTC';
 }
@@ -86,11 +85,14 @@ export function format({ base }: FormatOptions = {}) {
 		};
 
 		return (mask = 'DDDD, DD MMMM YYYY') => {
-			return mask.replace(REGEX, ($) => {
-				const exe = tokens[$ as keyof typeof tokens];
-				if (!exe) return $.slice(1, $.length - 1);
-				return typeof exe === 'string' ? exe : exe();
-			});
+			return mask.replace(
+				/D{1,4}|M{1,4}|YY(?:YY)?|([hHmsAPap])\1?|Z{1,3}|\[([^\]\[]|\[[^\[\]]*\])*\]/g,
+				($) => {
+					const exe = tokens[$ as keyof typeof tokens];
+					if (!exe) return $.slice(1, $.length - 1);
+					return typeof exe === 'string' ? exe : exe();
+				}
+			);
 		};
 	};
 }
