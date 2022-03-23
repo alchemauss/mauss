@@ -57,20 +57,24 @@ export function format({ base }: FormatOptions = {}) {
 			DD: () => pad(now.date()),
 			DDD: () => word.days[now.day()].slice(0, 3),
 			DDDD: () => word.days[now.day()],
+
 			M: () => str(now.month() + 1),
 			MM: () => pad(now.month() + 1),
 			MMM: () => word.months[now.month()].slice(0, 3),
 			MMMM: () => word.months[now.month()],
+
 			YY: () => str(now.year()).slice(2),
 			YYYY: () => str(now.year()),
+
 			H: () => str(now.hours()),
 			HH: () => pad(now.hours()),
 			h: () => str(now.hours() % 12 || 12),
 			hh: () => pad(now.hours() % 12 || 12),
 			m: () => str(now.minutes()),
 			mm: () => pad(now.minutes()),
-			str: () => str(now.seconds()),
+			s: () => str(now.seconds()),
 			ss: () => pad(now.seconds()),
+
 			a: marker,
 			p: marker,
 			A: marker,

@@ -32,6 +32,7 @@ basics.format('basic rendering', () => {
 	assert.equal(renderer('hh'), '01');
 	assert.equal(renderer('m'), '2');
 	assert.equal(renderer('mm'), '02');
+	assert.equal(renderer('s'), '3');
 	assert.equal(renderer('ss'), '03');
 
 	assert.equal(renderer('DD/MM/YYYY!'), '08/09/2017!');
