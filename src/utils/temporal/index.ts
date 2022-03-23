@@ -32,46 +32,45 @@ interface FormatOptions {
 }
 export function format({ base }: FormatOptions = {}) {
 	const method = base === 'UTC' ? 'getUTC' : 'get';
-	const now: Record<string, (d: Date) => number> = {
-		date: (d) => d[`${method}Date`](),
-		day: (d) => d[`${method}Day`](),
-		month: (d) => d[`${method}Month`](),
-		year: (d) => d[`${method}FullYear`](),
-		hours: (d) => d[`${method}Hours`](),
-		minutes: (d) => d[`${method}Minutes`](),
-		seconds: (d) => d[`${method}Seconds`](),
-	};
 
 	return (date?: DateValue) => {
-		const check = current(date);
-		if (Number.isNaN(check)) {
-			throw SyntaxError('Invalid Date');
-		}
+		const d = current(date);
+		if (Number.isNaN(+d)) throw SyntaxError('Invalid Date');
 
-		const tzo = base === 'UTC' ? 0 : check.getTimezoneOffset();
-		const marker = now.hours(check) < 12 ? 'AM' : 'PM';
+		const now: Record<string, () => number> = {
+			date: () => d[`${method}Date`](),
+			day: () => d[`${method}Day`](),
+			month: () => d[`${method}Month`](),
+			year: () => d[`${method}FullYear`](),
+			hours: () => d[`${method}Hours`](),
+			minutes: () => d[`${method}Minutes`](),
+			seconds: () => d[`${method}Seconds`](),
+		};
+
+		const tzo = base === 'UTC' ? 0 : d.getTimezoneOffset();
+		const marker = now.hours() < 12 ? 'AM' : 'PM';
 		const timezone = [Math.floor(Math.abs(tzo) / 60), Math.abs(tzo) % 60];
 		const sign = tzo > 0 ? '-' : '+';
 
 		const tokens = {
-			D: () => str(now.date(check)),
-			DD: () => pad(now.date(check)),
-			DDD: () => word.days[now.day(check)].slice(0, 3),
-			DDDD: () => word.days[now.day(check)],
-			M: () => str(now.month(check) + 1),
-			MM: () => pad(now.month(check) + 1),
-			MMM: () => word.months[now.month(check)].slice(0, 3),
-			MMMM: () => word.months[now.month(check)],
-			YY: () => str(now.year(check)).slice(2),
-			YYYY: () => str(now.year(check)),
-			H: () => str(now.hours(check)),
-			HH: () => pad(now.hours(check)),
-			h: () => str(now.hours(check) % 12 || 12),
-			hh: () => pad(now.hours(check) % 12 || 12),
-			m: () => str(now.minutes(check)),
-			mm: () => pad(now.minutes(check)),
-			str: () => str(now.seconds(check)),
-			ss: () => pad(now.seconds(check)),
+			D: () => str(now.date()),
+			DD: () => pad(now.date()),
+			DDD: () => word.days[now.day()].slice(0, 3),
+			DDDD: () => word.days[now.day()],
+			M: () => str(now.month() + 1),
+			MM: () => pad(now.month() + 1),
+			MMM: () => word.months[now.month()].slice(0, 3),
+			MMMM: () => word.months[now.month()],
+			YY: () => str(now.year()).slice(2),
+			YYYY: () => str(now.year()),
+			H: () => str(now.hours()),
+			HH: () => pad(now.hours()),
+			h: () => str(now.hours() % 12 || 12),
+			hh: () => pad(now.hours() % 12 || 12),
+			m: () => str(now.minutes()),
+			mm: () => pad(now.minutes()),
+			str: () => str(now.seconds()),
+			ss: () => pad(now.seconds()),
 			a: marker,
 			p: marker,
 			A: marker,
