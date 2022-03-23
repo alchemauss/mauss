@@ -48,8 +48,9 @@ export function format({ base }: FormatOptions = {}) {
 		};
 
 		const tzo = base === 'UTC' ? 0 : d.getTimezoneOffset();
+		const abs = Math.abs(tzo);
+		const tz = [Math.floor(abs / 60), abs % 60];
 		const marker = now.hours() < 12 ? 'AM' : 'PM';
-		const timezone = [Math.floor(Math.abs(tzo) / 60), Math.abs(tzo) % 60];
 		const sign = tzo > 0 ? '-' : '+';
 
 		const tokens = {
@@ -79,9 +80,9 @@ export function format({ base }: FormatOptions = {}) {
 			p: marker,
 			A: marker,
 			P: marker,
-			Z: () => `${sign}${timezone[0]}`,
-			ZZ: () => `${sign}${pad(timezone[0])}${timezone[1]}`,
-			ZZZ: () => `${sign}${pad(timezone[0])}:${timezone[1]}`,
+			Z: () => `${sign}${tz[0]}`,
+			ZZ: () => `${sign}${pad(tz[0])}${tz[1]}`,
+			ZZZ: () => `${sign}${pad(tz[0])}:${tz[1]}`,
 		};
 
 		return (mask = 'DDDD, DD MMMM YYYY') => {
