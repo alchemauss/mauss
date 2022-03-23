@@ -38,7 +38,7 @@ basics.format('basic rendering', () => {
 	assert.equal(renderer('DD/MM/YYYY!'), '08/09/2017!');
 
 	assert.equal(
-		renderer(`Valid from: [${renderer('YYYY-MM-DD ~ HH:mm:ss')}]`),
+		`Valid from: [${renderer('YYYY-MM-DD ~ HH:mm:ss')}]`,
 		'Valid from: [2017-09-08 ~ 13:02:03]'
 	);
 });
