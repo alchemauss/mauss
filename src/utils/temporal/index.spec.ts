@@ -41,6 +41,9 @@ basics.format('basic rendering', () => {
 		'Valid from: [2017-09-08 ~ 13:02:03]'
 	);
 });
+basics.format('throw on invalid date', () => {
+	assert.throws(() => dt.format()('invalid'));
+});
 
 // ---- travel ----
 
