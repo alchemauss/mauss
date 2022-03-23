@@ -84,8 +84,8 @@ export function format({ base }: FormatOptions = {}) {
 		return (mask = 'DDDD, DD MMMM YYYY') => {
 			return mask.replace(REGEX, ($) => {
 				const exe = tokens[$ as keyof typeof tokens];
-				if (typeof exe === 'string') return exe;
-				return exe ? exe() : $.slice(1, $.length - 1);
+				if (!exe) return $.slice(1, $.length - 1);
+				return typeof exe === 'string' ? exe : exe();
 			});
 		};
 	};
