@@ -19,6 +19,8 @@
 ### Breaking Changes
 
 - [#102](https://github.com/alchemauss/mauss/pull/102) | Overhauled `dt` namespace
+  - `now` getter has been removed
+  - `new` has been renamed to `current`
   - `format` is now a curried function that needs to be called 3 times, from passing the options first, then the Date value, and finally the mask to be formatted
 - [#95](https://github.com/alchemauss/mauss/pull/95) | Overhauled `cookies` namespace
   - `raw` method is now a standalone function outside of parsed object

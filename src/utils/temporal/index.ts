@@ -1,9 +1,8 @@
 type DateValue = string | number | Date;
-function current(d?: DateValue): Date {
+export function current(d?: DateValue): Date {
 	if (d instanceof Date) return d;
 	return d ? new Date(d) : new Date();
 }
-export { current as new };
 
 const word = {
 	days: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
