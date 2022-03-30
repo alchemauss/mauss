@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- ([#102](https://github.com/alchemauss/mauss/pull/102)) overhaul `dt` namespace in utils module
 - ([#95](https://github.com/alchemauss/mauss/pull/95)) overhaul `cookies` namespace in web module
 - ([#90](https://github.com/alchemauss/mauss/pull/90)) add `curry` function in core module
 - ([#86](https://github.com/alchemauss/mauss/pull/86)) strongly type `debounce` and `throttle`
@@ -17,6 +18,8 @@
 
 ### Breaking Changes
 
+- [#102](https://github.com/alchemauss/mauss/pull/102) | Overhauled `dt` namespace
+  - `format` is now a curried function that needs to be called 3 times, from passing the options first, then the Date value, and finally the mask to be formatted
 - [#95](https://github.com/alchemauss/mauss/pull/95) | Overhauled `cookies` namespace
   - `raw` method is now a standalone function outside of parsed object
   - `create` is now a curried function that takes in the options first
