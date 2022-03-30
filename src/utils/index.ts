@@ -1,4 +1,4 @@
-export { dt } from './temporal';
+export * as dt from './temporal';
 export { random } from './toolbox';
 
 interface CapitalizeOptions {
