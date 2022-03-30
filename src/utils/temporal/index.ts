@@ -1,35 +1,29 @@
 type DateValue = string | number | Date;
-export function current(d?: DateValue): Date {
+export function current(d?: DateValue) {
 	if (d instanceof Date) return d;
 	return d ? new Date(d) : new Date();
 }
 
-const word = {
-	days: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
-	months: [
-		'January',
-		'February',
-		'March',
-		'April',
-		'May',
-		'June',
-		'July',
-		'August',
-		'September',
-		'October',
-		'November',
-		'December',
-	],
-};
-
 const str = (v: DateValue) => `${v}`;
 const pad = (v: DateValue, len = 2) => str(v).padStart(len, '0');
 
+export const i18n: Record<string, { days: string[]; months: string[] }> = {
+	en: {
+		days: 'Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday'.split('|'),
+		months: [
+			...'January|February|March|April|May|June|July'.split('|'),
+			...'August|September|October|November|December'.split('|'),
+		],
+	},
+};
+
 interface FormatOptions {
 	base?: 'UTC';
+	lang?: string;
 }
-export function format({ base }: FormatOptions = {}) {
+export function format({ base, lang = 'en' }: FormatOptions = {}) {
 	const method = base === 'UTC' ? 'getUTC' : 'get';
+	const { days, months } = i18n[lang] || i18n.en;
 
 	return (date?: DateValue) => {
 		const d = current(date);
@@ -54,13 +48,13 @@ export function format({ base }: FormatOptions = {}) {
 		const tokens = {
 			D: () => str(now.date()),
 			DD: () => pad(now.date()),
-			DDD: () => word.days[now.day()].slice(0, 3),
-			DDDD: () => word.days[now.day()],
+			DDD: () => days[now.day()].slice(0, 3),
+			DDDD: () => days[now.day()],
 
 			M: () => str(now.month() + 1),
 			MM: () => pad(now.month() + 1),
-			MMM: () => word.months[now.month()].slice(0, 3),
-			MMMM: () => word.months[now.month()],
+			MMM: () => months[now.month()].slice(0, 3),
+			MMMM: () => months[now.month()],
 
 			YY: () => str(now.year()).slice(2),
 			YYYY: () => str(now.year()),
