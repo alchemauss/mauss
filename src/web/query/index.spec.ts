@@ -37,5 +37,14 @@ basics.encoder('encode object to query string', () => {
 		assert.equal(qse(input), output);
 	}
 });
+basics.encoder('transform final string if it exists', () => {
+	const bound = { q: '' };
+	const transform = (v: string) => `?${v}`;
+
+	assert.equal(qse(bound, transform), '');
+
+	bound.q = 'hi';
+	assert.equal(qse(bound, transform), '?q=hi');
+});
 
 Object.values(basics).forEach((v) => v.run());
