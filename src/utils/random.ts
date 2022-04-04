@@ -33,9 +33,10 @@ export function ipv4(): string {
 	return [0, 1, 2, 3].map((i) => int(255) + (!i ? 1 : 0)).join('.');
 }
 
-/** unsafe and for fast prototyping only, use with caution for production */
-export function uuid(): string {
-	return `${1e7}-${1e3}-${4e3}-${8e3}-${1e11}`.replace(/[018]/g, (c) =>
-		(+c ^ (float(16) >> (+c / 4))).toString(16)
-	);
+export function uuid(gen?: <T extends ArrayBufferView>(arr: T) => T): string {
+	const grv = gen || (typeof crypto !== 'undefined' && crypto.getRandomValues);
+	return `${1e7}-${1e3}-${4e3}-${8e3}-${1e11}`.replace(/[018]/g, (c) => {
+		const rng = grv ? grv(new Uint8Array(1))[0] : float(16);
+		return (+c ^ ((rng & 15) >> (+c / 4))).toString(16);
+	});
 }
