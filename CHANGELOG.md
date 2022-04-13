@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- ([#105](https://github.com/alchemauss/mauss/pull/105)) enable i18n customization in `dt.i18n`
 - ([#102](https://github.com/alchemauss/mauss/pull/102)) overhaul `dt` namespace in utils module
 - ([#95](https://github.com/alchemauss/mauss/pull/95)) overhaul `cookies` namespace in web module
 - ([#90](https://github.com/alchemauss/mauss/pull/90)) add `curry` function in core module
