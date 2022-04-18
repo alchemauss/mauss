@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- ([#104](https://github.com/alchemauss/mauss/pull/104)) overhaul `random` namespace in utils module
 - ([#102](https://github.com/alchemauss/mauss/pull/102)) overhaul `dt` namespace in utils module
 - ([#101](https://github.com/alchemauss/mauss/pull/101)) add nicer `qse` output handling
 - ([#95](https://github.com/alchemauss/mauss/pull/95)) overhaul `cookies` namespace in web module
@@ -19,6 +20,7 @@
 
 ### Breaking Changes
 
+- [#104](https://github.com/alchemauss/mauss/pull/104) | Added generator parameter to `random.uuid`
 - [#102](https://github.com/alchemauss/mauss/pull/102) | Overhauled `dt` namespace
   - `now` getter has been removed
   - `new` has been renamed to `current`
