@@ -2,6 +2,38 @@
 
 ## Unreleased
 
+- ([#104](https://github.com/alchemauss/mauss/pull/104)) overhaul `random` namespace in utils module
+- ([#102](https://github.com/alchemauss/mauss/pull/102)) overhaul `dt` namespace in utils module
+- ([#101](https://github.com/alchemauss/mauss/pull/101)) add nicer `qse` output handling
+- ([#95](https://github.com/alchemauss/mauss/pull/95)) overhaul `cookies` namespace in web module
+- ([#90](https://github.com/alchemauss/mauss/pull/90)) add `curry` function in core module
+- ([#86](https://github.com/alchemauss/mauss/pull/86)) strongly type `debounce` and `throttle`
+- ([#81](https://github.com/alchemauss/mauss/pull/81)) add fallback parameter to `tryNumber`
+- ([#79](https://github.com/alchemauss/mauss/pull/79)) change `.y*ml` prettier formatting options
+- ([#73](https://github.com/alchemauss/mauss/pull/73)) add `pipe` function in core module
+- ([#72](https://github.com/alchemauss/mauss/pull/72)) strongly infer `inverse` return type
+- ([#72](https://github.com/alchemauss/mauss/pull/72)) add `UnaryFunction` typings
+- ([#72](https://github.com/alchemauss/mauss/pull/72)) fix default generic value of `AnyFunction` typing
+- ([#72](https://github.com/alchemauss/mauss/pull/72)) change generic order of `Tuple` and only require the size
+- ([#65](https://github.com/alchemauss/mauss/pull/65)) change `qpm` to `qse` in `/web` module
+- ([#65](https://github.com/alchemauss/mauss/pull/65)) add query string decoder in `/web` module
+
+### Breaking Changes
+
+- [#104](https://github.com/alchemauss/mauss/pull/104) | Added generator parameter to `random.uuid`
+- [#102](https://github.com/alchemauss/mauss/pull/102) | Overhauled `dt` namespace
+  - `now` getter has been removed
+  - `new` has been renamed to `current`
+  - `format` is now a curried function that needs to be called 3 times, from passing the options first, then the Date value, and finally the mask to be formatted
+- [#95](https://github.com/alchemauss/mauss/pull/95) | Overhauled `cookies` namespace
+  - `raw` method is now a standalone function outside of parsed object
+  - `create` is now a curried function that takes in the options first
+- [#79](https://github.com/alchemauss/mauss/pull/79) | Prettier for `.y*ml` files will now format with spaces and single quotes
+- [#72](https://github.com/alchemauss/mauss/pull/72) | Generic order for `Tuple` is reversed and reduced to only require the final size
+- [#65](https://github.com/alchemauss/mauss/pull/65) | Query string encoder (previously query string pathname maker) is now platform agnostic and does not rely on `window.location`, and returns the generated query string without the leading `?`
+
+## 0.2.3 - 2022/02/17
+
 - ([#64](https://github.com/alchemauss/mauss/pull/64)) remove `svelteBracketNewLine` option from prettier config
 - ([#63](https://github.com/alchemauss/mauss/pull/63)) add `Flexible` typings
 - ([#63](https://github.com/alchemauss/mauss/pull/63)) fix bool generator in `random`
