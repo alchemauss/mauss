@@ -3,6 +3,7 @@
 ## Unreleased
 
 - ([#95](https://github.com/alchemauss/mauss/pull/95)) overhaul `cookies` namespace in web module
+- ([#91](https://github.com/alchemauss/mauss/pull/91)) add `compare.key` method in core module
 - ([#90](https://github.com/alchemauss/mauss/pull/90)) add `curry` function in core module
 - ([#86](https://github.com/alchemauss/mauss/pull/86)) strongly type `debounce` and `throttle`
 - ([#81](https://github.com/alchemauss/mauss/pull/81)) add fallback parameter to `tryNumber`
