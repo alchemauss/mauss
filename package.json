@@ -5,7 +5,6 @@
   "version": "0.2.3",
   "license": "MIT",
   "type": "module",
-  "main": "index.js",
   "types": "index.d.ts",
   "scripts": {
     "clean": "git add * && git clean -dfx -e node_modules",
