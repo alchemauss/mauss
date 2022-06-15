@@ -8,7 +8,6 @@
 
 		// Module Resolution
 		"moduleResolution": "Node",
-		"esModuleInterop": true,
 		"resolveJsonModule": true,
 		"allowSyntheticDefaultImports": true,
 
