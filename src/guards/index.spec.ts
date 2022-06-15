@@ -1,5 +1,5 @@
 import { suite } from 'uvu';
-import assert from 'uvu/assert';
+import * as assert from 'uvu/assert';
 import * as guards from '.';
 
 // checked based on https://developer.mozilla.org/en-US/docs/Glossary/Falsy
