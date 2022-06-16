@@ -43,7 +43,7 @@ if (response.ok) {
 /* POST example */
 const { response, body, error } = await post('auth/login', {
   email: 'mail@example.com',
-  password: 'super_secure_password'
+  password: 'super_secure_password',
 });
 if (response.ok) {
   console.log(body);  // response body
