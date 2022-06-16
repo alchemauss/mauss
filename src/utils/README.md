@@ -13,6 +13,7 @@ interface CapitalizeOptions {
 	/** convert the remaining word to lowercase */
 	normalize?: boolean;
 }
+
 export function capitalize(text: string, options?: CapitalizeOptions): string;
 ```
 
@@ -26,10 +27,15 @@ capitalize('hI thErE', { cap: true, normalize: true }); // 'Hi there'
 
 ## `dt`
 
-Simple `date/time` (`dt`) utility object
+Simple `date/time` (`dt`) utility namespace
 
 ```ts
 type DateValue = string | number | Date;
+
+interface FormatOptions {
+	base?: 'UTC';
+}
+
 interface TravelOptions {
 	/** relative point of reference to travel */
 	from?: DateValue;
@@ -38,21 +44,30 @@ interface TravelOptions {
 }
 
 export const dt: {
-  readonly now: Date;
-  new(d?: DateValue): Date;
-  format(date: DateValue, mask?: string, base?: 'UTC'): string;
+  current(d?: DateValue): Date;
+  format(options: FormatOptions): (date?: DateValue) => (mask?: string) => string;
   travel({ from, to }: TravelOptions): Date;
 }
 ```
 
-- `dt.now` is a shortcut to `new Date()`
-- `dt.new` is a function `(date?: DateValue) => Date` that optionally takes in a `DateValue` to be converted into a `Date` object
+- `dt.current` is a function `(d?: DateValue) => Date` that optionally takes in a `DateValue` to be converted into a `Date` object, `new Date()` will be used if nothing is passed
 - `dt.format` is a function `(date: DateValue, mask = 'DDDD, DD MMMM YYYY', base?: 'UTC') => string` that takes in a `DateValue`, optionally a mask that defaults to `'DDDD, DD MMMM YYYY'`, and optionally `'UTC'` as the last argument
 - `dt.travel` is a function `({ from, to }) => Date` that takes in a `{ from, to }` object with `from` property being optional
 
 ## `tryNumber`
 
 will check an input and convert to number when applicable, otherwise it will return the input as is.
+
+```ts
+type Possibilities = string | number | null | undefined;
+
+export function tryNumber<Input extends Possibilities, Fallback = Input>(
+  input: Input,
+  fallback?: Fallback
+): Input is number ? number : Fallback | Input;
+```
+
+Example inputs and outputs
 
 ```js
 tryNumber('0');  // 0
