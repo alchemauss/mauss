@@ -1,15 +1,4 @@
-import type { Filter, Split } from '../typings';
-
-type Wildcard = (x: any, y: any) => number;
-type Primitives = {
-	undefined: (x: undefined, y: undefined) => number;
-	boolean: (x: boolean, y: boolean) => number;
-	number: (x: number, y: number) => number;
-	string: (x: string, y: string) => number;
-	bigint: (x: bigint, y: bigint) => number;
-	symbol: (x: symbol, y: symbol) => number;
-	object: (x: object, y: object) => number;
-};
+import type { Filter, Split, WhenAny, WhenUnknown } from '../typings';
 
 const patterns = {
 	'date:complete': /\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+([+-][0-2]\d:[0-5]\d|Z)/,
@@ -18,13 +7,41 @@ const patterns = {
 	time: /[0-2]\d:[0-5]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z)/,
 };
 
+type Wildcard = (x: any, y: any) => number;
+type Primitives = {
+	undefined(x: undefined, y: undefined): number;
+	boolean(x: boolean, y: boolean): number;
+	number(x: number, y: number): number;
+	string(x: string, y: string): number;
+	bigint(x: bigint, y: bigint): number;
+	symbol(x: symbol, y: symbol): number;
+	object(x: object, y: object): number;
+};
+
+type Customized = {
+	key<Identifier extends string>(
+		identifier: Identifier
+	): <X extends Record<string, any>, Y extends Record<string, any>>(
+		x: WhenAny<X[Identifier], X, WhenUnknown<X[Identifier], never, X>>,
+		y: WhenAny<Y[Identifier], Y, WhenUnknown<Y[Identifier], never, Y>>
+	) => number;
+};
+
 type PatternKeys = keyof typeof patterns;
 type Categories = Split<PatternKeys, ':'>[0];
 type Prefixed<K extends string> = K extends `${infer P}:${string}` ? Filter<P, Categories> : K;
-type Comparisons = Primitives & { [K in Prefixed<PatternKeys>]: (x: string, y: string) => number };
-export const compare: Comparisons & { wildcard: (x: any, y: any) => number } = {
+type Patterned = { [K in Prefixed<PatternKeys>]: (x: string, y: string) => number };
+type Comparisons = Primitives & Customized & Patterned;
+export const compare: Comparisons & { wildcard(x: any, y: any): number } = {
+	// patterned
 	date: (x, y) => new Date(y).getTime() - new Date(x).getTime(),
 	time: (x, y) => Date.parse(`2017/08/28 ${y}`) - Date.parse(`2017/08/28 ${x}`),
+
+	// customized
+	key(k) {
+		return (x, y) => this.object(x[k], y[k]);
+	},
+
 	// primitives
 	undefined: (x) => (x ? -1 : 1),
 	boolean: (x, y) => +y - +x,
@@ -38,6 +55,7 @@ export const compare: Comparisons & { wildcard: (x: any, y: any) => number } = {
 		}
 		return x.localeCompare(y);
 	},
+
 	// object + null
 	object(x, y) {
 		if (x === null) return 1;

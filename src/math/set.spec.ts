@@ -2,21 +2,23 @@ import { suite } from 'uvu';
 import assert from 'uvu/assert';
 import * as set from './set';
 
-const basics = [suite('permutation')];
+const basics = {
+	permutation: suite('permutation'),
+};
 
-basics[0]('returns array with empty array for empty array', () => {
+basics.permutation('returns array with empty array for empty array', () => {
 	assert.equal(set.permutation([]), [[]]);
 });
-basics[0]('returns immediate wrapped input for one length array', () => {
+basics.permutation('returns immediate wrapped input for one length array', () => {
 	assert.equal(set.permutation(['a']), [['a']]);
 });
-basics[0]('correctly permute 2 words and returns array of results', () => {
+basics.permutation('correctly permute 2 words and returns array of results', () => {
 	assert.equal(set.permutation(['a', 'b']), [
 		['a', 'b'],
 		['b', 'a'],
 	]);
 });
-basics[0]('correctly permute 3 words and returns array of results', () => {
+basics.permutation('correctly permute 3 words and returns array of results', () => {
 	assert.equal(set.permutation(['a', 'b', 'c']), [
 		['a', 'b', 'c'],
 		['a', 'c', 'b'],
@@ -26,7 +28,7 @@ basics[0]('correctly permute 3 words and returns array of results', () => {
 		['c', 'b', 'a'],
 	]);
 });
-basics[0]('correctly permute 4 words and returns array of results', () => {
+basics.permutation('correctly permute 4 words and returns array of results', () => {
 	assert.equal(set.permutation(['a', 'b', 'c', 'd']), [
 		['a', 'b', 'c', 'd'],
 		['a', 'b', 'd', 'c'],
@@ -55,23 +57,23 @@ basics[0]('correctly permute 4 words and returns array of results', () => {
 	]);
 });
 
-basics.forEach((v) => v.run());
-
 // ---- mutated suite ----
 
-const advanced = [suite('permutation+fn')];
+const advanced = {
+	permutation: suite('permutation+'),
+};
 
 const dashed = (i: string[]) => i.join('-');
-advanced[0]('returns array with empty string for empty array', () => {
+advanced.permutation('returns array with empty string for empty array', () => {
 	assert.equal(set.permutation([], dashed), ['']);
 });
-advanced[0]('returns immediate input for one length array', () => {
+advanced.permutation('returns immediate input for one length array', () => {
 	assert.equal(set.permutation(['a'], dashed), ['a']);
 });
-advanced[0]('correctly permute and mutate 2 words', () => {
+advanced.permutation('correctly permute and mutate 2 words', () => {
 	assert.equal(set.permutation(['a', 'b'], dashed), ['a-b', 'b-a']);
 });
-advanced[0]('correctly permute and mutate 3 words', () => {
+advanced.permutation('correctly permute and mutate 3 words', () => {
 	assert.equal(set.permutation(['a', 'b', 'c'], dashed), [
 		'a-b-c',
 		'a-c-b',
@@ -81,7 +83,7 @@ advanced[0]('correctly permute and mutate 3 words', () => {
 		'c-b-a',
 	]);
 });
-advanced[0]('correctly permute and mutate 4 words', () => {
+advanced.permutation('correctly permute and mutate 4 words', () => {
 	assert.equal(set.permutation(['a', 'b', 'c', 'd'], dashed), [
 		'a-b-c-d',
 		'a-b-d-c',
@@ -110,4 +112,5 @@ advanced[0]('correctly permute and mutate 4 words', () => {
 	]);
 });
 
-advanced.forEach((v) => v.run());
+Object.values(basics).forEach((v) => v.run());
+Object.values(advanced).forEach((v) => v.run());

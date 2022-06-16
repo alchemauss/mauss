@@ -2,7 +2,12 @@
 
 ## Unreleased
 
+- ([#104](https://github.com/alchemauss/mauss/pull/104)) overhaul `random` namespace in utils module
+- ([#102](https://github.com/alchemauss/mauss/pull/102)) overhaul `dt` namespace in utils module
+- ([#101](https://github.com/alchemauss/mauss/pull/101)) add nicer `qse` output handling
 - ([#95](https://github.com/alchemauss/mauss/pull/95)) overhaul `cookies` namespace in web module
+- ([#91](https://github.com/alchemauss/mauss/pull/91)) initialize `comparators` typings
+- ([#91](https://github.com/alchemauss/mauss/pull/91)) add `compare.key` method in core module
 - ([#90](https://github.com/alchemauss/mauss/pull/90)) add `curry` function in core module
 - ([#86](https://github.com/alchemauss/mauss/pull/86)) strongly type `debounce` and `throttle`
 - ([#81](https://github.com/alchemauss/mauss/pull/81)) add fallback parameter to `tryNumber`
@@ -17,6 +22,11 @@
 
 ### Breaking Changes
 
+- [#104](https://github.com/alchemauss/mauss/pull/104) | Added generator parameter to `random.uuid`
+- [#102](https://github.com/alchemauss/mauss/pull/102) | Overhauled `dt` namespace
+  - `now` getter has been removed
+  - `new` has been renamed to `current`
+  - `format` is now a curried function that needs to be called 3 times, from passing the options first, then the Date value, and finally the mask to be formatted
 - [#95](https://github.com/alchemauss/mauss/pull/95) | Overhauled `cookies` namespace
   - `raw` method is now a standalone function outside of parsed object
   - `create` is now a curried function that takes in the options first
