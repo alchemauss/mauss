@@ -23,7 +23,7 @@
 
 ### Breaking Changes
 
-- [#109](https://github.com/alchemauss/mauss/pull/109) | Discourage CommonJS by disabling `esModuleInterop` and `allowSyntheticDefaultImports` option
+- [#109](https://github.com/alchemauss/mauss/pull/109) | Removed `esModuleInterop` and `allowSyntheticDefaultImports` option
 - [#104](https://github.com/alchemauss/mauss/pull/104) | Added generator parameter to `random.uuid`
 - [#102](https://github.com/alchemauss/mauss/pull/102) | Overhauled `dt` namespace
   - `now` getter has been removed
