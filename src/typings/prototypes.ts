@@ -1,23 +1,18 @@
-/** Generic for making any arbitrary function */
-export type AnyFunction<P extends any[] = any, R = any> = (...parameters: P) => R;
-/** Allow either A or B but not both at the same time */
-export type Either<A, B> = Only<A, B> | Only<B, A>;
-export type Entries<T> = Array<{ [K in keyof T]: [keyof PickByValue<T, T[K]>, T[K]] }[keyof T]>;
-export type Filter<T, Validator> = T extends Validator ? T : never;
-/** Infers the return value of toJSON on the properties */
-export type JSONState<T> = { [P in keyof T]: T[P] extends { toJSON: () => infer J } ? J : T[P] };
-export type NonEmptyArray<T> = [T, ...Array<T>];
-/** Disallow any properties from V when defining U */
-export type Only<U, V> = { [P in keyof U]: U[P] } & Omit<{ [P in keyof V]?: never }, keyof U>;
-export type Overwrite<U, V> = Omit<U, keyof V> & V;
-export type PickByValue<T, V> = Pick<T, { [K in keyof T]: T[K] extends V ? K : never }[keyof T]>;
-/** Reverses any tuple values */
-export type Reverse<T extends any[]> = T extends [infer H, ...infer R] ? [...Reverse<R>, H] : [];
-/** Strict properties narrowing and remove Index Signatures */
-export type Strict<T> = { [P in keyof T as {} extends Record<P, any> ? never : P]: T[P] };
-export type Typify<T> = { [P in keyof T]: Typify<T[P]> };
-
 /* <-- Type Level Programming --> */
+
+/** Extends a list to a certain specified length */
+export type Extend<Size extends number, List extends any[] = []> = List['length'] extends Size
+	? List
+	: Extend<Size, [...List, any]>;
+
+/** Flattens any array recursively */
+export type Flatten<List extends any[], Memory extends any[] = []> = List extends []
+	? /** return Memory if List is empty */ Memory
+	: List extends [infer Head, ...infer Rest]
+	? Head extends any[] // check for nested array
+		? Flatten<[...Head, ...Rest], Memory>
+		: Flatten<Rest, [...Memory, Head]>
+	: never;
 
 /** Joins a list of string with custom delimiter */
 export type Join<
@@ -38,6 +33,19 @@ export type Permutation<Union, Sliced = Union> = [Union] extends [never]
 	: Union extends Union
 	? [Union, ...Permutation<Sliced extends Union ? never : Sliced>]
 	: never;
+
+/** Define a union of tuple that accepts a progressively increasing (LTR) items */
+export type Progressive<List extends any[]> = List extends [...infer Rest, any]
+	? List | (Rest['length'] extends 1 ? Rest : Progressive<Rest>)
+	: List;
+
+/** Slices a list beginning from the starting index */
+export type Slice<List extends any[], Start extends number = 0> = List extends [
+	...Extend<Start>,
+	...infer Sliced
+]
+	? Sliced
+	: [];
 
 /** Splits a string with custom separator */
 export type Split<
@@ -66,8 +74,7 @@ export type PartialOmit<
 	T,
 	Keys extends keyof T,
 	Saved = { [P in Exclude<keyof T, Keys>]: T[P] },
-	Optional = { [P in keyof T]?: T[P] },
-	Final = Saved & Optional
+	Final = Saved & { [P in keyof T]?: T[P] }
 > = { [P in keyof Final]: Final[P] };
 
 /**
@@ -82,7 +89,7 @@ export type SingleProperty<T> = {
  * Specify tuple of `Size` with items of `T`
  */
 export type Tuple<
-	T,
 	Size extends number,
-	VirtualArray extends any[] = []
-> = VirtualArray['length'] extends Size ? VirtualArray : Tuple<T, Size, [T, ...VirtualArray]>;
+	T extends any[] = [],
+	Virtual extends any[] = []
+> = Virtual['length'] extends Size ? Virtual : Tuple<Size, T, [T, ...Virtual]>;

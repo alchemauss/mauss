@@ -1,5 +1,5 @@
 export function permutation<T, K>(input: T[], fn?: (i: T[]) => K) {
-	const results: (T[] | K)[] = [];
+	const results: Array<T[] | K> = [];
 	const permute = (arr: T[], m: T[] = []): void | number => {
 		if (!arr.length) return results.push(fn ? fn(m) : m);
 		for (let i = 0; i < arr.length; i++) {
