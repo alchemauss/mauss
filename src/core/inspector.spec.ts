@@ -4,6 +4,7 @@ import { compare, comparator } from './inspector';
 
 const basics = {
 	comparator: suite('comparator'),
+
 	number: suite('compare:number'),
 };
 
@@ -11,6 +12,13 @@ const basics = {
 
 basics.comparator('comparator', () => {
 	assert.type(comparator, 'function');
+
+	const data = [{ id: 0, name: 'B' }, { name: 'A' }, { id: 1, name: 'C' }];
+	assert.equal(data.sort(comparator), [
+		{ name: 'A' }, // name sorted first as it's the common denominator
+		{ id: 1, name: 'C' }, // id takes over since it's defined first
+		{ id: 0, name: 'B' },
+	]);
 });
 
 basics.number('sort number in descending order', () => {
