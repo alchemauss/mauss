@@ -40,6 +40,12 @@ basics.undefined('sort undefined values with null values above', () => {
 		[3, 0, 1, -1, -2, null, null, undefined, undefined, undefined]
 	);
 });
+basics.boolean('sort boolean values with true above', () => {
+	assert.equal(
+		[true, false, true, false, true, false, true, false, true, false].sort(compare.boolean),
+		[true, true, true, true, true, false, false, false, false, false]
+	);
+});
 basics.number('sort number in descending order', () => {
 	assert.equal(
 		[5, 3, 9, 6, 0, 2, 1, -1, 4, -2].sort(compare.number),
