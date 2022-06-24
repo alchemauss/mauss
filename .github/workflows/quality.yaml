@@ -9,7 +9,7 @@ on:
       - "**"
 
 jobs:
-  check-lint:
+  lint:
     runs-on: ubuntu-latest
 
     steps:
@@ -20,7 +20,7 @@ jobs:
       - name: Lint
         run: npm install && npm run lint
 
-  check-test:
+  test:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
