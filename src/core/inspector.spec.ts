@@ -52,5 +52,15 @@ basics.number('sort number in descending order', () => {
 		[9, 6, 5, 4, 3, 2, 1, 0, -1, -2]
 	);
 });
+basics.string('sort string in alphabetical order', () => {
+	assert.equal(
+		['k', 'h', 'g', 'f', 'e', 'l', 'd', 'm', 'c', 'b', 'j', 'i', 'a'].sort(compare.string),
+		['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm']
+	);
+	assert.equal(
+		['K', 'H', 'G', 'F', 'E', 'L', 'D', 'M', 'C', 'B', 'J', 'I', 'A'].sort(compare.string),
+		['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M']
+	);
+});
 
 Object.values(basics).forEach((v) => v.run());
