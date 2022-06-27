@@ -9,7 +9,7 @@ const patterns = {
 
 type Wildcard = (x: any, y: any) => number;
 type Primitives = {
-	undefined(x: undefined, y: undefined): number;
+	undefined(x: unknown, y: unknown): number;
 	boolean(x: boolean, y: boolean): number;
 	number(x: number, y: number): number;
 	string(x: string, y: string): number;
@@ -57,7 +57,10 @@ export const compare: Comparisons & { wildcard(x: any, y: any): number } = {
 	},
 
 	// primitives
-	undefined: (x) => (x ? -1 : 1),
+	undefined(x, y) {
+		if (x == null && y == null) return 0;
+		return (x == null && 1) || (y == null && -1) || 0;
+	},
 	boolean: (x, y) => +y - +x,
 	number: (x, y) => y - x,
 	bigint: (x, y) => (x < y ? -1 : x > y ? 1 : 0),
