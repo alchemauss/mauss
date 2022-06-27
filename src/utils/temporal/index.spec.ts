@@ -12,7 +12,7 @@ const fixed = new Date('2017/09/08, 13:02:03');
 // ---- format ----
 
 basics.format('basic rendering', () => {
-	const renderer = dt.format()(fixed);
+	const renderer = dt.format(fixed);
 
 	assert.equal(renderer('foo'), 'foo');
 
@@ -43,7 +43,7 @@ basics.format('basic rendering', () => {
 	);
 });
 basics.format('throw on invalid date', () => {
-	assert.throws(() => dt.format()('invalid'));
+	assert.throws(() => dt.format('invalid'));
 });
 
 // ---- travel ----
