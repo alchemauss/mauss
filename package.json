@@ -1,7 +1,7 @@
 {
   "name": "mauss",
   "author": "Ignatius Bagus",
-  "description": "Declarative type-safe zero-dependency SDK",
+  "description": "A declarative approach to a fast and efficient type-safe SDK",
   "version": "0.2.3",
   "license": "MIT",
   "type": "module",
