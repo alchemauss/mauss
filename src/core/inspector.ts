@@ -43,15 +43,6 @@ export const compare: Comparisons & { wildcard(x: any, y: any): number } = {
 		return (x, y) => this.object(x[k], y[k]);
 	},
 	order(w) {
-		// TODO: Failing test, waiting for #112
-
-		// basics.order('customized compare with order', () => {
-		// 	const months = ['January', 'February', 'March', 'April', 'May', 'June'];
-		// 	const list = ['March', 'June', 'May', 'April', 'January', 'June', 'February'];
-		// 	const result = ['January', 'February', 'March', 'April', 'May', 'June', 'June'];
-		// 	assert.equal(list.sort(compare.order(months)), result);
-		// });
-
 		const m = w.reduce<Record<string, number>>((a, c, i) => ({ ...a, [c]: i }), {});
 		return (x, y) => m[x] - m[y];
 	},

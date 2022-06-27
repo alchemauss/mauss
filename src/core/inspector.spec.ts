@@ -19,6 +19,7 @@ const basics = {
 	time: suite('compare:time'),
 
 	key: suite('compare:key'),
+	order: suite('compare:order'),
 };
 
 // ---- standard ----
@@ -61,6 +62,13 @@ basics.string('sort string in alphabetical order', () => {
 		['K', 'H', 'G', 'F', 'E', 'L', 'D', 'M', 'C', 'B', 'J', 'I', 'A'].sort(compare.string),
 		['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M']
 	);
+});
+
+basics.order('customized compare with order', () => {
+	const months = ['January', 'February', 'March', 'April', 'May', 'June'];
+	const list = ['March', 'June', 'May', 'April', 'January', 'June', 'February'];
+	const result = ['January', 'February', 'March', 'April', 'May', 'June', 'June'];
+	assert.equal(list.sort(compare.order(months)), result);
 });
 
 Object.values(basics).forEach((v) => v.run());
