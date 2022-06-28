@@ -2,13 +2,14 @@
 
 ## Unreleased
 
+- ([#116](https://github.com/alchemauss/mauss/pull/116)) add `compare.order` function in `/core` module
 - ([#109](https://github.com/alchemauss/mauss/pull/109)) remove `esModuleInterop` and `allowSyntheticDefaultImports` option
 - ([#104](https://github.com/alchemauss/mauss/pull/104)) overhaul `random` namespace in `/utils` module
 - ([#102](https://github.com/alchemauss/mauss/pull/102)) overhaul `dt` namespace in `/utils` module
 - ([#101](https://github.com/alchemauss/mauss/pull/101)) add nicer `qse` output handling
 - ([#95](https://github.com/alchemauss/mauss/pull/95)) overhaul `cookies` namespace in `/web` module
 - ([#91](https://github.com/alchemauss/mauss/pull/91)) initialize `comparators` typings
-- ([#91](https://github.com/alchemauss/mauss/pull/91)) add `compare.key` method in `/core` module
+- ([#91](https://github.com/alchemauss/mauss/pull/91)) add `compare.key` function in `/core` module
 - ([#90](https://github.com/alchemauss/mauss/pull/90)) add `curry` function in `/core` module
 - ([#86](https://github.com/alchemauss/mauss/pull/86)) strongly type `debounce` and `throttle`
 - ([#81](https://github.com/alchemauss/mauss/pull/81)) add fallback parameter to `tryNumber`
