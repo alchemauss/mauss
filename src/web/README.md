@@ -14,7 +14,7 @@ Homemade baked cookies for server and client side usage.
 type BoundValues = Nullish | Primitives;
 export function qse<
   Bound extends { [k: string | number]: BoundValues | readonly BoundValues[] }
->(bound: Bound, transformer = (final: string) => final): string;
+>(bound: Bound, transformer = (final: string) => `?${final}`): string;
 ```
 
 Query string encoder (`qse`) encodes key-value pairs from an object into a query string. It optionally accepts a second argument for a transformer function that will be applied to the final value if it exists, else an empty string will be returned.
