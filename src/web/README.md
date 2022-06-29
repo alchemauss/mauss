@@ -17,7 +17,7 @@ let query = 'anything'; // a reactive variable
 const type = 1;
 
 const updated = qse({ q: query, type });
-history.replaceState({}, '', `?${updated}`);
+history.replaceState({}, '', updated);
 // https://mauss.dev/reviews?q=anything&type=1
 ```
 
