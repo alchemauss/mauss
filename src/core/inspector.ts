@@ -39,7 +39,7 @@ export const compare: Comparisons & { wildcard(x: any, y: any): number } = {
 
 	// customized
 	key(k) {
-		return (x, y) => this.object(x[k], y[k]);
+		return (x, y) => this.wildcard(x[k], y[k]);
 	},
 
 	// primitives
