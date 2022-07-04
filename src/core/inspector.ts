@@ -20,7 +20,8 @@ type Primitives = {
 
 type Customized = {
 	key<Identifier extends string>(
-		identifier: Identifier
+		identifier: Identifier,
+		comparator?: Wildcard
 	): <X extends Record<string, any>, Y extends Record<string, any>>(
 		x: WhenAny<X[Identifier], X, WhenUnknown<X[Identifier], never, X>>,
 		y: WhenAny<Y[Identifier], Y, WhenUnknown<Y[Identifier], never, Y>>
@@ -38,8 +39,8 @@ export const compare: Comparisons & { wildcard(x: any, y: any): number } = {
 	time: (x, y) => Date.parse(`2017/08/28 ${y}`) - Date.parse(`2017/08/28 ${x}`),
 
 	// customized
-	key(k) {
-		return (x, y) => this.wildcard(x[k], y[k]);
+	key(k, c) {
+		return (x, y) => (c || this.wildcard)(x[k], y[k]);
 	},
 
 	// primitives
