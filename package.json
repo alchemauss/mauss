@@ -1,7 +1,7 @@
 {
   "name": "mauss",
   "author": "Ignatius Bagus",
-  "description": "Declarative type-safe zero-dependency SDK",
+  "description": "A declarative approach to a fast and efficient type-safe SDK",
   "version": "0.2.3",
   "license": "MIT",
   "type": "module",
@@ -12,7 +12,7 @@
     "test:unit": "uvu -r tsm src \"(spec\\.ts)\"",
     "lint": "npm run lint:code && npm run lint:style",
     "lint:code": "tsc --noEmit",
-    "lint:style": "prettier -c src",
+    "lint:style": "prettier -c \"src/**/*.ts\"",
     "pub:build": "tsc --project src",
     "pub:format": "prettier -wu **/*.{d.ts,js}",
     "prepublishOnly": "npm run pub:build && npm run pub:format"
