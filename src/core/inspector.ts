@@ -39,7 +39,7 @@ export const compare: Comparisons & { wildcard(x: any, y: any): number } = {
 
 	// customized
 	key(k) {
-		return (x, y) => this.object(x[k], y[k]);
+		return (x, y) => this.wildcard(x[k], y[k]);
 	},
 
 	// primitives
@@ -69,17 +69,17 @@ export const compare: Comparisons & { wildcard(x: any, y: any): number } = {
 	wildcard(x, y) {
 		if (x == null) return 1;
 		if (y == null) return -1;
-		const [tx, ty] = [typeof x, typeof y];
-		if (tx === 'function') return 0;
+		const [xt, yt] = [typeof x, typeof y];
+		if (xt === 'function') return 0;
 
-		if (tx !== ty) {
-			const cx = JSON.stringify(x);
-			const cy = JSON.stringify(y);
-			return this.string(cx, cy);
+		if (xt !== yt) {
+			const xs = JSON.stringify(x);
+			const ys = JSON.stringify(y);
+			return this.string(xs, ys);
 		}
 
-		const constrained: Wildcard = this[tx];
-		return constrained(tx, ty);
+		const constrained: Wildcard = this[xt];
+		return constrained(x, y);
 	},
 };
 

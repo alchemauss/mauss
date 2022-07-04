@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- ([#122](https://github.com/alchemauss/mauss/pull/122)) fix `compare.wildcard` value comparison
 - ([#109](https://github.com/alchemauss/mauss/pull/109)) remove `esModuleInterop` and `allowSyntheticDefaultImports` option
 - ([#104](https://github.com/alchemauss/mauss/pull/104)) overhaul `random` namespace in `/utils` module
 - ([#102](https://github.com/alchemauss/mauss/pull/102)) overhaul `dt` namespace in `/utils` module
