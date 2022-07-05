@@ -28,7 +28,8 @@
 - [#102](https://github.com/alchemauss/mauss/pull/102) | Overhauled `dt` namespace
   - `now` getter has been removed
   - `new` method has been renamed to `current`
-  - `format` is now a [curried function (#115)](https://github.com/alchemauss/mauss/pull/115) with all optional unary parameters
+  - `format` is now a [curried function (#115)](https://github.com/alchemauss/mauss/pull/115) and a convenience export of `build`
+  - `build` is a [new function (#115)](https://github.com/alchemauss/mauss/pull/115) that builds a formatter
 - [#95](https://github.com/alchemauss/mauss/pull/95) | Overhauled `cookies` namespace
   - `raw` method is now a standalone function outside of parsed object
   - `create` is now a curried function that takes in the options first
