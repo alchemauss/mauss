@@ -27,12 +27,12 @@ capitalize('hI thErE', { cap: true, normalize: true }); // 'Hi there'
 
 ## `dt`
 
-Simple `date/time` (`dt`) utility namespace
+Simple `date/time` (`dt`) utility namespace.
 
 ```ts
 type DateValue = string | number | Date;
 
-interface FormatOptions {
+interface BuildOptions {
 	base?: 'UTC';
 }
 
@@ -45,13 +45,18 @@ interface TravelOptions {
 
 export const dt: {
   current(d?: DateValue): Date;
-  format(options: FormatOptions): (date?: DateValue) => (mask?: string) => string;
+
+  build(options: BuildOptions): (date?: DateValue) => (mask?: string) => string;
+
+  format: ReturnType<typeof this.build>;
+
   travel({ from, to }: TravelOptions): Date;
 }
 ```
 
 - `dt.current` is a function `(d?: DateValue) => Date` that optionally takes in a `DateValue` to be converted into a `Date` object, `new Date()` will be used if nothing is passed
-- `dt.format` is a function `(date: DateValue, mask = 'DDDD, DD MMMM YYYY', base?: 'UTC') => string` that takes in a `DateValue`, optionally a mask that defaults to `'DDDD, DD MMMM YYYY'`, and optionally `'UTC'` as the last argument
+- `dt.build` is a function that accepts `BuildOptions` and builds a formatter, a convenience export is included with all the default options as `dt.format`
+- `dt.format` is a function that takes in a `DateValue` and returns a renderer that accepts a string mask to format the date in, defaults to `'DDDD, DD MMMM YYYY'`
 - `dt.travel` is a function `({ from, to }) => Date` that takes in a `{ from, to }` object with `from` property being optional
 
 ## `tryNumber`
