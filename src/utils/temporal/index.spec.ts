@@ -19,8 +19,7 @@ basics.build('basic formatter builder', () => {
 
 	const renderer = format(fixed);
 
-	assert.equal(renderer('DD/MM/YYYY'), '08/09/2017');
-	assert.equal(renderer('HH:mm:ss'), '06:02:03');
+	assert.equal(renderer('DD/MM/YYYY (Z)'), '08/09/2017 (+0)');
 });
 
 // ---- format ----
