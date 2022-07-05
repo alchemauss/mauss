@@ -3,11 +3,25 @@ import * as assert from 'uvu/assert';
 import * as dt from './index';
 
 const basics = {
+	build: suite('temporal:build'),
 	format: suite('temporal:format'),
 	travel: suite('temporal:travel'),
 };
 
 const fixed = new Date('2017/09/08, 13:02:03');
+
+// ---- build ----
+
+basics.build('basic formatter builder', () => {
+	const format = dt.build({ base: 'UTC' });
+
+	assert.type(format, 'function');
+
+	const renderer = format(fixed);
+
+	assert.equal(renderer('DD/MM/YYYY'), '08/09/2017');
+	assert.equal(renderer('HH:mm:ss'), '06:02:03');
+});
 
 // ---- format ----
 
