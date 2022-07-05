@@ -17,11 +17,11 @@ export const i18n: Record<string, { days: string[]; months: string[] }> = {
 	},
 };
 
-interface FormatOptions {
+interface BuildOptions {
 	base?: 'UTC';
 	lang?: string;
 }
-export function format({ base, lang = 'en' }: FormatOptions = {}) {
+export function build({ base, lang = 'en' }: BuildOptions) {
 	const method = base === 'UTC' ? 'getUTC' : 'get';
 	const { days, months } = i18n[lang] || i18n.en;
 
@@ -78,17 +78,17 @@ export function format({ base, lang = 'en' }: FormatOptions = {}) {
 		};
 
 		return (mask = 'DDDD, DD MMMM YYYY') => {
-			return mask.replace(
-				/D{1,4}|M{1,4}|YY(?:YY)?|([hHmsAPap])\1?|Z{1,3}|\[([^\]\[]|\[[^\[\]]*\])*\]/g,
-				($) => {
-					const exe = tokens[$ as keyof typeof tokens];
-					if (!exe) return $.slice(1, $.length - 1);
-					return typeof exe === 'string' ? exe : exe();
-				}
-			);
+			const EXP = /D{1,4}|M{1,4}|YY(?:YY)?|([hHmsAPap])\1?|Z{1,3}|\[([^\]\[]|\[[^\[\]]*\])*\]/g;
+			return mask.replace(EXP, ($) => {
+				const exe = tokens[$ as keyof typeof tokens];
+				if (!exe) return $.slice(1, $.length - 1);
+				return typeof exe === 'string' ? exe : exe();
+			});
 		};
 	};
 }
+
+export const format = build({});
 
 interface TravelOptions {
 	/** relative point of reference to travel */

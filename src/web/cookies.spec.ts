@@ -1,5 +1,5 @@
 import { suite } from 'uvu';
-import assert from 'uvu/assert';
+import * as assert from 'uvu/assert';
 import * as cookies from './cookies';
 
 const basics = {
