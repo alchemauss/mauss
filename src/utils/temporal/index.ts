@@ -21,11 +21,11 @@ interface BuildOptions {
 	base?: 'UTC';
 	lang?: string;
 }
-export function build({ base, lang = 'en' }: BuildOptions) {
+export function build({ base, lang }: BuildOptions) {
 	const method = base === 'UTC' ? 'getUTC' : 'get';
-	const { days, months } = i18n[lang] || i18n.en;
+	const { days, months } = i18n[lang || 'en'];
 
-	return (date?: DateValue) => {
+	return function formatter(date?: DateValue) {
 		const d = current(date);
 		if (Number.isNaN(+d)) throw SyntaxError('Invalid Date');
 
@@ -77,7 +77,7 @@ export function build({ base, lang = 'en' }: BuildOptions) {
 			ZZZ: () => `${sign}${pad(tz[0])}:${tz[1]}`,
 		};
 
-		return (mask = 'DDDD, DD MMMM YYYY') => {
+		return function renderer(mask = 'DDDD, DD MMMM YYYY') {
 			const EXP = /D{1,4}|M{1,4}|YY(?:YY)?|([hHmsAPap])\1?|Z{1,3}|\[([^\]\[]|\[[^\[\]]*\])*\]/g;
 			return mask.replace(EXP, ($) => {
 				const exe = tokens[$ as keyof typeof tokens];
