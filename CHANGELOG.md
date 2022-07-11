@@ -1,6 +1,6 @@
 # mauss changelog
 
-## Unreleased
+## 0.3.0 - 2022/07/11
 
 - ([#122](https://github.com/alchemauss/mauss/pull/122)) fix `compare.wildcard` value comparison
 - ([#110](https://github.com/alchemauss/mauss/pull/110)) add second parameter to `compare.key`
