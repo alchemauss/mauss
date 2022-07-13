@@ -6,6 +6,7 @@ let unknown: Record<any, unknown> = {};
 
 compare.key('name')(generic, generic);
 compare.key('name')({ name: 'abc' }, { name: 'def', foo: maybe ? 1 : undefined });
+compare.key('name', compare.string)({ name: 'abc' }, { name: 'def' });
 
 // ---- errors ----
 

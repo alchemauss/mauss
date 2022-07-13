@@ -3,6 +3,11 @@
 ## Unreleased
 
 - ([#116](https://github.com/alchemauss/mauss/pull/116)) add `compare.order` function in `/core` module
+
+## 0.3.0 - 2022/07/11
+
+- ([#122](https://github.com/alchemauss/mauss/pull/122)) fix `compare.wildcard` value comparison
+- ([#110](https://github.com/alchemauss/mauss/pull/110)) add second parameter to `compare.key`
 - ([#109](https://github.com/alchemauss/mauss/pull/109)) remove `esModuleInterop` and `allowSyntheticDefaultImports` option
 - ([#104](https://github.com/alchemauss/mauss/pull/104)) overhaul `random` namespace in `/utils` module
 - ([#102](https://github.com/alchemauss/mauss/pull/102)) overhaul `dt` namespace in `/utils` module
@@ -29,7 +34,8 @@
 - [#102](https://github.com/alchemauss/mauss/pull/102) | Overhauled `dt` namespace
   - `now` getter has been removed
   - `new` method has been renamed to `current`
-  - `format` is now a triple curried function, all optional unary parameters
+  - `format` is now a [curried function (#115)](https://github.com/alchemauss/mauss/pull/115)
+  - `build` is a [new function (#115)](https://github.com/alchemauss/mauss/pull/115) that builds a formatter
 - [#95](https://github.com/alchemauss/mauss/pull/95) | Overhauled `cookies` namespace
   - `raw` method is now a standalone function outside of parsed object
   - `create` is now a curried function that takes in the options first
