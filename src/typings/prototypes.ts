@@ -14,6 +14,13 @@ export type Flatten<List extends any[], Memory extends any[] = []> = List extend
 		: Flatten<Rest, [...Memory, Head]>
 	: never;
 
+/** Convert Union to Intersection */
+export type IntersectUnion<U> = /** distributive conditional type */ (
+	U extends any ? (_: U) => void : never
+) extends (_: /** conditional type inference */ infer Intersection) => void
+	? Intersection
+	: never;
+
 /** Joins a list of string with custom delimiter */
 export type Join<
 	StringList extends readonly string[],

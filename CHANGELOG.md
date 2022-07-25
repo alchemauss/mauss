@@ -3,6 +3,7 @@
 ## Unreleased
 
 - ([#116](https://github.com/alchemauss/mauss/pull/116)) add `compare.order` function in `/core` module
+- ([#103](https://github.com/alchemauss/mauss/pull/103)) add `Definable`, `Difference`, and `IntersectUnion` typings
 
 ## 0.3.0 - 2022/07/11
 
