@@ -44,7 +44,8 @@ export const compare: Comparisons & { wildcard(x: any, y: any): number } = {
 		return (x, y) => (c || this.wildcard)(x[k], y[k]);
 	},
 	order(w) {
-		const m = w.reduce<Record<string, number>>((a, c, i) => ({ ...a, [c]: i }), {});
+		const m: Record<string, number> = {};
+		w.forEach((v, i) => (m[v] = i));
 		return (x, y) => m[x] - m[y];
 	},
 
