@@ -1,18 +1,31 @@
 import { suite } from 'uvu';
-import assert from 'uvu/assert';
+import * as assert from 'uvu/assert';
 import * as dt from './index';
 
 const basics = {
+	build: suite('temporal:build'),
 	format: suite('temporal:format'),
 	travel: suite('temporal:travel'),
 };
 
 const fixed = new Date('2017/09/08, 13:02:03');
 
+// ---- build ----
+
+basics.build('basic formatter builder', () => {
+	const format = dt.build({ base: 'UTC' });
+
+	assert.type(format, 'function');
+
+	const renderer = format(fixed);
+
+	assert.equal(renderer('DD/MM/YYYY (Z)'), '08/09/2017 (+0)');
+});
+
 // ---- format ----
 
 basics.format('basic rendering', () => {
-	const renderer = dt.format()(fixed);
+	const renderer = dt.format(fixed);
 
 	assert.equal(renderer('foo'), 'foo');
 
@@ -43,7 +56,7 @@ basics.format('basic rendering', () => {
 	);
 });
 basics.format('throw on invalid date', () => {
-	assert.throws(() => dt.format()('invalid'));
+	assert.throws(() => dt.format('invalid'));
 });
 
 // ---- travel ----
