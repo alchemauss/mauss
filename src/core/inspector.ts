@@ -26,6 +26,7 @@ type Customized = {
 		x: WhenAny<X[Identifier], X, WhenUnknown<X[Identifier], never, X>>,
 		y: WhenAny<Y[Identifier], Y, WhenUnknown<Y[Identifier], never, Y>>
 	) => number;
+	order(weights: string[]): Wildcard;
 };
 
 type PatternKeys = keyof typeof patterns;
@@ -41,6 +42,11 @@ export const compare: Comparisons & { wildcard(x: any, y: any): number } = {
 	// customized
 	key(k, c) {
 		return (x, y) => (c || this.wildcard)(x[k], y[k]);
+	},
+	order(w) {
+		const m: Record<string, number> = {};
+		w.forEach((v, i) => (m[v] = i));
+		return (x, y) => m[x] - m[y];
 	},
 
 	// primitives

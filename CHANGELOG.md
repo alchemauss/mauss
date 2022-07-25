@@ -1,5 +1,9 @@
 # mauss changelog
 
+## Unreleased
+
+- ([#116](https://github.com/alchemauss/mauss/pull/116)) add `compare.order` function in `/core` module
+
 ## 0.3.0 - 2022/07/11
 
 - ([#122](https://github.com/alchemauss/mauss/pull/122)) fix `compare.wildcard` value comparison

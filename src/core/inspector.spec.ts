@@ -18,7 +18,11 @@ const basics = {
 	date: suite('compare:date'),
 	time: suite('compare:time'),
 
-	key: suite('compare:key'),
+	order: suite('compare:order'),
+};
+
+const composite = {
+	order: suite('compare[key]:order'),
 };
 
 // ---- standard ----
@@ -63,4 +67,37 @@ basics.string('sort string in alphabetical order', () => {
 	);
 });
 
+basics.order('customized compare with order', () => {
+	const months = ['January', 'February', 'March', 'April', 'May', 'June'];
+	const list = ['March', 'June', 'May', 'April', 'January', 'June', 'February'];
+	const result = ['January', 'February', 'March', 'April', 'May', 'June', 'June'];
+	assert.equal(list.sort(compare.order(months)), result);
+});
+
 Object.values(basics).forEach((v) => v.run());
+
+// ---- composite ----
+
+composite.order('keyed compare with order', () => {
+	const months = ['January', 'February', 'March', 'April', 'May', 'June'];
+	const posts = [
+		{ month: 'March' },
+		{ month: 'June' },
+		{ month: 'May' },
+		{ month: 'April' },
+		{ month: 'January' },
+		{ month: 'June' },
+		{ month: 'February' },
+	];
+	assert.equal(posts.sort(compare.key('month', compare.order(months))), [
+		{ month: 'January' },
+		{ month: 'February' },
+		{ month: 'March' },
+		{ month: 'April' },
+		{ month: 'May' },
+		{ month: 'June' },
+		{ month: 'June' },
+	]);
+});
+
+Object.values(composite).forEach((v) => v.run());
