@@ -1,6 +1,6 @@
 import { suite } from 'uvu';
 import * as assert from 'uvu/assert';
-import * as guards from '.';
+import * as guards from './index.js';
 
 // checked based on https://developer.mozilla.org/en-US/docs/Glossary/Falsy
 const data = [true, false, 'a', 'b', 0, 1, 2, '', null, undefined, NaN];

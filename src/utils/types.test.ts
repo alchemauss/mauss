@@ -1,4 +1,4 @@
-import { tryNumber } from '.';
+import { tryNumber } from './index.js';
 
 declare function expect<T>(v: T): void;
 

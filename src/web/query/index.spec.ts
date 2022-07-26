@@ -1,8 +1,8 @@
 import { suite } from 'uvu';
 import * as assert from 'uvu/assert';
 
-import qsd from './decoder';
-import qse from './encoder';
+import qsd from './decoder.js';
+import qse from './encoder.js';
 
 const basics = {
 	decoder: suite('query:decoder'),

@@ -1,6 +1,6 @@
 import { suite } from 'uvu';
 import * as assert from 'uvu/assert';
-import * as cookies from './cookies';
+import * as cookies from './cookies.js';
 
 const basics = {
 	parse: suite('cookie:parse'),

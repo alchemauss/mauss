@@ -1,6 +1,6 @@
 import { suite } from 'uvu';
 import * as assert from 'uvu/assert';
-import * as utils from '.';
+import * as utils from './index.js';
 
 const basics = {
 	capitalize: suite('capitalize'),
