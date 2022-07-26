@@ -1,4 +1,4 @@
-import type { Last, UnaryFunction as Constraint } from '../../typings';
+import type { Last, UnaryFunction as Constraint } from '../../typings/helpers.js';
 
 type Validator<
 	Functions extends Constraint[],

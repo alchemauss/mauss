@@ -1,4 +1,4 @@
-import type { AnyFunction } from '../typings';
+import type { AnyFunction } from '../typings/helpers.js';
 
 export function debounce<F extends AnyFunction>(fn: F, time = 300) {
 	let timeout: NodeJS.Timeout;

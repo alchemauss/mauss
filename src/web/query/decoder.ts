@@ -1,5 +1,8 @@
-import type { AlsoArray, Flatten, Intersection, Primitives } from '../../typings';
-import { tryNumber } from '../../utils';
+import type { Primitives } from '../../typings/aliases.js';
+import type { AlsoArray } from '../../typings/extenders.js';
+import type { Intersection } from '../../typings/helpers.js';
+import type { Flatten } from '../../typings/prototypes.js';
+import { tryNumber } from '../../utils/index.js';
 
 type CombineExisting<
 	A extends Record<any, any>,

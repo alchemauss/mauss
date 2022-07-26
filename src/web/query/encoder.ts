@@ -1,4 +1,4 @@
-import type { Nullish, Primitives } from '../../typings';
+import type { Nullish, Primitives } from '../../typings/aliases.js';
 
 type BoundValues = Nullish | Primitives;
 

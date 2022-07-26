@@ -1,5 +1,5 @@
-export * as random from './random';
-export * as dt from './temporal';
+export * as random from './random.js';
+export * as dt from './temporal/index.js';
 
 interface CapitalizeOptions {
 	/** only capitalize the very first letter */

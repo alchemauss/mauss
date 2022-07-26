@@ -1,4 +1,6 @@
-import type { Filter, Split, WhenAny, WhenUnknown } from '../typings';
+import type { WhenAny, WhenUnknown } from '../typings/comparators.js';
+import type { Filter } from '../typings/helpers.js';
+import type { Split } from '../typings/prototypes.js';
 
 const patterns = {
 	'date:complete': /\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+([+-][0-2]\d:[0-5]\d|Z)/,

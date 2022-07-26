@@ -1,1 +1,1 @@
-export { permutation } from './set';
+export { permutation } from './set.js';
