@@ -5,8 +5,10 @@ import type { AnyFunction, Reverse } from '../typings';
  * @param fn any function with one or more arguments
  * @returns a curried function to take in the arguments
  */
-export function inverse<T extends AnyFunction>(fn: T): AnyFunction<Reverse<Parameters<T>>> {
-	return (...parameters) => fn(...parameters.reverse());
+export function inverse<Function extends AnyFunction>(fn: Function) {
+	type Reversed = Reverse<Parameters<Function>>;
+	type Returned = ReturnType<Function>;
+	return (...parameters: Reversed): Returned => fn(...parameters.reverse());
 }
 
 /**
