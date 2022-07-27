@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- ([#131](https://github.com/alchemauss/mauss/pull/131)) support native ESM resolution
 - ([#116](https://github.com/alchemauss/mauss/pull/116)) add `compare.order` function in `/core` module
 - ([#103](https://github.com/alchemauss/mauss/pull/103)) add `Definable`, `Difference`, and `IntersectUnion` typings
 
