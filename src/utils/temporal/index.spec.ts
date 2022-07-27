@@ -1,6 +1,6 @@
 import { suite } from 'uvu';
 import * as assert from 'uvu/assert';
-import * as dt from './index';
+import * as dt from './index.js';
 
 const basics = {
 	build: suite('temporal:build'),

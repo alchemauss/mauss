@@ -1,4 +1,4 @@
-import type { Nullish, FullPrimitives as Primitives } from '../typings';
+import type { Nullish, FullPrimitives as Primitives } from '../typings/aliases.js';
 
 type EmptyString = '';
 type Empty = EmptyString | Nullish;

@@ -8,6 +8,15 @@ export function debounce<F extends AnyFunction>(fn: F, time = 300) {
 	};
 }
 
+export function immediate<F extends AnyFunction>(fn: F, time = 300) {
+	let timeout: NodeJS.Timeout;
+	return <A extends Parameters<F>>(...args: A) => {
+		if (timeout) return;
+		fn(...args);
+		timeout = setTimeout(() => clearTimeout(timeout), time);
+	};
+}
+
 export function throttle<F extends AnyFunction>(fn: F, time = 300) {
 	let wait = false;
 	return <A extends Parameters<F>>(...args: A) => {

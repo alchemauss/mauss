@@ -1,1 +1,1 @@
-export * as find from './find';
+export * as find from './find.js';

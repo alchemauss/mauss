@@ -1,4 +1,4 @@
-import { compare } from './inspector';
+import { compare } from './inspector.js';
 
 let maybe: boolean = false;
 let generic: Record<any, any> = {};

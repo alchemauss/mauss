@@ -1,6 +1,6 @@
 import { suite } from 'uvu';
 import * as assert from 'uvu/assert';
-import { compare, comparator } from './inspector';
+import { compare, comparator } from './inspector.js';
 
 const basics = {
 	comparator: suite('comparator'),

@@ -1,6 +1,6 @@
 import { suite } from 'uvu';
 import * as assert from 'uvu/assert';
-import * as random from './random';
+import * as random from './random.js';
 
 const basics = {
 	float: suite('random:float'),
