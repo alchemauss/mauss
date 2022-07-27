@@ -1,6 +1,6 @@
 # mauss changelog
 
-## Unreleased
+## 0.3.1 - 2022/07/27
 
 - ([#131](https://github.com/alchemauss/mauss/pull/131)) support native ESM resolution
 - ([#116](https://github.com/alchemauss/mauss/pull/116)) add `compare.order` function in `/core` module
