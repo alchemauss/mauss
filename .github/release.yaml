@@ -5,14 +5,15 @@ changelog:
     authors:
       - github-actions[bot]
   categories:
-    - title: Breaking Changes 🛠
+    - title: 🛠️ Breaking Changes
       labels:
-        - Semver-Major
-        - breaking-change
-    - title: Exciting New Features 🎉
+        - breaking
+    - title: ✨ Newly Added Features
       labels:
-        - Semver-Minor
         - enhancement
-    - title: Other Changes
+    - title: 🩹 Essential Patches
+      labels:
+        - patch
+    - title: Other Noteworthy Changes
       labels:
         - "*"
