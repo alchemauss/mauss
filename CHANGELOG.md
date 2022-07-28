@@ -1,6 +1,6 @@
 # mauss changelog
 
-## Unreleased
+## 0.3.2 - 2022/07/28
 
 - ([#134](https://github.com/alchemauss/mauss/pull/134)) add `./typings` to `exports` field
 
