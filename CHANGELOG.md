@@ -1,5 +1,9 @@
 # mauss changelog
 
+## Unreleased
+
+- ([#134](https://github.com/alchemauss/mauss/pull/134)) add `./typings` to `exports` field
+
 ## 0.3.1 - 2022/07/27
 
 - ([#131](https://github.com/alchemauss/mauss/pull/131)) support native ESM resolution

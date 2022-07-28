@@ -28,6 +28,7 @@
     "./utils": "./utils/index.js",
     "./utils/toolbox": "./utils/toolbox.js",
     "./web": "./web/index.js",
+    "./typings": "./typings/index.d.ts",
     "./package.json": "./package.json",
     "./prettier.json": "./prettier.json",
     "./tsconfig.json": "./tsconfig.json"
