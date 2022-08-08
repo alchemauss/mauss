@@ -2,7 +2,7 @@
   "name": "mauss",
   "author": "Ignatius Bagus",
   "description": "A declarative approach to a fast and efficient type-safe SDK",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "license": "MIT",
   "type": "module",
   "types": "index.d.ts",

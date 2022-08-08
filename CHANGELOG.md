@@ -1,6 +1,6 @@
 # mauss changelog
 
-## Unreleased
+## 0.3.3 - 2022/08/08
 
 - ([#136](https://github.com/alchemauss/mauss/pull/136)) fix `random.uuid` implicitly calling crypto methods
 
