@@ -14,3 +14,18 @@ export type TypePrimitive = 'string' | 'number' | 'bigint' | 'boolean' | 'symbol
 
 /** The complete values from `typeof` as string union */
 export type TypeTable = TypePrimitive | 'undefined' | 'object' | 'function';
+
+/** Integer-based instances of https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray#typedarray_objects */
+export type TypedIntArray =
+	| Int8Array
+	| Uint8Array
+	| Uint8ClampedArray
+	| Int16Array
+	| Uint16Array
+	| Int32Array
+	| Uint32Array
+	| BigUint64Array
+	| BigInt64Array;
+
+/** Complete instances of https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray#typedarray_objects */
+export type TypedArray = TypedIntArray | Float32Array | Float64Array;
