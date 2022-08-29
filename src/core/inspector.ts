@@ -54,7 +54,7 @@ export function string(x: string, y: string): number {
 export function object(x: object, y: object): number {
 	if (x === null) return 1;
 	if (y === null) return -1;
-	return comparator(x, y);
+	return inspect(x, y);
 }
 const primitives = { undefined, boolean, number, bigint, symbol, string, object };
 
@@ -74,7 +74,7 @@ export function wildcard(x: any, y: any): number {
 	return constrained(x, y);
 }
 
-export function comparator(x: Record<any, any>, y: Record<any, any>): number {
+export function inspect(x: Record<any, any>, y: Record<any, any>): number {
 	const common = [...new Set([...Object.keys(x), ...Object.keys(y)])].filter(
 		(k) => k in x && k in y && typeof x[k] === typeof y[k] && x[k] !== y[k]
 	);
@@ -84,7 +84,7 @@ export function comparator(x: Record<any, any>, y: Record<any, any>): number {
 		key = common[++i], data = typeof x[key]
 	) {
 		if (data === 'function') continue;
-		if (data === 'object') return comparator(x[key], y[key]);
+		if (data === 'object') return inspect(x[key], y[key]);
 		const constrained: Wildcard = primitives[data];
 		if (data in primitives) return constrained(x[key], y[key]);
 	}
