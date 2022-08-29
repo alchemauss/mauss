@@ -1,6 +1,6 @@
 import { suite } from 'uvu';
 import * as assert from 'uvu/assert';
-import { compare, comparator } from './inspector.js';
+import * as compare from './inspector.js';
 
 const basics = {
 	comparator: suite('comparator'),
@@ -28,10 +28,10 @@ const composite = {
 // ---- standard ----
 
 basics.comparator('comparator', () => {
-	assert.type(comparator, 'function');
+	assert.type(compare.comparator, 'function');
 
 	const data = [{ id: 0, name: 'B' }, { name: 'A' }, { id: 1, name: 'C' }];
-	assert.equal(data.sort(comparator), [
+	assert.equal(data.sort(compare.comparator), [
 		{ name: 'A' }, // name sorted first as it's the common denominator
 		{ id: 1, name: 'C' }, // id takes over since it's defined first
 		{ id: 0, name: 'B' },
