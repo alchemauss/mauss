@@ -4,18 +4,23 @@ export function undefined(x: unknown, y: unknown): number {
 	if (x == null && y == null) return 0;
 	return (x == null && 1) || (y == null && -1) || 0;
 }
+
 export function boolean(x: boolean, y: boolean): number {
 	return +y - +x;
 }
+
 export function number(x: number, y: number): number {
 	return y - x;
 }
+
 export function bigint(x: bigint, y: bigint): number {
 	return x < y ? -1 : x > y ? 1 : 0;
 }
+
 export function symbol(x: symbol, y: symbol): number {
 	return x.toString().localeCompare(y.toString());
 }
+
 export function string(x: string, y: string): number {
 	for (const [pattern, exp] of Object.entries(patterns)) {
 		const [type] = pattern.split(':') as [keyof typeof patterned];

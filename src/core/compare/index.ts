@@ -19,7 +19,7 @@ export function wildcard(x: any, y: any): number {
 	const [xt, yt] = [typeof x, typeof y];
 	if (xt === 'function') return 0;
 
-	if (xt !== yt || xt === 'object' || yt === 'object') {
+	if (xt !== yt || xt === 'object') {
 		const xs = JSON.stringify(x);
 		const ys = JSON.stringify(y);
 		return primitives.string(xs, ys);
