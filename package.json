@@ -34,13 +34,8 @@
     "./tsconfig.json": "./tsconfig.json"
   },
   "prettier": "./prettier.json",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/alchemauss/mauss.git"
-  },
-  "bugs": {
-    "url": "https://github.com/alchemauss/mauss/issues"
-  },
+  "repository": "github:alchemauss/mauss",
+  "bugs": "https://github.com/alchemauss/mauss/issues",
   "devDependencies": {
     "@types/node": "^18.6.4",
     "@types/node-fetch": "^2.5.10",
