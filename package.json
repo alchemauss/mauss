@@ -26,7 +26,6 @@
     "./math": "./math/index.js",
     "./math/set": "./math/set.js",
     "./utils": "./utils/index.js",
-    "./utils/toolbox": "./utils/toolbox.js",
     "./web": "./web/index.js",
     "./typings": "./typings/index.d.ts",
     "./package.json": "./package.json",
