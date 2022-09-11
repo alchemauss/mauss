@@ -5,7 +5,7 @@
   "version": "0.3.3",
   "license": "MIT",
   "type": "module",
-  "types": "index.d.ts",
+  "types": "./core/index.d.ts",
   "scripts": {
     "clean": "git add * && git clean -dfx -e node_modules",
     "test": "npm run test:unit",
@@ -18,7 +18,7 @@
     "prepublishOnly": "npm run pub:build && npm run pub:format"
   },
   "exports": {
-    ".": "./index.js",
+    ".": "./core/index.js",
     "./api": "./api/index.js",
     "./bits": "./bits/index.js",
     "./bits/find": "./bits/find.js",
