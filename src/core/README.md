@@ -4,13 +4,11 @@
 import { :util } from 'mauss';
 ```
 
-## `compare/comparator`
+## `compare`
 
-compare utility object with multiple methods for various types, and comparator function that can sort any array of object (but only objects).
+A namespace with multiple functions for various types, including an `inspect` function that can sort any array of object (but only objects).
 
-### `compare`
-
-Compare object provides a complete list of methods that covers all `typeof` values and some customized additions. All method returns a number that can be provided directly to `.sort` function, defaults to ordering in descending values.
+This namespace provides complete list of methods that covers all `typeof` values and some customized additions. All method returns a number that can be provided directly to `.sort` function, defaults to ordering in descending values.
 
 | Method      | Accepts     |
 | ----------- | ----------- |
