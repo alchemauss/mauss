@@ -1,11 +1,5 @@
 # mauss/api
 
-This defaults to `fetch` api from browser, but you can also use it on the server-side by first installing the package `node-fetch`. If you're using something like [SvelteKit](https://github.com/sveltejs/kit) that polyfills `fetch` globally, you won't have to worry about installing this.
-
-```bash
-npm install node-fetch
-```
-
 You can set a custom rule by calling `init` as early as possible. This is optional and might be useful for pointing to both same and external domain at the same time.
 
 ```js
