@@ -12,15 +12,6 @@ export function inverse<Function extends AnyFunction>(fn: Function) {
 }
 
 /**
- * unique - transform an array to a set and back to array
- * @param array items to be inspected
- * @returns duplicate-free version of the array input
- */
-export function unique<T>(array: T[]): T[] {
-	return [...new Set(array)];
-}
-
-/**
  * regexp - implementation of global RegExp constructor with escaped pattern
  * @param pattern passed in the form of string literal
  * @param flags unique set of characters from `d|g|i|m|s|u|y`
@@ -28,4 +19,13 @@ export function unique<T>(array: T[]): T[] {
  */
 export function regexp(pattern: string, flags?: string): RegExp {
 	return new RegExp(pattern.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), flags);
+}
+
+/**
+ * unique - transform an array to a set and back to array
+ * @param array items to be inspected
+ * @returns duplicate-free version of the array input
+ */
+export function unique<T>(array: T[]): T[] {
+	return [...new Set(array)];
 }

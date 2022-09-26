@@ -34,34 +34,6 @@ export type Join<
 	? OnlyItem
 	: '';
 
-/** Generates a list of tuples from union */
-export type Permutation<Union, Sliced = Union> = [Union] extends [never]
-	? []
-	: Union extends Union
-	? [Union, ...Permutation<Sliced extends Union ? never : Sliced>]
-	: never;
-
-/** Define a union of tuple that accepts a progressively increasing (LTR) items */
-export type Progressive<List extends any[]> = List extends [...infer Rest, any]
-	? List | (Rest['length'] extends 1 ? Rest : Progressive<Rest>)
-	: List;
-
-/** Slices a list beginning from the starting index */
-export type Slice<List extends any[], Start extends number = 0> = List extends [
-	...Extend<Start>,
-	...infer Sliced
-]
-	? Sliced
-	: [];
-
-/** Splits a string with custom separator */
-export type Split<
-	Key extends string,
-	Separator extends string
-> = Key extends `${infer Prefix}${Separator}${infer Rest}`
-	? [Prefix, ...Split<Rest, Separator>]
-	: [Key];
-
 /**
  * Merge an object properties and make all of them optional.
  * But, when one of it is defined, all of it's other properties
@@ -84,6 +56,18 @@ export type PartialOmit<
 	Final = Saved & { [P in keyof T]?: T[P] }
 > = { [P in keyof Final]: Final[P] };
 
+/** Generates a list of tuples from union */
+export type Permutation<Union, Sliced = Union> = [Union] extends [never]
+	? []
+	: Union extends Union
+	? [Union, ...Permutation<Sliced extends Union ? never : Sliced>]
+	: never;
+
+/** Define a union of tuple that accepts a progressively increasing (LTR) items */
+export type Progressive<List extends any[]> = List extends [...infer Rest, any]
+	? List | (Rest['length'] extends 1 ? Rest : Progressive<Rest>)
+	: List;
+
 /**
  * Single out a property from an object, receives object of
  * any properties and only allow one property to be defined
@@ -91,6 +75,22 @@ export type PartialOmit<
 export type SingleProperty<T> = {
 	[P in keyof T]: { [K in P]: T[P] } & { [K in Exclude<keyof T, P>]?: undefined };
 }[keyof T];
+
+/** Slices a list beginning from the starting index */
+export type Slice<List extends any[], Start extends number = 0> = List extends [
+	...Extend<Start>,
+	...infer Sliced
+]
+	? Sliced
+	: [];
+
+/** Splits a string with custom separator */
+export type Split<
+	Key extends string,
+	Separator extends string
+> = Key extends `${infer Prefix}${Separator}${infer Rest}`
+	? [Prefix, ...Split<Rest, Separator>]
+	: [Key];
 
 /**
  * Specify tuple of `Size` with items of `T`
