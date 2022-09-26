@@ -100,8 +100,6 @@ export function raw(source: CookieInput, name: string, trim = false) {
 }
 
 /**
- * @param name name for cookie
- * @param value value to be saved as cookie name
  * @param options cookie settings
  * @returns the complete 'Set-Cookie' value
  */
@@ -122,6 +120,11 @@ export function create({
 
 	const HOUR = 36e5; // ONE HOUR (60 * 60 * 1e3)
 
+	/**
+	 * @param name name for cookie
+	 * @param value value to be saved as cookie name
+	 * @returns the complete 'Set-Cookie' value
+	 */
 	return (name: string, value: string) => {
 		if (/[\s\t()<>@,;:\\"/\[\]?={}\u0080-\u00ff]/.test(name)) {
 			name = name.replace(/[\s\t]/g, '-').replace(/-+/g, '-');
