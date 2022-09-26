@@ -1,4 +1,4 @@
-import type { TypedIntArray } from '../typings/aliases.js';
+import type { TypedIntArray } from '../../typings/aliases.js';
 
 export function float(max = 1, min = 0): number {
 	[min, max] = [Math.ceil(min), Math.floor(max)];

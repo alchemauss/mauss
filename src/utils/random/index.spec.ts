@@ -1,7 +1,7 @@
 import { webcrypto as crypto } from 'node:crypto';
 import { suite } from 'uvu';
 import * as assert from 'uvu/assert';
-import * as random from './random.js';
+import * as random from './index.js';
 
 const basics = {
 	float: suite('random:float'),
