@@ -62,25 +62,25 @@ function relay() {
 
 type MethodInit = string | { fetch?: typeof fetch; path: string };
 /**	GET request with fetch */
-export const get = async (init: MethodInit, token?: string) => {
+export async function get(init: MethodInit, token?: string) {
 	const { fetch = relay(), path } = typeof init !== 'string' ? init : { path: init };
 	return await send({ fetch }, { method: 'GET', path, token });
-};
+}
 /**	DELETE request with fetch */
-export const del = async (init: MethodInit, token?: string) => {
+export async function del(init: MethodInit, token?: string) {
 	const { fetch = relay(), path } = typeof init !== 'string' ? init : { path: init };
 	return await send({ fetch }, { method: 'DELETE', path, token });
-};
+}
 /**	POST request with fetch */
-export const post = async (init: MethodInit, data: any, token?: string) => {
+export async function post(init: MethodInit, data: any, token?: string) {
 	const { fetch = relay(), path } = typeof init !== 'string' ? init : { path: init };
 	return await send({ fetch }, { method: 'POST', path, data, token });
-};
+}
 /**	PUT request with fetch */
-export const put = async (init: MethodInit, data: any, token?: string) => {
+export async function put(init: MethodInit, data: any, token?: string) {
 	const { fetch = relay(), path } = typeof init !== 'string' ? init : { path: init };
 	return await send({ fetch }, { method: 'PUT', path, data, token });
-};
+}
 
 export default {
 	/** Use api with additional options by initializing this function */
