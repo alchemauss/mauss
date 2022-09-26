@@ -9,14 +9,17 @@ const options: {
 	fetch?: typeof fetch;
 } = {};
 
-type SendOptions = { fetch: typeof fetch };
 type SendParams = { method: string; path: string; data?: BodyInit; token?: string };
 type SendOutput = Promise<{ response: Response; body: string | Record<string, any> }>;
-async function send({ fetch }: SendOptions, { method, path, data, token }: SendParams): SendOutput {
+async function send(
+	passed: undefined | typeof fetch = undefined,
+	{ method, path, data, token }: SendParams
+): SendOutput {
 	const browser = typeof window !== 'undefined';
+	if (!passed) passed = relay(browser);
 
 	const opts: RequestInit = { method };
-	opts.headers = {}; // TS workaround for "Object is possibly 'undefined'."
+	opts.headers = {}; // init outside to satisfy TS
 	if (data) {
 		if (
 			(typeof Blob !== 'undefined' && data instanceof Blob) ||
@@ -48,47 +51,58 @@ async function send({ fetch }: SendOptions, { method, path, data, token }: SendP
 		(browser && (base ? `${base}/${path}` : path)) ||
 		`${base || 'localhost:3000'}/${path}`;
 
-	const res = await fetch(url, opts);
+	const res = await passed(url, opts);
 	const body = await (res.ok ? res.json() : res.text());
 	return { response: res, body };
 }
 
-function relay() {
-	if (typeof window !== 'undefined') return window.fetch;
-	if (typeof fetch !== 'undefined') return fetch;
+function relay(browser: boolean) {
 	if (typeof options.fetch !== 'undefined') return options.fetch;
+	if (browser || typeof fetch !== 'undefined') return fetch;
 	throw new Error('No fetch provided. Use browser only or pass in a fetch function');
 }
 
 type MethodInit = string | { fetch?: typeof fetch; path: string };
 /**	GET request with fetch */
 export async function get(init: MethodInit, token?: string) {
-	const { fetch = relay(), path } = typeof init !== 'string' ? init : { path: init };
-	return await send({ fetch }, { method: 'GET', path, token });
+	let fetch, path: string;
+	if (typeof init === 'string') path = init;
+	else ({ fetch, path } = init);
+
+	return await send(fetch, { method: 'GET', path, token });
 }
 /**	DELETE request with fetch */
 export async function del(init: MethodInit, token?: string) {
-	const { fetch = relay(), path } = typeof init !== 'string' ? init : { path: init };
-	return await send({ fetch }, { method: 'DELETE', path, token });
+	let fetch, path: string;
+	if (typeof init === 'string') path = init;
+	else ({ fetch, path } = init);
+
+	return await send(fetch, { method: 'DELETE', path, token });
 }
 /**	POST request with fetch */
 export async function post(init: MethodInit, data: any, token?: string) {
-	const { fetch = relay(), path } = typeof init !== 'string' ? init : { path: init };
-	return await send({ fetch }, { method: 'POST', path, data, token });
+	let fetch, path: string;
+	if (typeof init === 'string') path = init;
+	else ({ fetch, path } = init);
+
+	return await send(fetch, { method: 'POST', path, data, token });
 }
 /**	PUT request with fetch */
 export async function put(init: MethodInit, data: any, token?: string) {
-	const { fetch = relay(), path } = typeof init !== 'string' ? init : { path: init };
-	return await send({ fetch }, { method: 'PUT', path, data, token });
+	let fetch, path: string;
+	if (typeof init === 'string') path = init;
+	else ({ fetch, path } = init);
+
+	return await send(fetch, { method: 'PUT', path, data, token });
 }
 
 export default {
 	/** Use api with additional options by initializing this function */
 	init({ host, intercept, fetch }: typeof options) {
-		options.host = host && /^https?/.test(host) ? host : '';
-		options.intercept = typeof intercept === 'function' ? intercept : undefined;
+		options.host = host || '';
+		options.intercept = intercept;
 		try {
-			options.fetch = fetch || relay();
+			options.fetch = fetch || relay(typeof window !== 'undefined');
 		} catch (error) {
 			if (typeof window === 'undefined') console.warn(error);
 		}
