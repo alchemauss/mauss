@@ -48,8 +48,8 @@ async function send(
 	 */
 	const url =
 		(intercept && intercept(path)) ||
-		(browser && (base ? `${base}/${path}` : path)) ||
-		`${base || 'localhost:3000'}/${path}`;
+		(browser && (base ? base + path : path)) ||
+		(base || 'localhost:3000') + path;
 
 	const res = await passed(url, opts);
 	const body = await (res.ok ? res.json() : res.text());
