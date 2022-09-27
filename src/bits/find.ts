@@ -1,8 +1,10 @@
+import type { UnaryFunction } from '../typings/helpers.js';
+
 export function binary<T>(
 	sorted: T[],
 	check: {
-		item: (item: T) => false | ((item: T) => any);
-		pointer: (item: T) => boolean;
+		item: UnaryFunction<T, false | UnaryFunction<T>>;
+		pointer: UnaryFunction<T, boolean>;
 	}
 ): T | undefined {
 	let start = 0, final = sorted.length - 1; // prettier-ignore

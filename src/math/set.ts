@@ -5,7 +5,7 @@ export function permutation<T, K>(input: T[], fn?: (i: T[]) => K) {
 		for (let i = 0; i < arr.length; i++) {
 			const curr = arr.slice();
 			const next = curr.splice(i, 1);
-			permute(curr.slice(), m.concat(next));
+			permute(curr, m.concat(next));
 		}
 	};
 	return permute(input), results;
