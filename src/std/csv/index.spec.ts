@@ -1,6 +1,6 @@
 import { test } from 'uvu';
 import * as assert from 'uvu/assert';
-import { read } from './csv.js';
+import { read } from './index.js';
 
 test('parse csv edge cases correctly', () => {
 	const parsed = read(
