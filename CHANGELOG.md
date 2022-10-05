@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- ([#153](https://github.com/alchemauss/mauss/pull/153)) add new `sys.path` to `/std` module
 - ([#147](https://github.com/alchemauss/mauss/pull/147)) add new CSV parser to `/std` module
 - ([#147](https://github.com/alchemauss/mauss/pull/147)) new `"exports"` entry `'/std'`
 - ([#140](https://github.com/alchemauss/mauss/pull/140)) overhaul `compare` to namespace
