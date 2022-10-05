@@ -1,5 +1,7 @@
 export function join(...paths: string[]): string {
+	if (!paths.length) return '.';
 	const index = paths[0].replace(/\\/g, '/').trim();
+	if (paths.length === 1 && index === '') return '.';
 	const parts = index.replace(/[/]*$/g, '').split('/');
 	if (parts[0] === '') parts.shift();
 

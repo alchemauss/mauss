@@ -7,13 +7,13 @@ const basics = {
 };
 
 basics.join('joins paths base cases', () => {
-	assert.equal(path.join(''), '');
+	assert.equal(path.join(), '.');
+	assert.equal(path.join(''), '.');
 	assert.equal(path.join('/'), '/');
 });
 
 basics.join('joins URL-like paths correctly', () => {
 	assert.equal(path.join('/', 'root', ':id'), '/root/:id');
-	assert.equal(path.join('/root', ':id'), '/root/:id');
 	assert.equal(path.join('relative', ':id'), 'relative/:id');
 	assert.equal(path.join('/', '/', '/', '/foo/', '/', ':id'), '/foo/:id');
 	assert.equal(path.join('', '', '', 'foo', '', ':id'), 'foo/:id');
