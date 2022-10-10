@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- ([#154](https://github.com/alchemauss/mauss/pull/154)) add `"plugins"` to prettier overrides
 - ([#147](https://github.com/alchemauss/mauss/pull/147)) add new CSV parser to `/std` module
 - ([#147](https://github.com/alchemauss/mauss/pull/147)) new `"exports"` entry `'/std'`
 - ([#140](https://github.com/alchemauss/mauss/pull/140)) overhaul `compare` to namespace
