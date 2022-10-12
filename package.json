@@ -35,6 +35,18 @@
   "prettier": "./prettier.json",
   "repository": "github:alchemauss/mauss",
   "bugs": "https://github.com/alchemauss/mauss/issues",
+  "keywords": [
+    "zero-dependency",
+    "strongly-typed",
+    "type-safe",
+    "declarative",
+    "convenient",
+    "standard",
+    "modules",
+    "typings",
+    "opinionated",
+    "settings"
+  ],
   "devDependencies": {
     "@types/node": "^18.6.4",
     "@types/node-fetch": "^2.5.10",
@@ -42,12 +54,5 @@
     "tsm": "^2.2.1",
     "typescript": "^4.1.2",
     "uvu": "^0.5.3"
-  },
-  "keywords": [
-    "zero-dependency",
-    "strongly-typed",
-    "type-safe",
-    "modules",
-    "utilities"
-  ]
+  }
 }
