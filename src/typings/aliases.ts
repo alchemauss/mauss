@@ -15,6 +15,9 @@ export type TypePrimitive = 'string' | 'number' | 'bigint' | 'boolean' | 'symbol
 /** The complete values from `typeof` as string union */
 export type TypeTable = TypePrimitive | 'undefined' | 'object' | 'function';
 
+/** Primitives that are extended by `Record<..., any>` */
+export type IndexSignature = string | number | symbol;
+
 /** Integer-based instances of https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray#typedarray_objects */
 export type TypedIntArray =
 	| Int8Array
