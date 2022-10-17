@@ -2,13 +2,16 @@
 
 ## Unreleased
 
+- ([#154](https://github.com/alchemauss/mauss/pull/154)) add `"plugins"` to prettier overrides
 - ([#153](https://github.com/alchemauss/mauss/pull/153)) add new `sys.path` to `/std` module
+- ([#150](https://github.com/alchemauss/mauss/pull/150)) enable key drilling to `compare.key`
 - ([#147](https://github.com/alchemauss/mauss/pull/147)) add new CSV parser to `/std` module
 - ([#147](https://github.com/alchemauss/mauss/pull/147)) new `"exports"` entry `'/std'`
 - ([#140](https://github.com/alchemauss/mauss/pull/140)) overhaul `compare` to namespace
 
 ### Breaking Changes
 
+- [#150](https://github.com/alchemauss/mauss/pull/150) | Make `.` a reserved character as delimiter for `compare.key`
 - [#140](https://github.com/alchemauss/mauss/pull/140) | Renamed and moved `comparator` to `compare.inspect`
 
 ## 0.3.3 - 2022/08/08

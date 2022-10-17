@@ -1,5 +1,14 @@
 /* <-- Type Level Programming --> */
 
+import type { IndexSignature } from './aliases.js';
+import type { When } from './comparators.js';
+
+export type Concat<Left, Right, Delimiter = '.'> = When<
+	[Left, Right],
+	[string, string],
+	`${Left & string}${'' extends Right ? '' : Delimiter & string}${Right & string}`
+>;
+
 /** Extends a list to a certain specified length */
 export type Extend<Size extends number, List extends any[] = []> = List['length'] extends Size
 	? List
@@ -56,6 +65,15 @@ export type PartialOmit<
 	Final = Saved & { [P in keyof T]?: T[P] }
 > = { [P in keyof Final]: Final[P] };
 
+/**
+ * Generates all possible properties of nested object,
+ * starting from the root and ends anywhere in the tree.
+ * @returns string union with dot (.) as the delimiter
+ */
+export type Paths<T> = T extends object
+	? When<T, Date, '', { [K in keyof T]-?: `${K & string}` | Concat<K, Paths<T[K]>> }[keyof T]>
+	: '';
+
 /** Generates a list of tuples from union */
 export type Permutation<Union, Sliced = Union> = [Union] extends [never]
 	? []
@@ -86,7 +104,7 @@ export type Slice<List extends any[], Start extends number = 0> = List extends [
 
 /** Splits a string with custom separator */
 export type Split<
-	Key extends string,
+	Key extends IndexSignature,
 	Separator extends string
 > = Key extends `${infer Prefix}${Separator}${infer Rest}`
 	? [Prefix, ...Split<Rest, Separator>]
