@@ -5,11 +5,9 @@ on:
     branches:
       - master
   pull_request:
-    branches:
-      - "**"
 
 jobs:
-  lint:
+  check:
     runs-on: ubuntu-latest
 
     steps:
@@ -17,8 +15,18 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16
-      - name: Lint
-        run: npm install && npm run lint
+
+      - uses: pnpm/action-setup@v2
+      - id: pnpm
+        run: echo "cache=$(pnpm store path)" >> $GITHUB_ENV
+      - uses: actions/cache@v3
+        with:
+          path: ${{ env.cache }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: ${{ runner.os }}-pnpm-store-
+
+      - run: pnpm install
+      - run: pnpm check
 
   test:
     runs-on: ${{ matrix.os }}
@@ -32,5 +40,15 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-      - name: Test
-        run: npm install && npm run test
+
+      - uses: pnpm/action-setup@v2
+      - id: pnpm
+        run: echo "cache=$(pnpm store path)" >> $GITHUB_ENV
+      - uses: actions/cache@v3
+        with:
+          path: ${{ env.cache }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: ${{ runner.os }}-pnpm-store-
+
+      - run: pnpm install
+      - run: pnpm test
