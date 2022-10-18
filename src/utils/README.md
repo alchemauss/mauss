@@ -93,7 +93,3 @@ const data = { a: {}, b: 1, c: [3] };
 // returns a random value from an object
 random.key(data); // a || 1 || [3]
 ```
-
-***
-
-<h3 align="center"><pre>Mauss | <a href="LICENSE">MIT License</a></pre></h3>

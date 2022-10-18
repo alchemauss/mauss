@@ -7,7 +7,7 @@
 		"isolatedModules": true,
 
 		// Module Resolution
-		"moduleResolution": "Node",
+		"moduleResolution": "Node16",
 		"resolveJsonModule": true,
 
 		// Linter Checks

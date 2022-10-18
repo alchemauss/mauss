@@ -1,5 +1,14 @@
 /* <-- Type Level Programming --> */
 
+import type { IndexSignature } from './aliases.js';
+import type { When } from './comparators.js';
+
+export type Concat<Left, Right, Delimiter = '.'> = When<
+	[Left, Right],
+	[string, string],
+	`${Left & string}${'' extends Right ? '' : Delimiter & string}${Right & string}`
+>;
+
 /** Extends a list to a certain specified length */
 export type Extend<Size extends number, List extends any[] = []> = List['length'] extends Size
 	? List
@@ -14,6 +23,13 @@ export type Flatten<List extends any[], Memory extends any[] = []> = List extend
 		: Flatten<Rest, [...Memory, Head]>
 	: never;
 
+/** Convert Union to Intersection */
+export type IntersectUnion<U> = /** distributive conditional type */ (
+	U extends any ? (_: U) => void : never
+) extends (_: /** conditional type inference */ infer Intersection) => void
+	? Intersection
+	: never;
+
 /** Joins a list of string with custom delimiter */
 export type Join<
 	StringList extends readonly string[],
@@ -26,34 +42,6 @@ export type Join<
 	: StringList extends readonly [infer OnlyItem]
 	? OnlyItem
 	: '';
-
-/** Generates a list of tuples from union */
-export type Permutation<Union, Sliced = Union> = [Union] extends [never]
-	? []
-	: Union extends Union
-	? [Union, ...Permutation<Sliced extends Union ? never : Sliced>]
-	: never;
-
-/** Define a union of tuple that accepts a progressively increasing (LTR) items */
-export type Progressive<List extends any[]> = List extends [...infer Rest, any]
-	? List | (Rest['length'] extends 1 ? Rest : Progressive<Rest>)
-	: List;
-
-/** Slices a list beginning from the starting index */
-export type Slice<List extends any[], Start extends number = 0> = List extends [
-	...Extend<Start>,
-	...infer Sliced
-]
-	? Sliced
-	: [];
-
-/** Splits a string with custom separator */
-export type Split<
-	Key extends string,
-	Separator extends string
-> = Key extends `${infer Prefix}${Separator}${infer Rest}`
-	? [Prefix, ...Split<Rest, Separator>]
-	: [Key];
 
 /**
  * Merge an object properties and make all of them optional.
@@ -78,12 +66,49 @@ export type PartialOmit<
 > = { [P in keyof Final]: Final[P] };
 
 /**
+ * Generates all possible properties of nested object,
+ * starting from the root and ends anywhere in the tree.
+ * @returns string union with dot (.) as the delimiter
+ */
+export type Paths<T> = T extends object
+	? When<T, Date, '', { [K in keyof T]-?: `${K & string}` | Concat<K, Paths<T[K]>> }[keyof T]>
+	: '';
+
+/** Generates a list of tuples from union */
+export type Permutation<Union, Sliced = Union> = [Union] extends [never]
+	? []
+	: Union extends Union
+	? [Union, ...Permutation<Sliced extends Union ? never : Sliced>]
+	: never;
+
+/** Define a union of tuple that accepts a progressively increasing (LTR) items */
+export type Progressive<List extends any[]> = List extends [...infer Rest, any]
+	? List | (Rest['length'] extends 1 ? Rest : Progressive<Rest>)
+	: List;
+
+/**
  * Single out a property from an object, receives object of
  * any properties and only allow one property to be defined
  */
 export type SingleProperty<T> = {
 	[P in keyof T]: { [K in P]: T[P] } & { [K in Exclude<keyof T, P>]?: undefined };
 }[keyof T];
+
+/** Slices a list beginning from the starting index */
+export type Slice<List extends any[], Start extends number = 0> = List extends [
+	...Extend<Start>,
+	...infer Sliced
+]
+	? Sliced
+	: [];
+
+/** Splits a string with custom separator */
+export type Split<
+	Key extends IndexSignature,
+	Separator extends string
+> = Key extends `${infer Prefix}${Separator}${infer Rest}`
+	? [Prefix, ...Split<Rest, Separator>]
+	: [Key];
 
 /**
  * Specify tuple of `Size` with items of `T`

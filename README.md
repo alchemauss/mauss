@@ -9,7 +9,7 @@ Ever been frustrated when starting up a new project? Feels like there's a lot to
 ## Installation
 
 ```bash
-npm install mauss
+pnpm install mauss
 ```
 
 ### Disclaimer
@@ -18,11 +18,7 @@ Although it's meant to be versatile, there will most likely be something that th
 
 There's still a lot of room for improvements, so if there's something you think are essential that is missing and you feel it should be here, feel free to open an issue for it!
 
-***
-
-<h3 align="center"><pre>API Documentation</pre></h3>
-
-***
+## API Documentation
 
 | Module                    | Import            |
 | ------------------------- | ----------------- |
@@ -31,6 +27,7 @@ There's still a lot of room for improvements, so if there's something you think 
 | [`bits`](/src/bits)       | `'mauss/bits'`    |
 | [`guards`](/src/guards)   | `'mauss/guards'`  |
 | [`math`](/src/math)       | `'mauss/math'`    |
+| [`std`](/src/std)         | `'mauss/std'`     |
 | [`utils`](/src/utils)     | `'mauss/utils'`   |
 | [`web`](/src/web)         | `'mauss/web'`     |
 | [`typings`](/src/typings) | `'mauss/typings'` |

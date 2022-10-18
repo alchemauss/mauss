@@ -2,50 +2,59 @@
   "name": "mauss",
   "author": "Ignatius Bagus",
   "description": "A declarative approach to a fast and efficient type-safe SDK",
-  "version": "0.2.3",
+  "version": "0.3.3",
   "license": "MIT",
   "type": "module",
-  "types": "index.d.ts",
+  "types": "./core/index.d.ts",
   "scripts": {
     "clean": "git add * && git clean -dfx -e node_modules",
-    "test": "npm run test:unit",
+    "check": "pnpm check:code && pnpm check:style",
+    "check:code": "tsc --noEmit",
+    "check:style": "prettier -c \"src/**/*.ts\"",
+    "test": "pnpm test:unit",
     "test:unit": "uvu -r tsm src \"(spec\\.ts)\"",
-    "lint": "npm run lint:code && npm run lint:style",
-    "lint:code": "tsc --noEmit",
-    "lint:style": "prettier -c \"src/**/*.ts\"",
     "pub:build": "tsc --project src",
     "pub:format": "prettier -wu **/*.{d.ts,js}",
-    "prepublishOnly": "npm run pub:build && npm run pub:format"
+    "prepublishOnly": "pnpm pub:build && pnpm pub:format"
   },
   "exports": {
-    ".": "./index.js",
+    ".": "./core/index.js",
     "./api": "./api/index.js",
     "./bits": "./bits/index.js",
     "./bits/find": "./bits/find.js",
     "./guards": "./guards/index.js",
     "./math": "./math/index.js",
     "./math/set": "./math/set.js",
+    "./std": "./std/index.js",
     "./utils": "./utils/index.js",
-    "./utils/toolbox": "./utils/toolbox.js",
     "./web": "./web/index.js",
+    "./typings": "./typings/index.d.ts",
     "./package.json": "./package.json",
     "./prettier.json": "./prettier.json",
     "./tsconfig.json": "./tsconfig.json"
   },
+  "packageManager": "pnpm@7.13.5",
   "prettier": "./prettier.json",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/alchemauss/mauss.git"
-  },
-  "bugs": {
-    "url": "https://github.com/alchemauss/mauss/issues"
-  },
+  "repository": "github:alchemauss/mauss",
+  "bugs": "https://github.com/alchemauss/mauss/issues",
+  "keywords": [
+    "zero-dependency",
+    "strongly-typed",
+    "type-safe",
+    "declarative",
+    "convenient",
+    "standard",
+    "modules",
+    "typings",
+    "opinionated",
+    "settings"
+  ],
   "devDependencies": {
-    "@types/node": "^17.0.19",
-    "@types/node-fetch": "^2.5.10",
-    "prettier": "^2.3.0",
-    "tsm": "^2.2.1",
-    "typescript": "^4.1.2",
-    "uvu": "^0.5.3"
+    "@types/node": "^18.11.0",
+    "@types/node-fetch": "^2.6.2",
+    "prettier": "^2.7.1",
+    "tsm": "^2.2.2",
+    "typescript": "^4.8.4",
+    "uvu": "^0.5.6"
   }
 }

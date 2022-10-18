@@ -2,6 +2,33 @@
 
 ## Unreleased
 
+- ([#154](https://github.com/alchemauss/mauss/pull/154)) add `"plugins"` to prettier overrides
+- ([#150](https://github.com/alchemauss/mauss/pull/150)) enable key drilling to `compare.key`
+- ([#147](https://github.com/alchemauss/mauss/pull/147)) add new CSV parser to `/std` module
+- ([#147](https://github.com/alchemauss/mauss/pull/147)) new `"exports"` entry `'/std'`
+- ([#140](https://github.com/alchemauss/mauss/pull/140)) overhaul `compare` to namespace
+
+### Breaking Changes
+
+- [#150](https://github.com/alchemauss/mauss/pull/150) | Make `.` a reserved character as delimiter for `compare.key`
+- [#140](https://github.com/alchemauss/mauss/pull/140) | Renamed and moved `comparator` to `compare.inspect`
+
+## 0.3.3 - 2022/08/08
+
+- ([#136](https://github.com/alchemauss/mauss/pull/136)) fix `random.uuid` implicitly calling crypto methods
+
+## 0.3.2 - 2022/07/28
+
+- ([#134](https://github.com/alchemauss/mauss/pull/134)) add `./typings` to `exports` field
+
+## 0.3.1 - 2022/07/27
+
+- ([#131](https://github.com/alchemauss/mauss/pull/131)) support native ESM resolution
+- ([#116](https://github.com/alchemauss/mauss/pull/116)) add `compare.order` function in `/core` module
+- ([#103](https://github.com/alchemauss/mauss/pull/103)) add `Definable`, `Difference`, and `IntersectUnion` typings
+
+## 0.3.0 - 2022/07/11
+
 - ([#122](https://github.com/alchemauss/mauss/pull/122)) fix `compare.wildcard` value comparison
 - ([#110](https://github.com/alchemauss/mauss/pull/110)) add second parameter to `compare.key`
 - ([#109](https://github.com/alchemauss/mauss/pull/109)) remove `esModuleInterop` and `allowSyntheticDefaultImports` option

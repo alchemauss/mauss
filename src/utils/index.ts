@@ -1,5 +1,5 @@
-export * as random from './random';
-export * as dt from './temporal';
+export * as random from './random/index.js';
+export * as dt from './temporal/index.js';
 
 interface CapitalizeOptions {
 	/** only capitalize the very first letter */
@@ -31,5 +31,6 @@ export function tryNumber<Input extends Possibilities, Fallback = Input>(
 ) {
 	type Narrow<Other> = Other extends number | null ? number : Fallback;
 	type TryReturned = Input extends string ? TryValidator<Input> : Narrow<Input>;
-	return (Number.isNaN(+input) ? fallback : +input) as TryReturned;
+	const converted = Number(input);
+	return (Number.isNaN(converted) ? fallback : converted) as TryReturned;
 }

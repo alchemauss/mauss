@@ -1,4 +1,4 @@
-import curry from './curry';
+import curry from './curry.js';
 
 declare function expect<T>(v: T): void;
 

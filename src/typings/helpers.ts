@@ -3,6 +3,12 @@
 /** Generic for making any arbitrary function */
 export type AnyFunction<P extends any[] = any[], R = any> = (...parameters: P) => R;
 
+/** Exclude `undefined` from T */
+export type Definable<T> = T extends undefined ? never : T;
+
+/** Exclude all union that is in both A and B and get the difference */
+export type Difference<A, B> = Exclude<A | B, A & B>;
+
 /** Allow either A or B but not both at the same time */
 export type Either<A, B> = Only<A, B> | Only<B, A>;
 

@@ -1,10 +1,9 @@
 import { suite } from 'uvu';
 import * as assert from 'uvu/assert';
-import { compare, comparator } from './inspector';
+import * as compare from './index.js';
 
 const basics = {
-	comparator: suite('comparator'),
-
+	inspect: suite('compare:inspect'),
 	wildcard: suite('compare:wildcard'),
 
 	undefined: suite('compare:undefined'),
@@ -18,16 +17,20 @@ const basics = {
 	date: suite('compare:date'),
 	time: suite('compare:time'),
 
-	key: suite('compare:key'),
+	order: suite('compare:order'),
+};
+
+const composite = {
+	order: suite('compare:key+order'),
 };
 
 // ---- standard ----
 
-basics.comparator('comparator', () => {
-	assert.type(comparator, 'function');
+basics.inspect('inspect', () => {
+	assert.type(compare.inspect, 'function');
 
 	const data = [{ id: 0, name: 'B' }, { name: 'A' }, { id: 1, name: 'C' }];
-	assert.equal(data.sort(comparator), [
+	assert.equal(data.sort(compare.inspect), [
 		{ name: 'A' }, // name sorted first as it's the common denominator
 		{ id: 1, name: 'C' }, // id takes over since it's defined first
 		{ id: 0, name: 'B' },
@@ -63,4 +66,37 @@ basics.string('sort string in alphabetical order', () => {
 	);
 });
 
+basics.order('customized compare with order', () => {
+	const months = ['January', 'February', 'March', 'April', 'May', 'June'];
+	const list = ['March', 'June', 'May', 'April', 'January', 'June', 'February'];
+	const result = ['January', 'February', 'March', 'April', 'May', 'June', 'June'];
+	assert.equal(list.sort(compare.order(months)), result);
+});
+
 Object.values(basics).forEach((v) => v.run());
+
+// ---- composite ----
+
+composite.order('nested keyed compare with order', () => {
+	const months = ['January', 'February', 'March', 'April', 'May', 'June'];
+	const posts = [
+		{ date: { pub: { month: 'March' } } },
+		{ date: { pub: { month: 'June' } } },
+		{ date: { pub: { month: 'May' } } },
+		{ date: { pub: { month: 'April' } } },
+		{ date: { pub: { month: 'January' } } },
+		{ date: { pub: { month: 'June' } } },
+		{ date: { pub: { month: 'February' } } },
+	];
+	assert.equal(posts.sort(compare.key('date.pub.month', compare.order(months))), [
+		{ date: { pub: { month: 'January' } } },
+		{ date: { pub: { month: 'February' } } },
+		{ date: { pub: { month: 'March' } } },
+		{ date: { pub: { month: 'April' } } },
+		{ date: { pub: { month: 'May' } } },
+		{ date: { pub: { month: 'June' } } },
+		{ date: { pub: { month: 'June' } } },
+	]);
+});
+
+Object.values(composite).forEach((v) => v.run());

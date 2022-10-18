@@ -5,20 +5,21 @@ on:
     branches:
       - master
   pull_request:
-    branches:
-      - "**"
 
 jobs:
-  lint:
+  check:
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
       - uses: actions/setup-node@v3
         with:
           node-version: 16
-      - name: Lint
-        run: npm install && npm run lint
+          cache: pnpm
+
+      - run: pnpm install
+      - run: pnpm check
 
   test:
     runs-on: ${{ matrix.os }}
@@ -29,8 +30,11 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
       - uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-      - name: Test
-        run: npm install && npm run test
+          cache: pnpm
+
+      - run: pnpm install
+      - run: pnpm test

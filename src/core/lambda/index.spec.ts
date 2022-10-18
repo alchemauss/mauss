@@ -1,8 +1,8 @@
 import { suite } from 'uvu';
 import * as assert from 'uvu/assert';
 
-import curry from './curry';
-import pipe from './pipe';
+import curry from './curry.js';
+import pipe from './pipe.js';
 
 const basics = {
 	curry: suite('lambda:curry'),
