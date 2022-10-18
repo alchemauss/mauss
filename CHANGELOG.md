@@ -7,6 +7,7 @@
 - ([#147](https://github.com/alchemauss/mauss/pull/147)) add new CSV parser to `/std` module
 - ([#147](https://github.com/alchemauss/mauss/pull/147)) new `"exports"` entry `'/std'`
 - ([#140](https://github.com/alchemauss/mauss/pull/140)) overhaul `compare` to namespace
+- ([#105](https://github.com/alchemauss/mauss/pull/105)) enable i18n customization in `dt.i18n`
 
 ### Breaking Changes
 
@@ -32,7 +33,6 @@
 - ([#122](https://github.com/alchemauss/mauss/pull/122)) fix `compare.wildcard` value comparison
 - ([#110](https://github.com/alchemauss/mauss/pull/110)) add second parameter to `compare.key`
 - ([#109](https://github.com/alchemauss/mauss/pull/109)) remove `esModuleInterop` and `allowSyntheticDefaultImports` option
-- ([#105](https://github.com/alchemauss/mauss/pull/105)) enable i18n customization in `dt.i18n`
 - ([#104](https://github.com/alchemauss/mauss/pull/104)) overhaul `random` namespace in `/utils` module
 - ([#102](https://github.com/alchemauss/mauss/pull/102)) overhaul `dt` namespace in `/utils` module
 - ([#101](https://github.com/alchemauss/mauss/pull/101)) add nicer `qse` output handling
