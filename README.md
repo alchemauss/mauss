@@ -9,7 +9,7 @@ Ever been frustrated when starting up a new project? Feels like there's a lot to
 ## Installation
 
 ```bash
-npm install mauss
+pnpm install mauss
 ```
 
 ### Disclaimer
