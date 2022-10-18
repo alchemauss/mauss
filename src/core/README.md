@@ -27,6 +27,51 @@ compare.string('abc', 'def');
 [/* data */].sort(comparator);
 ```
 
+### `compare.key`
+
+```ts
+type Wildcard = (x: any, y: any) => number;
+export function key<
+  Identifier extends string
+>(identifier: Identifier, comparator?: Wildcard): Wildcard;
+```
+
+A higher-order function that accepts a string as an identifier and an optional comparator function, it breaks up the identifier described by the dot (`.`) character and returns a curried function that accepts `(x, y)` with an object defined by the identifier.
+
+```ts
+const posts = [
+  { date: { month: 4 } },
+  { date: { month: 7 } },
+  { date: { month: 6 } },
+  { date: { month: 5 } },
+  { date: { month: 1 } },
+  { date: { month: 7 } },
+  { date: { month: 2 } },
+];
+
+posts.sort(compare.key('date.month'));
+```
+
+The optional comparator can be used when you have an existing custom sort function, e.g. in combination with `compare.order` to sort a set of string.
+
+```ts
+const posts = [
+  { date: { month: 'March' } },
+  { date: { month: 'June' } },
+  { date: { month: 'May' } },
+  { date: { month: 'April' } },
+  { date: { month: 'January' } },
+  { date: { month: 'June' } },
+  { date: { month: 'February' } },
+];
+
+const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+posts.sort(
+  compare.key('date.month', compare.order(months))
+);
+```
+
 ## `curry`
 
 A type-safe higher-order function that accepts a function with one or more parameters and returns a function that can take in one or more arguments with a max of the parameters length.
