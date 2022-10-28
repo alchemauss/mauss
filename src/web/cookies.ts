@@ -101,7 +101,7 @@ export function raw(source: CookieInput, name: string, trim = false) {
 
 /**
  * @param options cookie settings
- * @returns the complete 'Set-Cookie' value
+ * @returns a set-cookie function
  */
 export function create({
 	path = '/',
@@ -125,7 +125,7 @@ export function create({
 	 * @param value value to be saved as cookie name
 	 * @returns the complete 'Set-Cookie' value
 	 */
-	return (name: string, value: string) => {
+	return function set(name: string, value: string) {
 		if (/[\s\t()<>@,;:\\"/\[\]?={}\u0080-\u00ff]/.test(name)) {
 			name = name.replace(/[\s\t]/g, '-').replace(/-+/g, '-');
 			name = name.replace(/[()<>@,;:\\"/\[\]?={}\u0080-\u00ff]/g, '');
@@ -148,6 +148,15 @@ export function create({
 		return `${biscuit}${crumbs}`;
 	};
 }
+
+/**
+ * A convenience function for the default `create()`
+ *
+ * @param name name for cookie
+ * @param value value to be saved as cookie name
+ * @returns the complete 'Set-Cookie' value
+ */
+export const set = create();
 
 /**
  * @param values object of string pair as name and value for cookies
