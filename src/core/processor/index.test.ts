@@ -1,5 +1,5 @@
-import type { UnaryFunction } from '../typings/helpers.js';
-import { debounce, throttle } from './balancer.js';
+import type { UnaryFunction } from '../../typings/helpers.js';
+import { debounce, throttle } from './index.js';
 
 declare function expect<T>(v: T): void;
 
