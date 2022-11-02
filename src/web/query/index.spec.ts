@@ -31,6 +31,9 @@ basics.encoder('encode object to query string', () => {
 		[{ hi: 'mom', hello: 'world' }, '?hi=mom&hello=world'],
 		[{ payload, foo: 'bar' }, '?payload=dynamic&foo=bar'],
 		[{ fam: ['mom', 'dad', 'sis'] }, '?fam=mom&fam=dad&fam=sis'],
+		[{ escape: 'spa zio!' }, '?escape=spa%20zio!'],
+		[{ brackets: '[dynamic]' }, '?brackets=%5Bdynamic%5D'],
+		[{ '[brackets]': 'boo' }, '?%5Bbrackets%5D=boo'],
 	] as const;
 
 	for (const [input, output] of pairs) {
