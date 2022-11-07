@@ -23,15 +23,15 @@ export function symbol(x: symbol, y: symbol): number {
 
 export function string(x: string, y: string): number {
 	for (const [pattern, exp] of Object.entries(patterns)) {
-		const [type] = pattern.split(':') as [keyof typeof patterned];
+		const type = pattern.split(':')[0] as keyof typeof patterned;
 		if (exp.test(x) && exp.test(y)) return patterned[type](x, y);
 	}
 	return x.localeCompare(y);
 }
 
-const patterns = {
+const patterns = Object.freeze({
 	'date:complete': /\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+([+-][0-2]\d:[0-5]\d|Z)/,
 	'date:time': /\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z)/,
 	date: /\d{4}-[01]\d-[0-3]\d/,
 	time: /[0-2]\d:[0-5]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z)/,
-};
+});
