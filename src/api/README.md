@@ -1,11 +1,5 @@
 # mauss/api
 
-This defaults to `fetch` api from browser, but you can also use it on the server-side by first installing the package `node-fetch`. If you're using something like [SvelteKit](https://github.com/sveltejs/kit) that polyfills `fetch` globally, you won't have to worry about installing this.
-
-```bash
-npm install node-fetch
-```
-
 You can set a custom rule by calling `init` as early as possible. This is optional and might be useful for pointing to both same and external domain at the same time.
 
 ```js
@@ -16,11 +10,11 @@ api.init({
 
   intercept(path) { /* returns a value that will be used as url for `fetch(url)` */
     const base = process.env.NODE_ENV !== 'production'
-      ? 'https://development.url/api'
-      : 'https://production.url/api';
+      ? 'https://development.url/api/'
+      : 'https://production.url/api/';
 
-    /* if path starts with '/', point to prod url, else same-domain */
-    return path[0] !== '/' ? `${base}/${path}` : path.slice(1);
+    /* differentiate external vs same-domain by checking if path starts with '/' */
+    return path[0] !== '/' ? base + path : path.slice(1);
   }
 });
 ```
@@ -33,7 +27,7 @@ import { get, post } from 'mauss/api';
 const token = 'jwt:token'; // optional, pass for authenticated request
 
 /* GET example */
-const { response, body, error } = await get('auth/profile', token);
+const { response, body, error } = await get('/auth/profile', token);
 if (response.ok) {
   console.log(body);  // user data in JSON format
 } else {
@@ -41,7 +35,7 @@ if (response.ok) {
 }
 
 /* POST example */
-const { response, body, error } = await post('auth/login', {
+const { response, body, error } = await post('/auth/login', {
   email: 'mail@example.com',
   password: 'super_secure_password',
 });
