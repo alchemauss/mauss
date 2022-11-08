@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- ([#160](https://github.com/alchemauss/mauss/pull/160)) add new `ntv` namespace to `/std` module
 - ([#159](https://github.com/alchemauss/mauss/pull/159)) add `immediate` function
 - ([#158](https://github.com/alchemauss/mauss/pull/158)) add convenience `set` cookie function
 - ([#154](https://github.com/alchemauss/mauss/pull/154)) add `"plugins"` to prettier overrides
