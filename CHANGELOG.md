@@ -5,6 +5,7 @@
 - ([#159](https://github.com/alchemauss/mauss/pull/159)) add `immediate` function
 - ([#158](https://github.com/alchemauss/mauss/pull/158)) add convenience `set` cookie function
 - ([#154](https://github.com/alchemauss/mauss/pull/154)) add `"plugins"` to prettier overrides
+- ([#153](https://github.com/alchemauss/mauss/pull/153)) add new `sys.path` to `/std` module
 - ([#150](https://github.com/alchemauss/mauss/pull/150)) enable key drilling to `compare.key`
 - ([#149](https://github.com/alchemauss/mauss/pull/149)) change url interpolation behaviour
 - ([#147](https://github.com/alchemauss/mauss/pull/147)) add new CSV parser to `/std` module
