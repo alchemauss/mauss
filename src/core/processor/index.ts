@@ -1,6 +1,9 @@
 import type { AnyFunction } from '../../typings/helpers.js';
 
-export function debounce<F extends AnyFunction>(fn: F, time = 300) {
+const DURATION = 300;
+
+/** Prevent execution of `fn` until `time` has passed */
+export function debounce<F extends AnyFunction>(fn: F, time = DURATION) {
 	let timeout: NodeJS.Timeout;
 	return <A extends Parameters<F>>(...args: A) => {
 		if (timeout) clearTimeout(timeout);
@@ -8,7 +11,8 @@ export function debounce<F extends AnyFunction>(fn: F, time = 300) {
 	};
 }
 
-export function immediate<F extends AnyFunction>(fn: F, time = 300) {
+/** Immediately execute `fn` and prevent the next execution until after `time` */
+export function immediate<F extends AnyFunction>(fn: F, time = DURATION) {
 	let timeout: NodeJS.Timeout;
 	return <A extends Parameters<F>>(...args: A) => {
 		if (timeout) return;
@@ -17,7 +21,8 @@ export function immediate<F extends AnyFunction>(fn: F, time = 300) {
 	};
 }
 
-export function throttle<F extends AnyFunction>(fn: F, time = 300) {
+/** Prevent executions after the first `fn` until `time` has passed  */
+export function throttle<F extends AnyFunction>(fn: F, time = DURATION) {
 	let wait = false;
 	return <A extends Parameters<F>>(...args: A) => {
 		if (wait) return;
