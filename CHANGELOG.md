@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- ([#159](https://github.com/alchemauss/mauss/pull/159)) add `immediate` function
 - ([#158](https://github.com/alchemauss/mauss/pull/158)) add convenience `set` cookie function
 - ([#154](https://github.com/alchemauss/mauss/pull/154)) add `"plugins"` to prettier overrides
 - ([#150](https://github.com/alchemauss/mauss/pull/150)) enable key drilling to `compare.key`
