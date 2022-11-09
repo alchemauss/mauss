@@ -4,9 +4,19 @@ import * as assert from 'uvu/assert';
 import * as ntv from './object.js';
 
 const basics = {
+	entries: suite('obj:entries'),
 	freeze: suite('obj:freeze'),
 	iterate: suite('obj:iterate'),
+	keys: suite('obj:keys'),
 };
+
+basics.entries('return object entries', () => {
+	assert.equal(ntv.entries({ hello: 'world', foo: 0, bar: { baz: 1 } }), [
+		['hello', 'world'],
+		['foo', 0],
+		['bar', { baz: 1 }],
+	]);
+});
 
 basics.freeze('deep freezes nested objects', () => {
 	const nested = ntv.freeze({
@@ -40,6 +50,7 @@ basics.iterate('iterate over nested objects', () => {
 			return [month, updated];
 		}),
 		months.reduce((a, m) => {
+			// @ts-ignore
 			a[m] = {
 				usd: { balance: 60 },
 				eur: { balance: 60 },
@@ -51,6 +62,10 @@ basics.iterate('iterate over nested objects', () => {
 			return a;
 		}, {})
 	);
+});
+
+basics.keys('return object keys', () => {
+	assert.equal(ntv.keys({ a: 0, b: 1, c: 2 }), ['a', 'b', 'c']);
 });
 
 Object.values(basics).forEach((v) => v.run());
