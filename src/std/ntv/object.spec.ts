@@ -1,11 +1,23 @@
 import { suite } from 'uvu';
 import * as assert from 'uvu/assert';
 
-import * as obj from './object.js';
+import * as ntv from './object.js';
 
 const basics = {
+	freeze: suite('obj:freeze'),
 	iterate: suite('obj:iterate'),
 };
+
+basics.freeze('deep freezes nested objects', () => {
+	const nested = ntv.freeze({
+		foo: { a: 0 },
+		bar: { b: 1 },
+	});
+
+	assert.ok(Object.isFrozen(nested));
+	assert.ok(Object.isFrozen(nested.foo));
+	assert.ok(Object.isFrozen(nested.bar));
+});
 
 basics.iterate('iterate over nested objects', () => {
 	const months = 'jan,feb,mar,apr,may,jun,jul,aug,sep,oct,nov,dec'.split(',');
@@ -21,8 +33,8 @@ basics.iterate('iterate over nested objects', () => {
 	);
 
 	assert.equal(
-		obj.iterate(nested, ([month, v]) => {
-			const updated = obj.iterate(v, ([currency, { income, expense }]) => {
+		ntv.iterate(nested, ([month, v]) => {
+			const updated = ntv.iterate(v, ([currency, { income, expense }]) => {
 				return [currency, { balance: income - expense }];
 			});
 			return [month, updated];

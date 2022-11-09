@@ -5,6 +5,16 @@ export function entries<T extends object>(o: T) {
 	return Object.entries(o) as Entries<T>;
 }
 
+type DeepFreeze<T> = { readonly [P in keyof T]: DeepFreeze<T[P]> };
+export function freeze<T extends object>(o: T): DeepFreeze<T> {
+	for (const key of Object.getOwnPropertyNames(o)) {
+		const value = o[key as keyof typeof o];
+		if (value == null || typeof value !== 'object') continue;
+		o[key as keyof typeof o] = freeze(value) as typeof value;
+	}
+	return Object.freeze(o);
+}
+
 /** Iterate over objects while retaining its structure */
 export function iterate<T extends object>(
 	o: T,
