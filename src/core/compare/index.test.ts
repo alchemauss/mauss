@@ -30,6 +30,9 @@ interface Example {
 }
 compare.key<Example>('date.updated');
 
+compare.order(['a', 'b', 'c', 'e', 'f']);
+compare.order(['a', 'b', 'c'] as const);
+
 // ---- errors ----
 
 // @ts-expect-error
