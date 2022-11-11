@@ -14,6 +14,8 @@
 
 ### Breaking Changes
 
+- [#165](https://github.com/alchemauss/mauss/pull/165) | Removed `/bits/find` and `/math/set` exports
+- [#165](https://github.com/alchemauss/mauss/pull/165) | Removed `find` namespace and export functions directly from `/bits`
 - [#150](https://github.com/alchemauss/mauss/pull/150) | Make `.` a reserved character as delimiter for `compare.key`
 - [#149](https://github.com/alchemauss/mauss/pull/149) | Removed implicit slash addition in `api` url interpolation
 - [#140](https://github.com/alchemauss/mauss/pull/140) | Renamed and moved `comparator` to `compare.inspect`
