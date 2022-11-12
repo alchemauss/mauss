@@ -14,7 +14,7 @@ type CombineExisting<
 	};
 
 type QueryDecoder<Query extends string> = string extends Query
-	? Record<string, string | string[]>
+	? Record<string, string | readonly string[]>
 	: Query extends `${infer Leading}${infer Rest}`
 	? Leading extends '?'
 		? QueryDecoder<Rest>
