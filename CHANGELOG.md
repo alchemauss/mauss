@@ -1,6 +1,6 @@
 # mauss changelog
 
-## Unreleased
+## 0.4.0 - 2022/11/14
 
 - ([#160](https://github.com/alchemauss/mauss/pull/160)) add new `ntv` namespace to `/std` module
 - ([#159](https://github.com/alchemauss/mauss/pull/159)) add `immediate` function
