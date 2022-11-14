@@ -65,7 +65,7 @@ export function key<
 	) => (comparator || wildcard)(drill(x as Inferred), drill(y as Inferred));
 }
 
-export function order(weights: string[]): Wildcard {
+export function order(weights: readonly string[]): Wildcard {
 	const m: Record<string, number> = {};
 	weights.forEach((v, i) => (m[v] = i));
 	return (x, y) => m[x] - m[y];
