@@ -8,6 +8,7 @@
   "types": "./core/index.d.ts",
   "scripts": {
     "clean": "git add * && git clean -dfx -e node_modules",
+    "watch": "tsc --project src --watch",
     "check": "pnpm check:code && pnpm check:style",
     "check:code": "tsc --noEmit",
     "check:style": "prettier -c \"src/**/*.ts\"",
