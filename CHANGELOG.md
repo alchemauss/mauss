@@ -1,5 +1,9 @@
 # mauss changelog
 
+## Unreleased
+
+- ([#170](https://github.com/alchemauss/mauss/pull/170)) fix infinite circularly referenced generated types
+
 ## 0.4.0 - 2022/11/14
 
 - ([#160](https://github.com/alchemauss/mauss/pull/160)) add new `ntv` namespace to `/std` module
