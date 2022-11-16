@@ -1,6 +1,6 @@
 # mauss changelog
 
-## Unreleased
+## 0.4.1 - 2022/11/16
 
 - ([#170](https://github.com/alchemauss/mauss/pull/170)) fix infinite circularly referenced generated types
 
