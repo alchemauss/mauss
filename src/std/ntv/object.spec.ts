@@ -28,6 +28,16 @@ basics.freeze('deep freezes nested objects', () => {
 	assert.ok(Object.isFrozen(nested.foo));
 	assert.ok(Object.isFrozen(nested.bar));
 });
+basics.freeze('deep freeze ignore function', () => {
+	const nested = ntv.freeze({
+		identity: (v: any) => v,
+		namespace: { a() {} },
+	});
+
+	assert.ok(!Object.isFrozen(nested.identity));
+	assert.equal(nested.identity(0), 0);
+	assert.ok(!Object.isFrozen(nested.namespace.a));
+});
 
 basics.iterate('iterate over nested objects', () => {
 	const months = 'jan,feb,mar,apr,may,jun,jul,aug,sep,oct,nov,dec'.split(',');
