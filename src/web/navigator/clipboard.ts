@@ -3,7 +3,7 @@ const noop = () => {};
 export function copy(
 	data: string | ClipboardItem,
 	handler: {
-		fulfil?(): Promise<void>;
+		accept?(): Promise<void>;
 		reject?(): Promise<void>;
 	} = {}
 ) {
@@ -20,8 +20,8 @@ export function copy(
 		process = ncb.write([data]);
 	}
 
-	const { fulfil = noop, reject = noop } = handler;
-	return process.then(fulfil, reject);
+	const { accept = noop, reject = noop } = handler;
+	return process.then(accept, reject);
 }
 
 export function item(type: string, data: string | Blob, options?: ClipboardItemOptions) {
