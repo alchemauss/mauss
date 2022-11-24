@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- ([#176](https://github.com/alchemauss/mauss/pull/176)) add empty/falsy filtering to `ntv.iterate`
 - ([#175](https://github.com/alchemauss/mauss/pull/175)) fix function in `ntv.freeze` not callable
 
 ## 0.4.1 - 2022/11/16
