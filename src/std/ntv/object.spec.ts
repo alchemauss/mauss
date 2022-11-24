@@ -73,10 +73,13 @@ basics.iterate('iterate over nested objects', () => {
 		}, {})
 	);
 });
-basics.iterate('iterate with empty return', () => {
-	ntv.iterate(
-		{ a: '0', b: 1, c: null, d: '3', e: undefined, f: false },
-		([k, v]) => v != null && v !== false && [k, v]
+basics.iterate('iterate with empty/falsy return', () => {
+	assert.equal(
+		ntv.iterate(
+			{ a: '0', b: 1, c: null, d: '3', e: undefined, f: false },
+			([k, v]) => v != null && v !== false && [k, v]
+		),
+		{ a: '0', b: 1, d: '3' }
 	);
 });
 
