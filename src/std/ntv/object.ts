@@ -6,7 +6,9 @@ export function entries<T extends object>(o: T) {
 	return Object.entries(o) as Entries<T>;
 }
 
-type DeepFreeze<T> = { readonly [P in keyof T]: WhenFunction<T[P], T[P], DeepFreeze<T[P]>> };
+type DeepFreeze<T> = {
+	readonly [P in keyof T]: WhenFunction<T[P], T[P], DeepFreeze<T[P]>>;
+};
 export function freeze<T extends object>(o: T): DeepFreeze<T> {
 	for (const key of Object.getOwnPropertyNames(o)) {
 		const value = o[key as keyof typeof o];
@@ -18,10 +20,10 @@ export function freeze<T extends object>(o: T): DeepFreeze<T> {
 
 /** Iterate over objects while retaining its structure */
 export function iterate<T extends object>(
-	o: T,
+	object: T,
 	fn: (entry: Entries<T>[number], index: number) => void | Falsy | [IndexSignature, any]
 ) {
-	const pairs = entries(o);
+	const pairs = entries(object);
 	const memo: typeof pairs = [];
 	for (let i = 0; i < pairs.length; i++) {
 		const res = fn(pairs[i], i);
