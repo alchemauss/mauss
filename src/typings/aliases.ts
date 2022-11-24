@@ -3,6 +3,9 @@
 /** Nullish values, which are only `null` and `undefined` */
 export type Nullish = null | undefined;
 
+/** Falsy values, value considered false in boolean context */
+export type Falsy = false | 0 | '' | Nullish;
+
 /** Basic primitives consisting of `string`, `number`, and `boolean` */
 export type Primitives = string | number | boolean;
 
