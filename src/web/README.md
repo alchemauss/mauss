@@ -8,6 +8,30 @@ import { :util } from 'mauss/web';
 
 Homemade baked cookies for server and client side usage.
 
+## `clipboard`
+
+This namespace extends the [`Navigator` object](https://developer.mozilla.org/en-US/docs/Web/API/Navigator), make sure to execute the functions in environments where `window.navigator` exists.
+
+```ts
+export function copy(
+	data: string | ClipboardItem,
+	handler: {
+		accept?(): Promise<void>;
+		reject?(): Promise<void>;
+	} = {}
+): void;
+
+export function item(
+  type: string,
+  data: string | Blob,
+  options?: ClipboardItemOptions
+): ClipboardItem;
+
+export function paste(type: 'blob'): Promise<ClipboardItems>;
+export function paste(type: 'text'): Promise<string>;
+export function paste(type: 'blob' | 'text');
+```
+
 ## `qse`
 
 ```ts
