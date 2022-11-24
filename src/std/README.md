@@ -20,3 +20,11 @@ const file = readFileSync('./data.csv', 'utf-8');
 
 csv.read(file);
 ```
+
+## `ntv`
+
+Native namespace for augmented static methods of standard objects.
+
+### `ntv.freeze`
+
+Augmented `Object.freeze()`, deep freezes and strongly-typed.
