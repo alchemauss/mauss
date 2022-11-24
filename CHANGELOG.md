@@ -1,6 +1,6 @@
 # mauss changelog
 
-## Unreleased
+## 0.4.2 - 2022/11/24
 
 - ([#176](https://github.com/alchemauss/mauss/pull/176)) add empty/falsy filtering to `ntv.iterate`
 - ([#175](https://github.com/alchemauss/mauss/pull/175)) fix function in `ntv.freeze` not callable
