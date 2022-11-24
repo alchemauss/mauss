@@ -1,11 +1,12 @@
 import type { IndexSignature } from '../../typings/aliases.js';
+import type { WhenFunction } from '../../typings/comparators.js';
 import type { Entries } from '../../typings/helpers.js';
 
 export function entries<T extends object>(o: T) {
 	return Object.entries(o) as Entries<T>;
 }
 
-type DeepFreeze<T> = { readonly [P in keyof T]: DeepFreeze<T[P]> };
+type DeepFreeze<T> = { readonly [P in keyof T]: WhenFunction<T[P], T[P], DeepFreeze<T[P]>> };
 export function freeze<T extends object>(o: T): DeepFreeze<T> {
 	for (const key of Object.getOwnPropertyNames(o)) {
 		const value = o[key as keyof typeof o];
