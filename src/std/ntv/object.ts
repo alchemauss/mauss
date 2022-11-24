@@ -1,4 +1,4 @@
-import type { IndexSignature } from '../../typings/aliases.js';
+import type { Falsy, IndexSignature } from '../../typings/aliases.js';
 import type { WhenFunction } from '../../typings/comparators.js';
 import type { Entries } from '../../typings/helpers.js';
 
@@ -19,9 +19,15 @@ export function freeze<T extends object>(o: T): DeepFreeze<T> {
 /** Iterate over objects while retaining its structure */
 export function iterate<T extends object>(
 	o: T,
-	fn: (entry: Entries<T>[number], index: number) => [IndexSignature, any]
+	fn: (entry: Entries<T>[number], index: number) => void | Falsy | [IndexSignature, any]
 ) {
-	const memo = entries(o).map(fn);
+	const pairs = entries(o);
+	const memo: typeof pairs = [];
+	for (let i = 0; i < pairs.length; i++) {
+		const res = fn(pairs[i], i);
+		if (!res || res.length !== 2) continue;
+		memo.push(res as typeof memo[number]);
+	}
 	return Object.fromEntries(memo);
 }
 
