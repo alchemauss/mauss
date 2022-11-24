@@ -14,11 +14,11 @@ This namespace extends the [`Navigator` object](https://developer.mozilla.org/en
 
 ```ts
 export function copy(
-	data: string | ClipboardItem,
-	handler: {
-		accept?(): Promise<void>;
-		reject?(): Promise<void>;
-	} = {}
+  data: string | ClipboardItem,
+  handler: {
+    accept?(): Promise<void>;
+    reject?(): Promise<void>;
+  } = {}
 ): void;
 
 export function item(
