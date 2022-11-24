@@ -1,8 +1,6 @@
-import type { Nullish, FullPrimitives as Primitives } from '../typings/aliases.js';
+import type { Nullish, Falsy, FullPrimitives as Primitives } from '../typings/aliases.js';
 
-type EmptyString = '';
-type Empty = EmptyString | Nullish;
-type Falsy = 0 | false | EmptyString | Nullish;
+type Empty = '' | Nullish;
 
 /** @returns true if input is not `nullish` or an empty string */
 export function exists<T>(i: T | Empty): i is T {
