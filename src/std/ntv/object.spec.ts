@@ -86,6 +86,16 @@ basics.iterate('iterate with empty/falsy return', () => {
 		),
 		{ a: '0', b: 1, d: '3' }
 	);
+
+	type Nested = { [P in 'a' | 'b']?: { [K in 'x' | 'y']: { foo: string } } };
+	ntv.iterate({ a: { x: { foo: 'ax' } } } as Nested, ([parent, v]) => {
+		assert.equal(parent, 'a');
+		v &&
+			ntv.iterate(v, ([key, { foo }]) => {
+				assert.equal(key, 'x');
+				assert.equal(foo, 'ax');
+			});
+	});
 });
 
 basics.keys('return object keys', () => {

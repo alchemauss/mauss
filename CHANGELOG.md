@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- ([#177](https://github.com/alchemauss/mauss/pull/177)) fix `Entries` possibly returning `undefined`
 - ([#174](https://github.com/alchemauss/mauss/pull/174)) add `clipboard` object to `/web` module
 
 ## 0.4.2 - 2022/11/24

@@ -13,7 +13,7 @@ export function bool(): boolean {
 	return float() < 0.5;
 }
 
-export function array(length: number, max: number, min = 0): Array<number> {
+export function array(length: number, max: number, min = 0): number[] {
 	return Array.from({ length }, () => int(max, min));
 }
 
