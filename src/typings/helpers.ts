@@ -13,7 +13,7 @@ export type Difference<A, B> = Exclude<A | B, A & B>;
 export type Either<A, B> = Only<A, B> | Only<B, A>;
 
 /** Strongly-type array of tuple from object in `Object.entries` */
-export type Entries<T> = Array<{ [K in keyof T]: [keyof PickByValue<T, T[K]>, T[K]] }[keyof T]>;
+export type Entries<T> = { [K in keyof T]-?: [keyof PickByValue<T, T[K]>, T[K]] }[keyof T][];
 
 /** Remove type from T that does not satisfy type of Validator */
 export type Filter<T, Validator> = T extends Validator ? T : never;
@@ -34,7 +34,7 @@ export type JSONState<T> = { [P in keyof T]: T[P] extends { toJSON: () => infer 
 export type Last<T extends any[], Fallback = never> = T extends [...any[], infer L] ? L : Fallback;
 
 /** Defines a type with at least one item */
-export type NonEmptyArray<T> = [T, ...Array<T>];
+export type NonEmptyArray<T> = [T, ...T[]];
 
 /** Disallow any properties from V when defining U */
 export type Only<U, V> = { [P in keyof U]: U[P] } & Omit<{ [P in keyof V]?: never }, keyof U>;
