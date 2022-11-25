@@ -1,5 +1,9 @@
 # mauss changelog
 
+## Unreleased
+
+- ([#174](https://github.com/alchemauss/mauss/pull/174)) add `clipboard` object to `/web` module
+
 ## 0.4.2 - 2022/11/24
 
 - ([#176](https://github.com/alchemauss/mauss/pull/176)) add empty/falsy filtering to `ntv.iterate`
