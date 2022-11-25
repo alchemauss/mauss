@@ -10,7 +10,7 @@ Homemade baked cookies for server and client side usage.
 
 ## `clipboard`
 
-This namespace extends the [`Navigator` object](https://developer.mozilla.org/en-US/docs/Web/API/Navigator), make sure to execute the functions in environments where `window.navigator` exists.
+This namespace extends the [`Navigator` object](https://developer.mozilla.org/en-US/docs/Web/API/Navigator), make sure to execute the function in environments where `window.navigator` exists.
 
 ```ts
 export function copy(
