@@ -1,6 +1,6 @@
 import { suite } from 'uvu';
 import * as assert from 'uvu/assert';
-import * as std from './index';
+import * as std from './index.js';
 
 const basics = {
 	equivalent: suite('std:equivalent'),
