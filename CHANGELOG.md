@@ -1,5 +1,9 @@
 # mauss changelog
 
+## Unreleased
+
+- ([#179](https://github.com/alchemauss/mauss/pull/179)) fix `clipboard.copy` handler not allowing non-promise callbacks
+
 ## 0.4.3 - 2022/11/25
 
 - ([#177](https://github.com/alchemauss/mauss/pull/177)) fix `Entries` possibly returning `undefined`
