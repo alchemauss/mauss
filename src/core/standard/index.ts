@@ -1,7 +1,35 @@
 import type { AnyFunction, Reverse } from '../../typings/helpers.js';
 
 export function equivalent(x: unknown, y: unknown): boolean {
-	// TODO
+	const [xt, yt] = [typeof x, typeof y];
+	if (xt !== yt) return false;
+	if (xt === 'function') return true;
+	if (xt === 'symbol') {
+		const xv = (x as symbol).toString();
+		const yv = (y as symbol).toString();
+		return !xv.localeCompare(yv);
+	}
+
+	if (xt !== 'object') return x === y;
+	if (x == null || y == null) return x === y;
+
+	if (Array.isArray(x) !== Array.isArray(y)) return false;
+	if (Array.isArray(x) && Array.isArray(y)) {
+		if (x.length !== y.length) return false;
+		for (let i = 0; i < x.length; i++) {
+			if (!equivalent(x[i], y[i])) return false;
+		}
+		return true;
+	}
+
+	const [xk, yk] = [Object.keys(x), Object.keys(y)];
+	const keys = new Set([...xk, ...yk]);
+	if (xk.length !== yk.length || keys.size !== xk.length) return false;
+	for (const k of keys) {
+		// @ts-expect-error - guaranteed indexable
+		if (!equivalent(x[k], y[k])) return false;
+	}
+	return true;
 }
 
 /**
