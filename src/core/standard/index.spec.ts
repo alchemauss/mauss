@@ -49,9 +49,13 @@ basics.equivalent('equivalent primitive checks', () => {
 });
 basics.equivalent('equivalent array checks', () => {
 	assert.ok(std.equivalent([], []));
+	assert.ok(std.equivalent(['', 1, !0], ['', 1, !0]));
+	assert.ok(std.equivalent([{ x: [] }], [{ x: [] }]));
 });
 basics.equivalent('equivalent object checks', () => {
 	assert.ok(std.equivalent({}, {}));
+	assert.ok(std.equivalent({ a: '', b: 1, c: !0 }, { a: '', b: 1, c: !0 }));
+	assert.ok(std.equivalent({ x: [{}], y: { a: 0 } }, { x: [{}], y: { a: 0 } }));
 });
 
 Object.values(basics).forEach((v) => v.run());
