@@ -24,6 +24,9 @@ export type First<T extends any[], Fallback = never> = T extends [infer F, ...an
 /** Allow autocompletion of union in addition to arbitrary values */
 export type Flexible<Union extends T, T = string> = Union | (T & Record<never, never>);
 
+/** Recursively make all properties of object T as readonly */
+export type Freeze<T> = { readonly [P in keyof T]: T[P] extends Function ? T[P] : Freeze<T[P]> };
+
 /** Pick the properties of A that also exists in B */
 export type Intersection<A, B> = Pick<A, Extract<keyof A, keyof B> & Extract<keyof B, keyof A>>;
 
