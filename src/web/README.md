@@ -16,8 +16,8 @@ This namespace extends the [`Navigator` object](https://developer.mozilla.org/en
 export function copy(
   data: string | ClipboardItem,
   handler: {
-    accept?(): Promise<void>;
-    reject?(): Promise<void>;
+    accept?(): void | Promise<void>;
+    reject?(): void | Promise<void>;
   } = {}
 ): void;
 
