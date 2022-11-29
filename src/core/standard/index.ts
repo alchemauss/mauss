@@ -1,5 +1,9 @@
 import type { AnyFunction, Reverse } from '../../typings/helpers.js';
 
+export function equivalent(x: unknown, y: unknown): boolean {
+	// TODO
+}
+
 /**
  * inverse - reverses the order of provided arguments to fn parameters
  * @param fn any function with one or more arguments
