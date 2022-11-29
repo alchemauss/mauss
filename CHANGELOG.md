@@ -1,6 +1,6 @@
 # mauss changelog
 
-## Unreleased
+## 0.4.4 - 2022/11/29
 
 - ([#182](https://github.com/alchemauss/mauss/pull/182)) add `Freeze` typings
 - ([#179](https://github.com/alchemauss/mauss/pull/179)) fix `clipboard.copy` handler not allowing non-promise callbacks
