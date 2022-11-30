@@ -28,7 +28,10 @@ export function wildcard(x: any, y: any): number {
 	return constrained(x, y);
 }
 
-export function inspect(x: Record<any, any>, y: Record<any, any>): number {
+export function inspect(
+	x: Record<TS.IndexSignature, any>,
+	y: Record<TS.IndexSignature, any>
+): number {
 	const common = [...new Set([...Object.keys(x), ...Object.keys(y)])].filter(
 		(k) => k in x && k in y && typeof x[k] === typeof y[k] && x[k] !== y[k]
 	);
