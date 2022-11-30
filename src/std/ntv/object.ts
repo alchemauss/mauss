@@ -15,10 +15,10 @@ export function freeze<T extends object>(o: T): Freeze<T> {
 }
 
 /** Iterate over objects while retaining its structure */
-export function iterate<I extends object, O = I>(
-	object: I,
+export function iterate<T extends object>(
+	object: T,
 	callback: AnyFunction<
-		[entry: Entries<I>[number], index: number],
+		[entry: Entries<T>[number], index: number],
 		void | Falsy | [IndexSignature, any]
 	>
 ) {
@@ -29,7 +29,7 @@ export function iterate<I extends object, O = I>(
 		if (!res || res.length !== 2) continue;
 		memo.push(res as typeof memo[number]);
 	}
-	return Object.fromEntries(memo) as O;
+	return Object.fromEntries(memo) as T;
 }
 
 export function keys<T extends object>(o: T) {
