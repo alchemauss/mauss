@@ -1,10 +1,12 @@
+import type { AlsoPromise } from '../../typings/extenders.js';
+
 const noop = () => {};
 
 export function copy(
 	data: string | ClipboardItem,
 	handler: {
-		accept?(): Promise<void>;
-		reject?(): Promise<void>;
+		accept?(): AlsoPromise<void>;
+		reject?(): AlsoPromise<void>;
 	} = {}
 ) {
 	const ncb = navigator.clipboard;
