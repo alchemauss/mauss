@@ -1,5 +1,9 @@
 # mauss changelog
 
+## Unreleased
+
+- ([#180](https://github.com/alchemauss/mauss/pull/180)) add default parameter to `iterate` callback for object deep copy
+
 ## 0.4.4 - 2022/11/29
 
 - ([#182](https://github.com/alchemauss/mauss/pull/182)) add `Freeze` typings

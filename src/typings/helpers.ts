@@ -13,7 +13,9 @@ export type Difference<A, B> = Exclude<A | B, A & B>;
 export type Either<A, B> = Only<A, B> | Only<B, A>;
 
 /** Strongly-type array of tuple from object in `Object.entries` */
-export type Entries<T> = { [K in keyof T]-?: [keyof PickByValue<T, T[K]>, T[K]] }[keyof T][];
+export type Entries<T> = {
+	[K in keyof T]-?: [NonNullable<keyof PickByValue<T, T[K]>>, T[K]];
+}[keyof T][];
 
 /** Remove type from T that does not satisfy type of Validator */
 export type Filter<T, Validator> = T extends Validator ? T : never;
