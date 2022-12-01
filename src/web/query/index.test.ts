@@ -1,4 +1,4 @@
-import qse from './encoder';
+import qse from './encoder.js';
 
 qse({});
 
