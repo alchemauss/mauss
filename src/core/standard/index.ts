@@ -1,6 +1,7 @@
 import type { AnyFunction, Reverse } from '../../typings/helpers.js';
 
-export function equivalent(x: unknown, y: unknown): boolean {
+/** identical - checks whether x and y have the same values */
+export function identical(x: unknown, y: unknown): boolean {
 	const [xt, yt] = [typeof x, typeof y];
 	if (xt !== yt) return false;
 	if (xt === 'function') return true;
@@ -17,7 +18,7 @@ export function equivalent(x: unknown, y: unknown): boolean {
 	if (Array.isArray(x) && Array.isArray(y)) {
 		if (x.length !== y.length) return false;
 		for (let i = 0; i < x.length; i++) {
-			if (!equivalent(x[i], y[i])) return false;
+			if (!identical(x[i], y[i])) return false;
 		}
 		return true;
 	}
@@ -27,7 +28,7 @@ export function equivalent(x: unknown, y: unknown): boolean {
 	if (xk.length !== yk.length || keys.size !== xk.length) return false;
 	for (const k of keys) {
 		// @ts-expect-error - guaranteed indexable
-		if (!equivalent(x[k], y[k])) return false;
+		if (!identical(x[k], y[k])) return false;
 	}
 	return true;
 }
