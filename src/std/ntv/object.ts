@@ -31,7 +31,7 @@ export function iterate<T extends object>(
 		if (!res || res.length !== 2) continue;
 		memo.push(res as typeof memo[number]);
 	}
-	return Object.fromEntries(memo);
+	return Object.fromEntries(memo) as T;
 }
 
 export function keys<T extends object>(o: T) {

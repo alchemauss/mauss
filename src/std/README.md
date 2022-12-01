@@ -40,7 +40,7 @@ export function iterate<T extends object>(
 		[entry: Entries<T>[number], index: number],
 		void | Falsy | [IndexSignature, any]
 	> = ([k, v]) => [k, v && typeof v === 'object' ? iterate(v) : v]
-): { [k: string]: T[keyof T] };
+): T;
 ```
 
 The returned object will be filtered to only contain a key-value pair of the 2-tuple from `fn()`, any other values returned from the callback will be ignored, i.e. `void | Falsy`.
