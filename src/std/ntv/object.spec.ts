@@ -99,7 +99,7 @@ basics.iterate('iterate with empty/falsy return', () => {
 });
 basics.iterate('iterate creates deep copy', () => {
 	const original = { x: 1, y: { z: 'foo' } };
-	const copy = ntv.iterate(original) as typeof original;
+	const copy = ntv.iterate(original);
 	assert.ok(original !== copy);
 	assert.ok(original.y !== copy.y);
 });
