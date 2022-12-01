@@ -92,6 +92,10 @@ tSearch('mauss'); // execute every 500ms
 
 ## `identical`
 
+```ts
+export function identical(x: unknown, y: unknown): boolean
+```
+
 A function to check for values equality between two variables. This will work for any data type except `function`, which will always return true when two function are being compared. The heuristics are as follows:
 
 - fails immediately when the type of `x` and `y` are not the same
