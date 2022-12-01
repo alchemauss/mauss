@@ -90,6 +90,24 @@ dSearch('mauss'); // execute after 500ms
 tSearch('mauss'); // execute every 500ms
 ```
 
+## `identical`
+
+```ts
+export function identical(x: unknown, y: unknown): boolean
+```
+
+A function to check for values equality between two variables. This will work for any data type except `function`, which will always return true when two function are being compared. The heuristics are as follows:
+
+- fails immediately when the type of `x` and `y` are not the same
+- type of `function` are not comparable, always returns true
+- type of `symbol` is converted and compared as a `string`
+- primitive values are compared using strict equality operator
+- type of `object`, two empty array or object are considered the same
+- type of `object`, comparing array also considers its length and item order
+- type of `object`, two object must have the same keys before comparing its values
+- type of `object`, the order of key-value pair does not matter for equality check
+- `identical` is infinitely recursive for any amount of nested array/object
+
 ## `inverse`
 
 A function that accepts a function and returns the same function with the order of parameters reversed. This can be used in conjunction with `compare` methods to sort the items in ascending values.
