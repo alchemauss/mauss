@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- ([#181](https://github.com/alchemauss/mauss/pull/181)) add `identical` function for values equality check
 - ([#180](https://github.com/alchemauss/mauss/pull/180)) add default parameter to `iterate` callback for object deep copy
 
 ## 0.4.4 - 2022/11/29

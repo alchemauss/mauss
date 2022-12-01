@@ -6,9 +6,8 @@ export function identical(x: unknown, y: unknown): boolean {
 	if (xt !== yt) return false;
 	if (xt === 'function') return true;
 	if (xt === 'symbol') {
-		const xv = (x as symbol).toString();
-		const yv = (y as symbol).toString();
-		return !xv.localeCompare(yv);
+		// @ts-expect-error - guaranteed symbol
+		return x.toString() === y.toString();
 	}
 
 	if (xt !== 'object') return x === y;
