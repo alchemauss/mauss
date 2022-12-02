@@ -1,4 +1,4 @@
-import type { TypedIntArray } from '../../typings/aliases.js';
+import type { IndexSignature, TypedIntArray } from '../../typings/aliases.js';
 
 export function float(max = 1, min = 0): number {
 	[min, max] = [Math.ceil(min), Math.floor(max)];
@@ -17,12 +17,12 @@ export function array(length: number, max: number, min = 0): number[] {
 	return Array.from({ length }, () => int(max, min));
 }
 
-export function key(dict: Record<any, any>): string {
+export function key(dict: Record<IndexSignature, any>): string {
 	const keys = Object.keys(dict);
 	return keys[int(keys.length)];
 }
 
-export function val<T>(dict: Record<any, T>): T {
+export function val<T>(dict: Record<IndexSignature, T>): T {
 	const values = Object.values(dict);
 	return values[int(values.length)];
 }
