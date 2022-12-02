@@ -1,5 +1,9 @@
 # mauss changelog
 
+## Unreleased
+
+- ([#172](https://github.com/alchemauss/mauss/pull/172)) add second parameter to `unique` for object handling
+
 ## 0.4.5 - 2022/12/01
 
 - ([#181](https://github.com/alchemauss/mauss/pull/181)) add `identical` function for values equality check
