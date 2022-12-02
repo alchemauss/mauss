@@ -1,5 +1,25 @@
 # mauss changelog
 
+## 0.4.5 - 2022/12/01
+
+- ([#181](https://github.com/alchemauss/mauss/pull/181)) add `identical` function for values equality check
+- ([#180](https://github.com/alchemauss/mauss/pull/180)) add default parameter to `iterate` callback for object deep copy
+
+## 0.4.4 - 2022/11/29
+
+- ([#182](https://github.com/alchemauss/mauss/pull/182)) add `Freeze` typings
+- ([#179](https://github.com/alchemauss/mauss/pull/179)) fix `clipboard.copy` handler not allowing non-promise callbacks
+
+## 0.4.3 - 2022/11/25
+
+- ([#177](https://github.com/alchemauss/mauss/pull/177)) fix `Entries` possibly returning `undefined`
+- ([#174](https://github.com/alchemauss/mauss/pull/174)) add `clipboard` object to `/web` module
+
+## 0.4.2 - 2022/11/24
+
+- ([#176](https://github.com/alchemauss/mauss/pull/176)) add empty/falsy filtering to `ntv.iterate`
+- ([#175](https://github.com/alchemauss/mauss/pull/175)) fix function in `ntv.freeze` not callable
+
 ## 0.4.1 - 2022/11/16
 
 - ([#170](https://github.com/alchemauss/mauss/pull/170)) fix infinite circularly referenced generated types

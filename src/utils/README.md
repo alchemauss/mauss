@@ -8,10 +8,10 @@ import { :util } from 'mauss/utils';
 
 ```ts
 interface CapitalizeOptions {
-	/** only capitalize the very first letter */
-	cap?: boolean;
-	/** convert the remaining word to lowercase */
-	normalize?: boolean;
+  /** only capitalize the very first letter */
+  cap?: boolean;
+  /** convert the remaining word to lowercase */
+  normalize?: boolean;
 }
 
 export function capitalize(text: string, options?: CapitalizeOptions): string;
@@ -33,23 +33,20 @@ Simple `date/time` (`dt`) utility namespace.
 type DateValue = string | number | Date;
 
 interface BuildOptions {
-	base?: 'UTC';
+  base?: 'UTC';
 }
 
 interface TravelOptions {
-	/** relative point of reference to travel */
-	from?: DateValue;
-	/** relative days to travel in number */
-	to: number;
+  /** relative point of reference to travel */
+  from?: DateValue;
+  /** relative days to travel in number */
+  to: number;
 }
 
 export const dt: {
   current(d?: DateValue): Date;
-
   build(options: BuildOptions): (date?: DateValue) => (mask?: string) => string;
-
   format: ReturnType<typeof this.build>;
-
   travel({ from, to }: TravelOptions): Date;
 }
 ```

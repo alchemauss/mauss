@@ -28,6 +28,16 @@ basics.freeze('deep freezes nested objects', () => {
 	assert.ok(Object.isFrozen(nested.foo));
 	assert.ok(Object.isFrozen(nested.bar));
 });
+basics.freeze('deep freeze ignore function', () => {
+	const nested = ntv.freeze({
+		identity: (v: any) => v,
+		namespace: { a() {} },
+	});
+
+	assert.ok(!Object.isFrozen(nested.identity));
+	assert.equal(nested.identity(0), 0);
+	assert.ok(!Object.isFrozen(nested.namespace.a));
+});
 
 basics.iterate('iterate over nested objects', () => {
 	const months = 'jan,feb,mar,apr,may,jun,jul,aug,sep,oct,nov,dec'.split(',');
@@ -62,6 +72,36 @@ basics.iterate('iterate over nested objects', () => {
 			return a;
 		}, {})
 	);
+});
+basics.iterate('iterate with empty/falsy return', () => {
+	assert.equal(
+		ntv.iterate({}, ([]) => {}),
+		{}
+	);
+
+	assert.equal(
+		ntv.iterate(
+			{ a: '0', b: 1, c: null, d: '3', e: undefined, f: false },
+			([k, v]) => v != null && v !== false && [k, v]
+		),
+		{ a: '0', b: 1, d: '3' }
+	);
+
+	type Nested = { [P in 'a' | 'b']?: { [K in 'x' | 'y']: { foo: string } } };
+	ntv.iterate({ a: { x: { foo: 'ax' } } } as Nested, ([parent, v]) => {
+		assert.equal(parent, 'a');
+		v &&
+			ntv.iterate(v, ([key, { foo }]) => {
+				assert.equal(key, 'x');
+				assert.equal(foo, 'ax');
+			});
+	});
+});
+basics.iterate('iterate creates deep copy', () => {
+	const original = { x: 1, y: { z: 'foo' } };
+	const copy = ntv.iterate(original);
+	assert.ok(original !== copy);
+	assert.ok(original.y !== copy.y);
 });
 
 basics.keys('return object keys', () => {

@@ -1,5 +1,37 @@
 import type { AnyFunction, Reverse } from '../../typings/helpers.js';
 
+/** identical - checks whether x and y have the same values */
+export function identical(x: unknown, y: unknown): boolean {
+	const [xt, yt] = [typeof x, typeof y];
+	if (xt !== yt) return false;
+	if (xt === 'function') return true;
+	if (xt === 'symbol') {
+		// @ts-expect-error - guaranteed symbol
+		return x.toString() === y.toString();
+	}
+
+	if (xt !== 'object') return x === y;
+	if (x == null || y == null) return x === y;
+
+	if (Array.isArray(x) !== Array.isArray(y)) return false;
+	if (Array.isArray(x) && Array.isArray(y)) {
+		if (x.length !== y.length) return false;
+		for (let i = 0; i < x.length; i++) {
+			if (!identical(x[i], y[i])) return false;
+		}
+		return true;
+	}
+
+	const [xk, yk] = [Object.keys(x), Object.keys(y)];
+	const keys = new Set([...xk, ...yk]);
+	if (xk.length !== yk.length || keys.size !== xk.length) return false;
+	for (const k of keys) {
+		// @ts-expect-error - guaranteed indexable
+		if (!identical(x[k], y[k])) return false;
+	}
+	return true;
+}
+
 /**
  * inverse - reverses the order of provided arguments to fn parameters
  * @param fn any function with one or more arguments

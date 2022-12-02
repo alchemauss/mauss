@@ -20,3 +20,27 @@ const file = readFileSync('./data.csv', 'utf-8');
 
 csv.read(file);
 ```
+
+## `ntv`
+
+Native namespace for augmented static methods of standard objects.
+
+### `ntv.freeze`
+
+Augmented `Object.freeze()`, deep freezes and strongly-typed.
+
+### `ntv.iterate`
+
+Original function, iterate over the key-value pair of an object, returns a new object using the pairs returned from the callback function. If callback is omitted, the default behaviour will create a deep copy of the original object.
+
+```ts
+export function iterate<T extends object>(
+	object: T,
+	callback: AnyFunction<
+		[entry: Entries<T>[number], index: number],
+		void | Falsy | [IndexSignature, any]
+	> = ([k, v]) => [k, v && typeof v === 'object' ? iterate(v) : v]
+): T;
+```
+
+The returned object will be filtered to only contain a key-value pair of the 2-tuple from `fn()`, any other values returned from the callback will be ignored, i.e. `void | Falsy`.
