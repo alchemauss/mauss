@@ -25,6 +25,14 @@ csv.read(file);
 
 Native namespace for augmented static methods of standard objects.
 
+### `ntv.clone`
+
+```ts
+export function clone<T>(i: T): T;
+```
+
+Original function, creates a deep copy/clone of any variable.
+
 ### `ntv.freeze`
 
 Augmented `Object.freeze()`, deep freezes and strongly-typed.
@@ -39,7 +47,7 @@ export function iterate<T extends object>(
 	callback: AnyFunction<
 		[entry: Entries<T>[number], index: number],
 		void | Falsy | [IndexSignature, any]
-	> = ([k, v]) => [k, v && typeof v === 'object' ? iterate(v) : v]
+	> = ([k, v]) => [k, clone(v)]
 ): T;
 ```
 
