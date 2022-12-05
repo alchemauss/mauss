@@ -27,11 +27,13 @@ Native namespace for augmented static methods of standard objects.
 
 ### `ntv.clone`
 
+Original function, creates a deep copy of any data type, use sparingly.
+
 ```ts
 export function clone<T>(i: T): T;
 ```
 
-Original function, creates a deep copy/clone of any variable.
+Creating a copy of a data type, especially an object, is useful for removing the reference to the original object, keeping it clean from unexpected changes and side effects. This is possible because we are creating a new instance, making sure that any mutation or changes that are applied won't affect one or the other.
 
 ### `ntv.freeze`
 
