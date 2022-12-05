@@ -122,4 +122,8 @@ A drop-in replacement for `new RegExp()` with special characters from source str
 
 ## `unique`
 
-A function that accepts an array and returns an array with no duplicate values.
+```ts
+export default function unique<T, I>(array: T[], key?: string & I): T[]
+```
+
+A function that accepts an array and returns the same without any duplicate values. This can also handle an array of object by passing in a `key` as an identifier to access the object, with the same behaviour as [`compare.key`](#comparekey).
