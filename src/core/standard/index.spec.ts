@@ -59,5 +59,10 @@ basics.identical('identical object checks', () => {
 	assert.ok(std.identical({ a: '', b: 1, c: !0 }, { a: '', b: 1, c: !0 }));
 	assert.ok(std.identical({ x: [{}], y: { a: 0 } }, { x: [{}], y: { a: 0 } }));
 });
+basics.identical('identical clone', async () => {
+	const { clone } = await import('../../std/ntv/object.js');
+	const data = { a: [1, '', {}], o: { now: new Date() } };
+	assert.ok(std.identical(data, clone(data)));
+});
 
 Object.values(basics).forEach((v) => v.run());
