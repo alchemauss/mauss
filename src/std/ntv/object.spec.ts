@@ -4,11 +4,26 @@ import * as assert from 'uvu/assert';
 import * as ntv from './object.js';
 
 const basics = {
+	clone: suite('obj:clone'),
 	entries: suite('obj:entries'),
 	freeze: suite('obj:freeze'),
 	iterate: suite('obj:iterate'),
 	keys: suite('obj:keys'),
 };
+
+basics.clone('clone any possible data type', () => {
+	const base = { arr: [0, 'hi', /wut/], obj: { now: new Date() } };
+	const cloned = ntv.clone(base);
+
+	assert.ok(base !== cloned);
+	assert.ok(base.arr !== cloned.arr);
+	assert.ok(base.obj !== cloned.obj);
+
+	assert.equal(base.arr, cloned.arr);
+	assert.equal(base.obj, cloned.obj);
+	assert.equal(base.arr[2], cloned.arr[2]);
+	assert.equal(base.obj.now, cloned.obj.now);
+});
 
 basics.entries('return object entries', () => {
 	assert.equal(ntv.entries({ hello: 'world', foo: 0, bar: { baz: 1 } }), [
