@@ -1,6 +1,14 @@
 import type { Falsy, IndexSignature } from '../../typings/aliases.js';
 import type { AnyFunction, Entries, Freeze } from '../../typings/helpers.js';
 
+export function clone<T>(i: T): T {
+	if (!i || typeof i !== 'object') return i;
+	if (Array.isArray(i)) return i.map(clone) as T;
+	const type = Object.prototype.toString.call(i);
+	if (type === '[object Object]') return iterate(i);
+	return i;
+}
+
 export function entries<T extends object>(o: T) {
 	return Object.entries(o) as Entries<T>;
 }
@@ -22,7 +30,7 @@ export function iterate<T extends object>(
 	callback: AnyFunction<
 		[entry: Entries<T>[number], index: number],
 		void | Falsy | [IndexSignature, any]
-	> = ([k, v]) => [k, v && typeof v === 'object' ? iterate(v) : v]
+	> = ([k, v]) => [k, clone(v)]
 ) {
 	const pairs = entries(object);
 	const memo: typeof pairs = [];

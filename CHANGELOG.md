@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- ([#187](https://github.com/alchemauss/mauss/pull/187)) add `clone` function for cloning variables
 - ([#172](https://github.com/alchemauss/mauss/pull/172)) add second parameter to `unique` for object handling
 
 ## 0.4.5 - 2022/12/01

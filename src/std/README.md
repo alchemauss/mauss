@@ -25,6 +25,16 @@ csv.read(file);
 
 Native namespace for augmented static methods of standard objects.
 
+### `ntv.clone`
+
+Original function, creates a deep copy of any data type, use sparingly.
+
+```ts
+export function clone<T>(i: T): T;
+```
+
+Creating a copy of a data type, especially an object, is useful for removing the reference to the original object, keeping it clean from unexpected changes and side effects. This is possible because we are creating a new instance, making sure that any mutation or changes that are applied won't affect one or the other.
+
 ### `ntv.freeze`
 
 Augmented `Object.freeze()`, deep freezes and strongly-typed.
@@ -39,7 +49,7 @@ export function iterate<T extends object>(
 	callback: AnyFunction<
 		[entry: Entries<T>[number], index: number],
 		void | Falsy | [IndexSignature, any]
-	> = ([k, v]) => [k, v && typeof v === 'object' ? iterate(v) : v]
+	> = ([k, v]) => [k, clone(v)]
 ): T;
 ```
 
