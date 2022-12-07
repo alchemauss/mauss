@@ -1,6 +1,6 @@
 # mauss changelog
 
-## Unreleased
+## 0.4.6 - 2022/12/07
 
 - ([#187](https://github.com/alchemauss/mauss/pull/187)) add `clone` function for cloning variables
 - ([#172](https://github.com/alchemauss/mauss/pull/172)) add second parameter to `unique` for object handling
