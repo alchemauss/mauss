@@ -5,8 +5,8 @@ export function clone<T>(i: T): T {
 	if (!i || typeof i !== 'object') return i;
 	if (Array.isArray(i)) return i.map(clone) as T;
 	const type = Object.prototype.toString.call(i);
-	if (type === '[object Object]') return iterate(i);
-	return i;
+	if (type !== '[object Object]') return i;
+	return iterate(i) as T;
 }
 
 export function entries<T extends object>(o: T) {
@@ -25,13 +25,13 @@ export function freeze<T extends object>(o: T): Freeze<T> {
 /**
  * Iterate over the key-value pair of an object, returns a new object using the pairs returned from the callback function. If callback is omitted, the default behaviour will create a deep copy of the original object.
  */
-export function iterate<T extends object>(
+export function iterate<T extends object, I = T[keyof T]>(
 	object: T,
 	callback: AnyFunction<
 		[entry: Entries<T>[number], index: number],
-		void | Falsy | [IndexSignature, any]
-	> = ([k, v]) => [k, clone(v)]
-) {
+		void | Falsy | [IndexSignature, I]
+	> = ([k, v]) => [k, clone(v) as I]
+): I extends T[keyof T] ? T : unknown {
 	const pairs = entries(object);
 	const memo: typeof pairs = [];
 	for (let i = 0; i < pairs.length; i++) {
@@ -39,7 +39,7 @@ export function iterate<T extends object>(
 		if (!res || res.length !== 2) continue;
 		memo.push(res as typeof memo[number]);
 	}
-	return Object.fromEntries(memo) as T;
+	return Object.fromEntries(memo) as any;
 }
 
 export function keys<T extends object>(o: T) {
