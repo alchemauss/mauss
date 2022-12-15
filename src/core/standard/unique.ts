@@ -1,4 +1,4 @@
-import type { IndexSignature, Primitives } from '../../typings/aliases.js';
+import type { IndexSignature } from '../../typings/aliases.js';
 import type { Paths } from '../../typings/prototypes.js';
 
 /**
@@ -10,7 +10,7 @@ export default function unique<
 	Inferred extends Record<IndexSignature, any>,
 	Identifier extends Paths<Inferred>
 >(array: readonly Inferred[], key: string & Identifier): Inferred[];
-export default function unique<T extends Primitives>(array: readonly T[]): T[];
+export default function unique<T>(array: readonly T[]): T[];
 export default function unique<T, I>(array: readonly T[], key?: string & I): T[] {
 	if (!key || typeof array[0] !== 'object') return [...new Set(array)];
 
