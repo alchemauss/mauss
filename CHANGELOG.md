@@ -1,5 +1,9 @@
 # mauss changelog
 
+## Unreleased
+
+- ([#190](https://github.com/alchemauss/mauss/pull/190)) add better `ntv.iterate` return inference
+
 ## 0.4.7 - 2022/12/15
 
 - ([#189](https://github.com/alchemauss/mauss/pull/189)) fix overly strict `unique` generic constraint
