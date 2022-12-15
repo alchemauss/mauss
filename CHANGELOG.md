@@ -2,7 +2,7 @@
 
 ## 0.4.7 - Unreleased
 
-- fix overly strict `unique` generic constraint
+- ([#189](https://github.com/alchemauss/mauss/pull/189)) fix overly strict `unique` generic constraint
 
 ## 0.4.6 - 2022/12/07
 
