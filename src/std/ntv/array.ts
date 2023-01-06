@@ -1,9 +1,15 @@
-export function zip<T extends readonly any[]>(...arrays: T[]): T[number][] {
+import type { IndexSignature, Nullish } from '../../typings/aliases.js';
+
+export function zip<T extends Array<Nullish | {}>>(...arrays: T[]) {
+	const max = Math.max(...arrays.map((a) => a.length));
 	const items: T[number][] = [];
-	for (let idx = 0; idx < Math.max(...arrays.map((a) => a.length)); idx++) {
-		const zipped: T[number] = [];
-		for (const a of arrays) zipped.push(a[idx]);
-		items.push(zipped);
+	for (let idx = 0, empty; idx < max; idx++, empty = !0) {
+		const zipped: T[number] = {};
+		for (const prime of arrays) {
+			if (!prime[idx]) continue;
+			empty = !Object.assign(zipped, prime[idx]);
+		}
+		if (!empty) items.push(zipped);
 	}
-	return items;
+	return items as Record<IndexSignature, any>[];
 }
