@@ -1,7 +1,8 @@
 /* <-- Type Level Programming --> */
 
-import type { IndexSignature } from './aliases.js';
+import type { IndexSignature, Narrowable } from './aliases.js';
 import type { When } from './comparators.js';
+import type { Fallback } from './helpers.js';
 
 export type Concat<Left, Right, Delimiter = '.'> = When<
 	[Left, Right],
@@ -42,6 +43,13 @@ export type Join<
 	: StringList extends readonly [infer OnlyItem]
 	? OnlyItem
 	: '';
+
+// TODO remove once `const` modifier lands in TS 5.0
+// https://github.com/microsoft/TypeScript/pull/51865
+export type Narrow<T> = Fallback<
+	T,
+	[] | (T extends Narrowable ? T : never) | { [K in keyof T]: Narrow<T[K]> }
+>;
 
 /**
  * Merge an object properties and make all of them optional.
