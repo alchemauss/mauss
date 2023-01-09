@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- ([#200](https://github.com/alchemauss/mauss/pull/200)) add `bulwark` to `/guards` module
 - ([#190](https://github.com/alchemauss/mauss/pull/190)) add better `ntv.iterate` return inference
 
 ## 0.4.7 - 2022/12/15
