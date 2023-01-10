@@ -1,5 +1,8 @@
 /* <-- Basic Typing Aliases --> */
 
+// for `Narrow` in /typings/prototypes.ts
+export type Narrowable = void | symbol | Nullish | Primitives | object | {};
+
 /** Nullish values, which are only `null` and `undefined` */
 export type Nullish = null | undefined;
 

@@ -1,5 +1,6 @@
 import type { Falsy, IndexSignature } from '../../typings/aliases.js';
 import type { AnyFunction, Entries, Freeze } from '../../typings/helpers.js';
+import type { Narrow } from '../../typings/prototypes.js';
 
 export function clone<T>(i: T): T {
 	if (!i || typeof i !== 'object') return i;
@@ -44,4 +45,13 @@ export function iterate<T extends object, I = T[keyof T]>(
 
 export function keys<T extends object>(o: T) {
 	return Object.keys(o) as Array<keyof T>;
+}
+
+export function pick<Keys extends readonly string[]>(keys: Narrow<Keys>) {
+	const props = new Set(keys);
+	// @ts-expect-error - 100% TS bug not mine
+	return <T extends object>(o: T): Pick<T, Keys[number]> => {
+		// @ts-expect-error - unknown until `keys` are passed
+		return iterate(o, ([k, v]) => props.has(k) && [k, v]);
+	};
 }
