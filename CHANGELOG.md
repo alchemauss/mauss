@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- ([#199](https://github.com/alchemauss/mauss/pull/199)) add `pick` function to `ntv` namespace
 - ([#190](https://github.com/alchemauss/mauss/pull/190)) add better `ntv.iterate` return inference
 
 ## 0.4.7 - 2022/12/15

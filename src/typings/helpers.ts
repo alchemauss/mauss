@@ -44,10 +44,10 @@ export type Last<T extends any[], Fallback = never> = T extends [...any[], infer
 /** Defines a type with at least one item */
 export type NonEmptyArray<T> = [T, ...T[]];
 
-/** Disallow any properties from V when defining U */
+/** Disallow any properties from B when defining A */
 export type Only<A, B> = { [P in keyof A]: A[P] } & Omit<{ [P in keyof B]?: never }, keyof A>;
 
-/** Overwrite properties in U with values from V */
+/** Overwrite properties in A with values from B */
 export type Overwrite<A, B> = Omit<A, keyof B> & B;
 
 /** Pick the properties of T that satisfies type of V */
