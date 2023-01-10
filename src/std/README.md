@@ -70,3 +70,11 @@ const unwrap = pick(['a', 'b', 'c']);
 
 unwrap({ ... });
 ```
+
+### `ntv.zip`
+
+Original function, aggregates elements from each of the arrays and returns a single array of objects with the length of the largest array.
+
+```typescript
+export function zip<T extends Array<Nullish | {}>>(...arrays: T[]): Record<IndexSignature, any>[];
+```
