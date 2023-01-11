@@ -1,6 +1,6 @@
 # mauss changelog
 
-## Unreleased
+## 0.4.8 - 2023/01/11
 
 - ([#199](https://github.com/alchemauss/mauss/pull/199)) add `pick` function to `ntv` namespace
 - ([#190](https://github.com/alchemauss/mauss/pull/190)) add better `ntv.iterate` return inference
