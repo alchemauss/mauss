@@ -1,6 +1,6 @@
 # mauss changelog
 
-## Unreleased
+## 0.4.8 - 2023/01/11
 
 - ([#199](https://github.com/alchemauss/mauss/pull/199)) add `pick` function to `ntv` namespace
 - ([#197](https://github.com/alchemauss/mauss/pull/197)) add `zip` function to `ntv` namespace
