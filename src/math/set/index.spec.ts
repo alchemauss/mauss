@@ -1,6 +1,6 @@
 import { suite } from 'uvu';
 import * as assert from 'uvu/assert';
-import * as set from './set.js';
+import * as set from './index.js';
 
 const basics = {
 	permutation: suite('permutation'),

@@ -13,7 +13,12 @@ export type Difference<A, B> = Exclude<A | B, A & B>;
 export type Either<A, B> = Only<A, B> | Only<B, A>;
 
 /** Strongly-type array of tuple from object in `Object.entries` */
-export type Entries<T> = Array<{ [K in keyof T]: [keyof PickByValue<T, T[K]>, T[K]] }[keyof T]>;
+export type Entries<T> = {
+	[K in keyof T]-?: [NonNullable<keyof PickByValue<T, T[K]>>, T[K]];
+}[keyof T][];
+
+// for `Narrow` in /typings/prototypes.ts
+export type Fallback<A, B> = A extends B ? A : B;
 
 /** Remove type from T that does not satisfy type of Validator */
 export type Filter<T, Validator> = T extends Validator ? T : never;
@@ -23,6 +28,9 @@ export type First<T extends any[], Fallback = never> = T extends [infer F, ...an
 
 /** Allow autocompletion of union in addition to arbitrary values */
 export type Flexible<Union extends T, T = string> = Union | (T & Record<never, never>);
+
+/** Recursively make all properties of object T as readonly */
+export type Freeze<T> = { readonly [P in keyof T]: T[P] extends Function ? T[P] : Freeze<T[P]> };
 
 /** Pick the properties of A that also exists in B */
 export type Intersection<A, B> = Pick<A, Extract<keyof A, keyof B> & Extract<keyof B, keyof A>>;
@@ -34,13 +42,13 @@ export type JSONState<T> = { [P in keyof T]: T[P] extends { toJSON: () => infer 
 export type Last<T extends any[], Fallback = never> = T extends [...any[], infer L] ? L : Fallback;
 
 /** Defines a type with at least one item */
-export type NonEmptyArray<T> = [T, ...Array<T>];
+export type NonEmptyArray<T> = [T, ...T[]];
 
-/** Disallow any properties from V when defining U */
-export type Only<U, V> = { [P in keyof U]: U[P] } & Omit<{ [P in keyof V]?: never }, keyof U>;
+/** Disallow any properties from B when defining A */
+export type Only<A, B> = { [P in keyof A]: A[P] } & Omit<{ [P in keyof B]?: never }, keyof A>;
 
-/** Overwrite properties in U with values from V */
-export type Overwrite<U, V> = Omit<U, keyof V> & V;
+/** Overwrite properties in A with values from B */
+export type Overwrite<A, B> = Omit<A, keyof B> & B;
 
 /** Pick the properties of T that satisfies type of V */
 export type PickByValue<T, V> = Pick<T, { [K in keyof T]: T[K] extends V ? K : never }[keyof T]>;

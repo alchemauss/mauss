@@ -28,7 +28,10 @@ export function wildcard(x: any, y: any): number {
 	return constrained(x, y);
 }
 
-export function inspect(x: Record<any, any>, y: Record<any, any>): number {
+export function inspect(
+	x: Record<TS.IndexSignature, any>,
+	y: Record<TS.IndexSignature, any>
+): number {
 	const common = [...new Set([...Object.keys(x), ...Object.keys(y)])].filter(
 		(k) => k in x && k in y && typeof x[k] === typeof y[k] && x[k] !== y[k]
 	);
@@ -47,25 +50,24 @@ export function inspect(x: Record<any, any>, y: Record<any, any>): number {
 
 // ---- customized ----
 
+type KeyValidator<Keys, Expected> = Keys extends [infer I extends string, ...infer R]
+	? Expected & Record<I, KeyValidator<R, I extends keyof Expected ? Expected[I] : never>>
+	: Expected;
 export function key<
 	Inferred extends Record<TS.IndexSignature, any>,
 	Identifier extends keyof Inferred = TS.Paths<Inferred>
 >(identifier: string & Identifier, comparator?: Wildcard) {
-	type BuildValidator<Keys, Expected> = Keys extends [infer I extends string, ...infer R]
-		? Expected & Record<I, BuildValidator<R, I extends keyof Expected ? Expected[I] : never>>
-		: Expected;
-
 	const trail = identifier.split('.');
 	const drill = (o: Inferred) => trail.reduce((ret, prop) => ret[prop], o);
 
 	type Properties = TS.Split<Identifier, '.'>;
 	return <X extends Inferred, Y extends Inferred>(
-		x: TS.WhenAny<keyof X, X, BuildValidator<Properties, X>>,
-		y: TS.WhenAny<keyof Y, Y, BuildValidator<Properties, Y>>
+		x: TS.WhenAny<keyof X, X, KeyValidator<Properties, X>>,
+		y: TS.WhenAny<keyof Y, Y, KeyValidator<Properties, Y>>
 	) => (comparator || wildcard)(drill(x as Inferred), drill(y as Inferred));
 }
 
-export function order(weights: string[]): Wildcard {
+export function order(weights: readonly string[]): Wildcard {
 	const m: Record<string, number> = {};
 	weights.forEach((v, i) => (m[v] = i));
 	return (x, y) => m[x] - m[y];

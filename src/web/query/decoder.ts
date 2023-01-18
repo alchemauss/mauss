@@ -1,12 +1,12 @@
-import type { Primitives } from '../../typings/aliases.js';
+import type { IndexSignature, Primitives } from '../../typings/aliases.js';
 import type { AlsoArray } from '../../typings/extenders.js';
 import type { Intersection } from '../../typings/helpers.js';
 import type { Flatten } from '../../typings/prototypes.js';
 import { tryNumber } from '../../utils/index.js';
 
 type CombineExisting<
-	A extends Record<any, any>,
-	B extends Record<any, any>,
+	A extends Record<IndexSignature, any>,
+	B extends Record<IndexSignature, any>,
 	Duplicate = Intersection<A, B>
 > = Omit<A, keyof Duplicate> &
 	Omit<B, keyof Duplicate> & {
@@ -14,7 +14,7 @@ type CombineExisting<
 	};
 
 type QueryDecoder<Query extends string> = string extends Query
-	? Record<string, string | string[]>
+	? Record<IndexSignature, string | readonly string[]>
 	: Query extends `${infer Leading}${infer Rest}`
 	? Leading extends '?'
 		? QueryDecoder<Rest>
@@ -40,7 +40,7 @@ export default function qsd<Q extends string>(qs: Q) {
 		return ['true', 'false'].includes(s) ? s[0] === 't' : tryNumber(s);
 	};
 
-	const dqs: Record<any, AlsoArray<Primitives>> = {};
+	const dqs: Record<IndexSignature, AlsoArray<Primitives>> = {};
 	const qar = qs.split('&');
 	for (let i = 0; i < qar.length; i++) {
 		const [k, v] = qar[i].split('=');

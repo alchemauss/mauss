@@ -1,7 +1,47 @@
 # mauss changelog
 
-## Unreleased
+## 0.4.8 - 2023/01/11
 
+- ([#199](https://github.com/alchemauss/mauss/pull/199)) add `pick` function to `ntv` namespace
+- ([#190](https://github.com/alchemauss/mauss/pull/190)) add better `ntv.iterate` return inference
+
+## 0.4.7 - 2022/12/15
+
+- ([#189](https://github.com/alchemauss/mauss/pull/189)) fix overly strict `unique` generic constraint
+
+## 0.4.6 - 2022/12/07
+
+- ([#187](https://github.com/alchemauss/mauss/pull/187)) add `clone` function for cloning variables
+- ([#172](https://github.com/alchemauss/mauss/pull/172)) add second parameter to `unique` for object handling
+
+## 0.4.5 - 2022/12/01
+
+- ([#181](https://github.com/alchemauss/mauss/pull/181)) add `identical` function for values equality check
+- ([#180](https://github.com/alchemauss/mauss/pull/180)) add default parameter to `iterate` callback for object deep copy
+
+## 0.4.4 - 2022/11/29
+
+- ([#182](https://github.com/alchemauss/mauss/pull/182)) add `Freeze` typings
+- ([#179](https://github.com/alchemauss/mauss/pull/179)) fix `clipboard.copy` handler not allowing non-promise callbacks
+
+## 0.4.3 - 2022/11/25
+
+- ([#177](https://github.com/alchemauss/mauss/pull/177)) fix `Entries` possibly returning `undefined`
+- ([#174](https://github.com/alchemauss/mauss/pull/174)) add `clipboard` object to `/web` module
+
+## 0.4.2 - 2022/11/24
+
+- ([#176](https://github.com/alchemauss/mauss/pull/176)) add empty/falsy filtering to `ntv.iterate`
+- ([#175](https://github.com/alchemauss/mauss/pull/175)) fix function in `ntv.freeze` not callable
+
+## 0.4.1 - 2022/11/16
+
+- ([#170](https://github.com/alchemauss/mauss/pull/170)) fix infinite circularly referenced generated types
+
+## 0.4.0 - 2022/11/14
+
+- ([#160](https://github.com/alchemauss/mauss/pull/160)) add new `ntv` namespace to `/std` module
+- ([#159](https://github.com/alchemauss/mauss/pull/159)) add `immediate` function
 - ([#158](https://github.com/alchemauss/mauss/pull/158)) add convenience `set` cookie function
 - ([#154](https://github.com/alchemauss/mauss/pull/154)) add `"plugins"` to prettier overrides
 - ([#150](https://github.com/alchemauss/mauss/pull/150)) enable key drilling to `compare.key`
@@ -12,6 +52,8 @@
 
 ### Breaking Changes
 
+- [#165](https://github.com/alchemauss/mauss/pull/165) | Removed `/bits/find` and `/math/set` exports
+- [#165](https://github.com/alchemauss/mauss/pull/165) | Removed `find` namespace and export functions directly from `/bits`
 - [#150](https://github.com/alchemauss/mauss/pull/150) | Make `.` a reserved character as delimiter for `compare.key`
 - [#149](https://github.com/alchemauss/mauss/pull/149) | Removed implicit slash addition in `api` url interpolation
 - [#140](https://github.com/alchemauss/mauss/pull/140) | Renamed and moved `comparator` to `compare.inspect`
