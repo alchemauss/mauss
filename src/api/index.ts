@@ -20,15 +20,15 @@ export interface FetcherOptions extends RequestInit {
 	transform?(res: Response): Promise<unknown>;
 }
 
-interface SendParams {
-	data?: unknown;
-	method: string;
-	passed?: typeof fetch;
-	path: string;
-	token?: string;
-}
-
 export function fetcher(options: FetcherOptions) {
+	interface SendParams {
+		data?: unknown;
+		method: string;
+		passed?: typeof fetch;
+		path: string;
+		token?: string;
+	}
+
 	async function send({ method, path, data }: SendParams) {
 		const browser = options.browser ?? typeof window !== 'undefined';
 		const { base, intercept, prepare = (r) => r, transform = (r) => r.json() } = options;
@@ -65,7 +65,7 @@ export function fetcher(options: FetcherOptions) {
 		return await transform(res);
 	}
 
-	return Object.freeze({
+	return {
 		async get(path: string, token?: string) {
 			return await send({ method: 'GET', path, token });
 		},
@@ -81,13 +81,5 @@ export function fetcher(options: FetcherOptions) {
 		async put(path: string, data: any, token?: string) {
 			return await send({ method: 'PUT', path, data, token });
 		},
-	});
+	} as const;
 }
-
-const type = fetcher({});
-
-// function relay(browser: boolean) {
-// 	if (typeof options.fetch !== 'undefined') return options.fetch;
-// 	if (browser || typeof fetch !== 'undefined') return fetch;
-// 	throw new Error('No fetch provided. Use browser only or pass in a fetch function');
-// }
