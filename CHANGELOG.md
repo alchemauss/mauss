@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- ([#200](https://github.com/alchemauss/mauss/pull/200)) add `bulwark` to `/guards` module
 - ([#197](https://github.com/alchemauss/mauss/pull/197)) add `zip` function to `ntv` namespace
 
 ## 0.4.8 - 2023/01/11

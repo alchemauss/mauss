@@ -1,5 +1,9 @@
 import type { Nullish, Falsy, FullPrimitives as Primitives } from '../typings/aliases.js';
 
+export function bulwark(nothing: never) {
+	throw new Error(`UncaughtError: reached forbidden guard with ${JSON.stringify(nothing)}`);
+}
+
 type Empty = '' | Nullish;
 
 /** @returns true if input is not `nullish` or an empty string */
