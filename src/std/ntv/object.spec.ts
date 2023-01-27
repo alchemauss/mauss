@@ -9,6 +9,7 @@ const basics = {
 	freeze: suite('obj:freeze'),
 	iterate: suite('obj:iterate'),
 	keys: suite('obj:keys'),
+	pick: suite('obj:pick'),
 };
 
 basics.clone('clone any possible data type', () => {
@@ -121,6 +122,12 @@ basics.iterate('iterate creates deep copy', () => {
 
 basics.keys('return object keys', () => {
 	assert.equal(ntv.keys({ a: 0, b: 1, c: 2 }), ['a', 'b', 'c']);
+});
+
+basics.pick('pick properties from an object', () => {
+	const unwrap = ntv.pick(['a', 'b', 'c', 'z']);
+	const picked = unwrap({ a: 0, c: 'b', y: undefined, z: null });
+	assert.equal(picked, { a: 0, c: 'b', z: null });
 });
 
 Object.values(basics).forEach((v) => v.run());
