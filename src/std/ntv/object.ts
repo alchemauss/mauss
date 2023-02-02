@@ -55,3 +55,7 @@ export function pick<Keys extends readonly string[]>(keys: Narrow<Keys>) {
 		return iterate(o, ([k, v]) => props.has(k) && [k, v]);
 	};
 }
+
+export function size<T extends object>(o: T): number {
+	return Object.keys(o).length;
+}
