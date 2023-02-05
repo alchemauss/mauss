@@ -124,10 +124,15 @@ basics.keys('return object keys', () => {
 	assert.equal(ntv.keys({ a: 0, b: 1, c: 2 }), ['a', 'b', 'c']);
 });
 
-basics.pick('pick properties from an object', () => {
+basics.pick('pick-filter properties from an object', () => {
 	const unwrap = ntv.pick(['a', 'b', 'c', 'z']);
 	const picked = unwrap({ a: 0, c: 'b', y: undefined, z: null });
 	assert.equal(picked, { a: 0, c: 'b', z: null });
+});
+basics.pick('pick-build properties from an object', () => {
+	const unwrap = ntv.pick(['a', 'b', 'c', 'd', 'e'], { type: 'build' });
+	const picked = unwrap({ a: 0, c: 'b', z: null });
+	assert.equal(picked, { a: 0, b: null, c: 'b', d: null, e: null });
 });
 
 Object.values(basics).forEach((v) => v.run());
