@@ -47,11 +47,31 @@ export function keys<T extends object>(o: T) {
 	return Object.keys(o) as Array<keyof T>;
 }
 
-export function pick<Keys extends readonly string[]>(keys: Narrow<Keys>) {
+interface PickOptions {
+	type?: 'build' | 'filter';
+}
+export function pick<Keys extends readonly string[]>(
+	keys: Narrow<Keys>,
+	{ type = 'filter' }: PickOptions = {}
+) {
 	const props = new Set(keys);
-	// @ts-expect-error - 100% TS bug not mine
-	return <T extends object>(o: T): Pick<T, Keys[number]> => {
-		// @ts-expect-error - unknown until `keys` are passed
-		return iterate(o, ([k, v]) => props.has(k) && [k, v]);
-	};
+
+	switch (type) {
+		case 'build': {
+			return <T extends object>(o: T, initial = null) => {
+				// @ts-expect-error - too hard for TS
+				const object = {} as { [K in Keys[number]]: Pick<T, K> extends {} ? typeof initial : T[K] };
+				// @ts-expect-error - unknown until `keys` are passed
+				props.forEach((k) => (object[k] = k in o ? o[k] : initial));
+				return object;
+			};
+		}
+		case 'filter': {
+			// @ts-expect-error - 100% TS bug not mine
+			return <T extends object>(o: T): Pick<T, Keys[number]> => {
+				// @ts-expect-error - unknown until `keys` are passed
+				return iterate(o, ([k, v]) => props.has(k) && [k, v]);
+			};
+		}
+	}
 }
