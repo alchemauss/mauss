@@ -3,10 +3,10 @@ import type { AnyFunction, Reverse } from '../../typings/helpers.js';
 
 export function execute(
 	condition: boolean,
-	success: () => AlsoPromise<any>,
-	reject: () => AlsoPromise<any> = () => {}
+	correct: () => AlsoPromise<void> | AnyFunction<[]>,
+	otherwise: () => AlsoPromise<void> | AnyFunction<[]> = () => {}
 ) {
-	condition ? success() : reject();
+	condition ? correct() : otherwise();
 }
 
 /** identical - checks whether x and y have the same values */
