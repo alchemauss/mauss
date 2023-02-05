@@ -1,4 +1,13 @@
+import type { AlsoPromise } from '../../typings/extenders.js';
 import type { AnyFunction, Reverse } from '../../typings/helpers.js';
+
+export function execute(
+	condition: boolean,
+	success: () => AlsoPromise<any>,
+	reject: () => AlsoPromise<any> = () => {}
+) {
+	condition ? success() : reject();
+}
 
 /** identical - checks whether x and y have the same values */
 export function identical(x: unknown, y: unknown): boolean {
