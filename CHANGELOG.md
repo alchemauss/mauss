@@ -1,6 +1,6 @@
 # mauss changelog
 
-## Unreleased
+## 0.4.9 - 2023/02/07
 
 - ([#203](https://github.com/alchemauss/mauss/pull/203)) add `execute` function
 - ([#203](https://github.com/alchemauss/mauss/pull/203)) export `identical` function
