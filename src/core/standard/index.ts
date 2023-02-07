@@ -61,3 +61,7 @@ export function inverse<Function extends AnyFunction>(fn: Function) {
 export function regexp(pattern: string, flags?: string): RegExp {
 	return new RegExp(pattern.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), flags);
 }
+
+export function scope<T>(fn: () => T) {
+	return fn();
+}

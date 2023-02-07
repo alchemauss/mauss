@@ -165,6 +165,14 @@ A type-safe higher-order function that accepts any number of arguments, it retur
 
 A drop-in replacement for `new RegExp()` with special characters from source string escaped.
 
+## `scope`
+
+```ts
+export function scope<T>(fn: () => T): T;
+```
+
+A convenience function to declare a variable with multiple conditionals to determine its final value, without cluttering the global or top-level scope with temporary variables that are only used once, and also avoid nested ternary hell.
+
 ## `unique`
 
 ```ts
