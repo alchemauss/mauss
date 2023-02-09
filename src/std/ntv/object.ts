@@ -10,6 +10,12 @@ export function clone<T>(i: T): T {
 	return iterate(i) as T;
 }
 
+export function create<T extends IndexSignature>(array: T[], i: any = null) {
+	const object = {} as { [K in T]: typeof i };
+	for (const key of array) object[key] = i;
+	return object;
+}
+
 export function entries<T extends object>(o: T) {
 	return Object.entries(o) as Entries<T>;
 }

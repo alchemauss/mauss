@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+- ([#202](https://github.com/alchemauss/mauss/pull/202)) add `create` function to `ntv` namespace
+
+## 0.4.9 - 2023/02/07
+
+- ([#203](https://github.com/alchemauss/mauss/pull/203)) add `execute` function
+- ([#203](https://github.com/alchemauss/mauss/pull/203)) export `identical` function
 - ([#200](https://github.com/alchemauss/mauss/pull/200)) add `bulwark` to `/guards` module
 - ([#197](https://github.com/alchemauss/mauss/pull/197)) add `zip` function to `ntv` namespace
 
