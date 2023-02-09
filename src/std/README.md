@@ -35,6 +35,14 @@ export function clone<T>(i: T): T;
 
 Creating a copy of a data type, especially an object, is useful for removing the reference to the original object, keeping it clean from unexpected changes and side effects. This is possible because we are creating a new instance, making sure that any mutation or changes that are applied won't affect one or the other.
 
+### `ntv.create`
+
+```typescript
+export function create<T>(array: T[], i: any): { [K in T]: typeof i };
+```
+
+Create an object with keys from an array of strings with the option to specify the initial value, defaulting to `null`.
+
 ### `ntv.freeze`
 
 Augmented `Object.freeze()`, deep freezes and strongly-typed.
