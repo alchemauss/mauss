@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- ([#206](https://github.com/alchemauss/mauss/pull/206)) add options to `ntv.pick`
 - ([#202](https://github.com/alchemauss/mauss/pull/202)) add `create` function to `ntv` namespace
 
 ## 0.4.9 - 2023/02/07
