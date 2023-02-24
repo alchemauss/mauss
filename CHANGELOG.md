@@ -1,5 +1,10 @@
 # mauss changelog
 
+## Unreleased
+
+- ([#211](https://github.com/alchemauss/mauss/pull/211)) fix `ntv.keys` and `ntv.entries` always returns `string`
+- ([#202](https://github.com/alchemauss/mauss/pull/202)) add `create` function to `ntv` namespace
+
 ## 0.4.9 - 2023/02/07
 
 - ([#203](https://github.com/alchemauss/mauss/pull/203)) add `execute` function
