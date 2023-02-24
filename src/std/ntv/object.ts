@@ -50,7 +50,7 @@ export function iterate<T extends object, I = T[keyof T]>(
 }
 
 export function keys<T extends object>(o: T) {
-	return Object.keys(o) as Array<keyof T>;
+	return Object.keys(o) as Array<string & keyof T>;
 }
 
 export function pick<Keys extends readonly string[]>(keys: Narrow<Keys>) {
