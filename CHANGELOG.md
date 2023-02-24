@@ -3,6 +3,7 @@
 ## Unreleased
 
 - ([#211](https://github.com/alchemauss/mauss/pull/211)) fix `ntv.keys` and `ntv.entries` always returns `string`
+- ([#204](https://github.com/alchemauss/mauss/pull/204)) add `scope` function
 - ([#202](https://github.com/alchemauss/mauss/pull/202)) add `create` function to `ntv` namespace
 
 ## 0.4.9 - 2023/02/07
