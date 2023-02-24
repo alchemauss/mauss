@@ -44,7 +44,7 @@ export function iterate<T extends object, I = T[keyof T]>(
 	for (let i = 0; i < pairs.length; i++) {
 		const res = callback(pairs[i], i);
 		if (!res || res.length !== 2) continue;
-		memo.push(res as typeof memo[number]);
+		memo.push(res as (typeof memo)[number]);
 	}
 	return Object.fromEntries(memo) as any;
 }
