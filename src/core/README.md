@@ -90,10 +90,55 @@ dSearch('mauss'); // execute after 500ms
 tSearch('mauss'); // execute every 500ms
 ```
 
+## `execute`
+
+```ts
+export function execute(
+  condition: truthy,
+  correct: () => AlsoPromise<void> | AnyFunction<[]>,
+  otherwise: () => AlsoPromise<void> | AnyFunction<[]> = () => {}
+): void;
+```
+
+A convenience function to avoid writing [IIFE](https://developer.mozilla.org/en-US/docs/Glossary/IIFE)s. Instead of having `(...)()` everywhere in the codebase, it will be much nicer to see
+
+```ts
+execute(you === world, () => {
+  // ...
+})
+```
+
+Combined with Svelte's `$:`, which is a way to mark statements as reactive, we can have `async` operations that reacts to changes in the application and `await` them as well.
+
+```svelte
+<script>
+  export let initial;
+  import { execute } from 'mauss';
+
+  let editable = initial;
+  $: execute(editable !== initial, async () => {
+    // imagine `editable` as the local state and `initial` from an API...
+    // inside here will only run when `editable` and `initial` are different
+    // (or whatever boolean condition you put as the first argument)
+    // this means it will also not run on initial component mount.
+
+    // e.g. if `editable` is changed, we'll trigger a request to update the DB.
+    //
+    // we can then use SvelteKit's `invalidate[All]` function to update
+    // `initial` and refresh the whole app's page data without having to
+    // update the variables manually and individually.
+    //
+    // when using SvelteKit, the current page/component will not be recreated
+    // but because `editable` is declared with `let`, it will not change when
+    // `initial` is updated, preventing an infinite loop.
+  })
+</script>
+```
+
 ## `identical`
 
 ```ts
-export function identical(x: unknown, y: unknown): boolean
+export function identical(x: unknown, y: unknown): boolean;
 ```
 
 A function to check for values equality between two variables. This will work for any data type except `function`, which will always return true when two function are being compared. The heuristics are as follows:
@@ -120,10 +165,18 @@ A type-safe higher-order function that accepts any number of arguments, it retur
 
 A drop-in replacement for `new RegExp()` with special characters from source string escaped.
 
+## `scope`
+
+```ts
+export function scope<T>(fn: () => T): T;
+```
+
+A convenience function to declare a variable with multiple conditionals to determine its final value, without cluttering the global or top-level scope with temporary variables that are only used once, and avoid nested ternary hell.
+
 ## `unique`
 
 ```ts
-export default function unique<T, I>(array: T[], key?: string & I): T[]
+export default function unique<T, I>(array: T[], key?: string & I): T[];
 ```
 
 A function that accepts an array and returns the same without any duplicate values. This can also handle an array of object by passing in a `key` as an identifier to access the object, with the same behaviour as [`compare.key`](#comparekey).

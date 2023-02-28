@@ -5,6 +5,7 @@ import * as ntv from './object.js';
 
 const basics = {
 	clone: suite('obj:clone'),
+	create: suite('obj:create'),
 	entries: suite('obj:entries'),
 	freeze: suite('obj:freeze'),
 	iterate: suite('obj:iterate'),
@@ -25,6 +26,13 @@ basics.clone('clone any possible data type', () => {
 	assert.equal(base.obj, cloned.obj);
 	assert.equal(base.arr[2], cloned.arr[2]);
 	assert.equal(base.obj.now, cloned.obj.now);
+});
+
+basics.create('create object from an array', () => {
+	const numbers = ntv.create([1, 2, 0]);
+	assert.equal(numbers, { 1: null, 2: null, 0: null });
+	const vowels = ntv.create(['a', 'i', 'u', 'e', 'o'], '');
+	assert.equal(vowels, { a: '', i: '', u: '', e: '', o: '' });
 });
 
 basics.entries('return object entries', () => {
