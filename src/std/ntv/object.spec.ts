@@ -11,6 +11,7 @@ const basics = {
 	iterate: suite('obj:iterate'),
 	keys: suite('obj:keys'),
 	pick: suite('obj:pick'),
+	size: suite('obj:size'),
 };
 
 basics.clone('clone any possible data type', () => {
@@ -136,6 +137,10 @@ basics.pick('pick properties from an object', () => {
 	const unwrap = ntv.pick(['a', 'b', 'c', 'z']);
 	const picked = unwrap({ a: 0, c: 'b', y: undefined, z: null });
 	assert.equal(picked, { a: 0, c: 'b', z: null });
+});
+
+basics.size('return size of an object', () => {
+	assert.equal(ntv.size({ a: 0, b: 1, c: 2 }), 3);
 });
 
 Object.values(basics).forEach((v) => v.run());

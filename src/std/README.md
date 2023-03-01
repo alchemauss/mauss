@@ -79,6 +79,10 @@ const unwrap = pick(['a', 'b', 'c']);
 unwrap({ ... });
 ```
 
+### `ntv.size`
+
+Convenience method to get the size of an object by checking the `length` of its keys.
+
 ### `ntv.zip`
 
 Original function, aggregates elements from each of the arrays and returns a single array of objects with the length of the largest array.

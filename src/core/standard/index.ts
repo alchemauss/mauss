@@ -69,3 +69,7 @@ export function memory<T>(initial: T, fn: AnyFunction<[previous: T], void>) {
 export function regexp(pattern: string, flags?: string): RegExp {
 	return new RegExp(pattern.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), flags);
 }
+
+export function scope<T>(fn: () => T) {
+	return fn();
+}

@@ -14,7 +14,7 @@ export type Either<A, B> = Only<A, B> | Only<B, A>;
 
 /** Strongly-type array of tuple from object in `Object.entries` */
 export type Entries<T> = {
-	[K in keyof T]-?: [NonNullable<keyof PickByValue<T, T[K]>>, T[K]];
+	[K in keyof T]-?: [string & NonNullable<keyof PickByValue<T, T[K]>>, T[K]];
 }[keyof T][];
 
 // for `Narrow` in /typings/prototypes.ts
