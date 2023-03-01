@@ -157,6 +157,14 @@ A function to check for values equality between two variables. This will work fo
 
 A function that accepts a function and returns the same function with the order of parameters reversed. This can be used in conjunction with `compare` methods to sort the items in ascending values.
 
+## `memory`
+
+```typescript
+export function memory<T>(initial: T, fn: (previous: T) => void): (updated: T) => T;
+```
+
+A higher-order function that runs a callback function only when the `initial`/previous and `updated` are different.
+
 ## `pipe`
 
 A type-safe higher-order function that accepts any number of arguments, it returns a function with the parameters of the first function passed and a return type/value of the last function.
