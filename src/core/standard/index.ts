@@ -53,10 +53,12 @@ export function inverse<Function extends AnyFunction>(fn: Function) {
 }
 
 export function memory<T>(initial: T, fn: AnyFunction<[previous: T], void>) {
-	let check = initial;
+	let previous = initial;
 	return (updated: T) => {
-		if (identical(check, updated)) return;
-		fn(check), (check = updated);
+		if (!identical(previous, updated)) {
+			fn(previous), (previous = updated);
+		}
+		return updated;
 	};
 }
 
