@@ -65,3 +65,10 @@ export function regexp(pattern: string, flags?: string): RegExp {
 export function scope<T>(fn: () => T) {
 	return fn();
 }
+
+type Anatomy<T> = Record<'head' | 'tail', T>;
+export function sides<T>(x: T[]): Anatomy<T>;
+export function sides<T extends string>(x: T): Anatomy<string>;
+export function sides<T extends string | T[]>(x: T) {
+	return { head: x[0], tail: x[x.length - 1] };
+}
