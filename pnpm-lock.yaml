@@ -1,17 +1,17 @@
 lockfileVersion: 5.4
 
 specifiers:
-  '@types/node': ^18.14.1
-  prettier: ^2.8.4
+  '@types/node': ^18.15.11
+  prettier: ^2.8.7
   tsm: ^2.3.0
-  typescript: ^4.9.5
+  typescript: ^5.0.2
   uvu: ^0.5.6
 
 devDependencies:
-  '@types/node': 18.14.1
-  prettier: 2.8.4
+  '@types/node': 18.15.11
+  prettier: 2.8.7
   tsm: 2.3.0
-  typescript: 4.9.5
+  typescript: 5.0.2
   uvu: 0.5.6
 
 packages:
@@ -34,8 +34,8 @@ packages:
     dev: true
     optional: true
 
-  /@types/node/18.14.1:
-    resolution: {integrity: sha512-QH+37Qds3E0eDlReeboBxfHbX9omAcBCXEzswCu6jySP642jiM3cYSIkU/REqwhCUqXdonHFuBfJDiAJxMNhaQ==}
+  /@types/node/18.15.11:
+    resolution: {integrity: sha512-E5Kwq2n4SbMzQOn6wnmBjuK9ouqlURrcZDVfbo9ftDDTFt3nk7ZKK4GMOzoYgnpQJKcxwQw+lGaBvvlMo0qN/Q==}
     dev: true
 
   /dequal/2.0.3:
@@ -268,8 +268,8 @@ packages:
     engines: {node: '>=4'}
     dev: true
 
-  /prettier/2.8.4:
-    resolution: {integrity: sha512-vIS4Rlc2FNh0BySk3Wkd6xmwxB0FpOndW5fisM5H8hsZSxU2VWVB5CWIkIjWvrHjIhxk2g3bfMKM87zNTrZddw==}
+  /prettier/2.8.7:
+    resolution: {integrity: sha512-yPngTo3aXUUmyuTjeTUT75txrf+aMh9FiD7q9ZE/i6r0bPb22g4FsE6Y338PQX1bmfy08i9QQCB7/rcUAVntfw==}
     engines: {node: '>=10.13.0'}
     hasBin: true
     dev: true
@@ -289,9 +289,9 @@ packages:
       esbuild: 0.15.18
     dev: true
 
-  /typescript/4.9.5:
-    resolution: {integrity: sha512-1FXk9E2Hm+QzZQ7z+McJiHL4NW1F2EzMu9Nq9i3zAaGqibafqYwCVU6WyWAuyQRRzOlxou8xZSyXLEN8oKj24g==}
-    engines: {node: '>=4.2.0'}
+  /typescript/5.0.2:
+    resolution: {integrity: sha512-wVORMBGO/FAs/++blGNeAVdbNKtIh1rbBL2EyQ1+J9lClJ93KiiKe8PmFIVdXhHcyv44SL9oglmfeSsndo0jRw==}
+    engines: {node: '>=12.20'}
     hasBin: true
     dev: true
 
