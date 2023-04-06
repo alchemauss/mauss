@@ -7,6 +7,10 @@ const basics = {
 	pipe: suite('lambda:pipe'),
 };
 
+const composite = {
+	masked: suite('lambda:mask+reveal'),
+};
+
 basics.curry('properly curry a function', () => {
 	const sum = (a: number, b: number, c: number) => a + b + c;
 	const curried = lambda.curry(sum);
@@ -28,3 +32,21 @@ basics.pipe('properly apply functions in ltr order', () => {
 });
 
 Object.values(basics).forEach((v) => v.run());
+
+// ---- composite ----
+
+composite.masked('properly mask and reveal a value', () => {
+	const { mask, reveal } = lambda;
+
+	const answer = mask.of(() => 42);
+	assert.equal(reveal(answer).expect('unreachable'), 42);
+
+	let maybe: string | null | undefined;
+	let wrapped = mask.wrap(maybe);
+	assert.equal(reveal(wrapped).or('2023-04-04'), '2023-04-04');
+
+	wrapped = mask.wrap('2023-04-06');
+	assert.equal(reveal(wrapped).expect('unreachable'), '2023-04-06');
+});
+
+Object.values(composite).forEach((v) => v.run());
