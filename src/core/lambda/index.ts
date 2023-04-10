@@ -9,10 +9,10 @@ function success<T>(value: T) {
 	return { $kind: 'success' as const, value };
 }
 
-type Masked<T> = ReturnType<typeof error> | ReturnType<typeof success<T>>;
+type Result<T> = ReturnType<typeof error> | ReturnType<typeof success<T>>;
 
 function cast<X, Y extends X>(fn: (x: X) => x is Y) {
-	return (arg: X): Masked<Y> => {
+	return (arg: X): Result<Y> => {
 		try {
 			return fn(arg) ? success(arg) : error();
 		} catch {
@@ -22,7 +22,7 @@ function cast<X, Y extends X>(fn: (x: X) => x is Y) {
 }
 
 export const mask = {
-	of<T>(fn: () => T): Masked<T> {
+	of<T>(fn: () => T): Result<T> {
 		try {
 			return success(fn());
 		} catch {
@@ -30,14 +30,14 @@ export const mask = {
 		}
 	},
 
-	async resolve<T>(p: Promise<T>): Promise<Masked<T>> {
+	async resolve<T>(p: Promise<T>): Promise<Result<T>> {
 		return p.then((v) => success(v)).catch(() => error());
 	},
 
 	wrap: cast(<T>(i: T | undefined | null): i is T => i != null),
 } as const;
 
-export function reveal<T>(opt: Masked<T>) {
+export function reveal<T>(opt: Result<T>) {
 	return {
 		expect(message: string) {
 			if (opt.$kind === 'success') return opt.value;
