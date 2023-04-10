@@ -1,19 +1,22 @@
 export { default as curry } from './curry.js';
 export { default as pipe } from './pipe.js';
 
-type Masked<T> = { $kind: 'none' } | { $kind: 'some'; value: T };
-
-const none = { $kind: 'none' } as const;
-function some<T>(v: T) {
-	return { $kind: 'some', value: v } as const;
+function error(msg?: string) {
+	const error = msg || '';
+	return { $kind: 'error' as const, error };
 }
+function success<T>(value: T) {
+	return { $kind: 'success' as const, value };
+}
+
+type Masked<T> = ReturnType<typeof error> | ReturnType<typeof success<T>>;
 
 function cast<X, Y extends X>(fn: (x: X) => x is Y) {
 	return (arg: X): Masked<Y> => {
 		try {
-			return fn(arg) ? some(arg) : none;
+			return fn(arg) ? success(arg) : error();
 		} catch {
-			return none;
+			return error();
 		}
 	};
 }
@@ -21,14 +24,14 @@ function cast<X, Y extends X>(fn: (x: X) => x is Y) {
 export const mask = {
 	of<T>(fn: () => T): Masked<T> {
 		try {
-			return some(fn());
+			return success(fn());
 		} catch {
-			return none;
+			return error();
 		}
 	},
 
 	async resolve<T>(p: Promise<T>): Promise<Masked<T>> {
-		return p.then((v) => some(v)).catch(() => none);
+		return p.then((v) => success(v)).catch(() => error());
 	},
 
 	wrap: cast(<T>(i: T | undefined | null): i is T => i != null),
@@ -37,11 +40,11 @@ export const mask = {
 export function reveal<T>(opt: Masked<T>) {
 	return {
 		expect(message: string) {
-			if (opt.$kind === 'some') return opt.value;
+			if (opt.$kind === 'success') return opt.value;
 			throw new Error(message);
 		},
 		or(fallback: T): T {
-			return opt.$kind === 'some' ? opt.value : fallback;
+			return opt.$kind === 'success' ? opt.value : fallback;
 		},
 	};
 }
