@@ -90,6 +90,37 @@ dSearch('mauss'); // execute after 500ms
 tSearch('mauss'); // execute every 500ms
 ```
 
+## `dt`
+
+Simple `date/time` (`dt`) utility namespace.
+
+```ts
+type DateValue = string | number | Date;
+
+interface BuildOptions {
+  base?: 'UTC';
+}
+
+interface TravelOptions {
+  /** relative point of reference to travel */
+  from?: DateValue;
+  /** relative days to travel in number */
+  to: number;
+}
+
+export const dt: {
+  current(d?: DateValue): Date;
+  build(options: BuildOptions): (date?: DateValue) => (mask?: string) => string;
+  format: ReturnType<typeof this.build>;
+  travel({ from, to }: TravelOptions): Date;
+}
+```
+
+- `dt.current` is a function `(d?: DateValue) => Date` that optionally takes in a `DateValue` to be converted into a `Date` object, `new Date()` will be used if nothing is passed
+- `dt.build` is a function that accepts `BuildOptions` and builds a formatter, a convenience export is included with all the default options as `dt.format`
+- `dt.format` is a function that takes in a `DateValue` and returns a renderer that accepts a string mask to format the date in, defaults to `'DDDD, DD MMMM YYYY'`
+- `dt.travel` is a function `({ from, to }) => Date` that takes in a `{ from, to }` object with `from` property being optional
+
 ## `execute`
 
 ```ts

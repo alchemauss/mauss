@@ -3,8 +3,16 @@ import * as assert from 'uvu/assert';
 import * as std from './index.js';
 
 const basics = {
+	capitalize: suite('std:capitalize'),
 	identical: suite('std:identical'),
 };
+
+basics.capitalize('change one letter for one word', () => {
+	assert.equal(std.capitalize('hello'), 'Hello');
+});
+basics.capitalize('change two letter for two words', () => {
+	assert.equal(std.capitalize('hello world'), 'Hello World');
+});
 
 basics.identical('identical primitive checks', () => {
 	// boolean
