@@ -1,6 +1,10 @@
 # mauss changelog
 
-## Unreleased
+## 0.4.11 - 2023/03/30
+
+- ([#216](https://github.com/alchemauss/mauss/pull/216)) remove deprecated option for TS 5.0
+
+## 0.4.10 - 2023/03/27
 
 - ([#211](https://github.com/alchemauss/mauss/pull/211)) fix `ntv.keys` and `ntv.entries` always returns `string`
 - ([#205](https://github.com/alchemauss/mauss/pull/205)) add `size` function to `ntv` namespace
