@@ -3,10 +3,10 @@ export { default as pipe } from './pipe.js';
 
 function error(msg?: string) {
 	const error = msg || '';
-	return { $kind: 'error' as const, error };
+	return { kind: 'error' as const, error };
 }
 function success<T>(value: T) {
-	return { $kind: 'success' as const, value };
+	return { kind: 'success' as const, value };
 }
 
 type Result<T> = ReturnType<typeof error> | ReturnType<typeof success<T>>;
@@ -40,11 +40,11 @@ export const mask = {
 export function reveal<T>(opt: Result<T>) {
 	return {
 		expect(message: string) {
-			if (opt.$kind === 'success') return opt.value;
+			if (opt.kind === 'success') return opt.value;
 			throw new Error(message);
 		},
 		or(fallback: T): T {
-			return opt.$kind === 'success' ? opt.value : fallback;
+			return opt.kind === 'success' ? opt.value : fallback;
 		},
 	};
 }
