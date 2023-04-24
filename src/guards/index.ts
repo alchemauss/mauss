@@ -38,11 +38,11 @@ export function not<F extends ValidNegatives>(fn: F) {
 }
 
 // string guards
-/** @returns true if string input is all uppercase letters */
-export function uppercase(s: string): boolean {
-	return s === s.toUpperCase();
-}
 /** @returns true if string input is all lowercase letters */
 export function lowercase(s: string): boolean {
 	return s === s.toLowerCase();
+}
+/** @returns true if string input is all uppercase letters */
+export function uppercase(s: string): boolean {
+	return s === s.toUpperCase();
 }

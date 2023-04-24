@@ -1,5 +1,9 @@
 # mauss changelog
 
+## Unreleased
+
+- ([#224](https://github.com/alchemauss/mauss/pull/224)) add string guards
+
 ## 0.4.11 - 2023/03/30
 
 - ([#216](https://github.com/alchemauss/mauss/pull/216)) remove deprecated option for TS 5.0
