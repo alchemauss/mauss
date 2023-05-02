@@ -1,6 +1,6 @@
 # mauss changelog
 
-## Unreleased
+## 0.4.12 - 2023/05/02
 
 - ([#224](https://github.com/alchemauss/mauss/pull/224)) add string guards
 - ([#221](https://github.com/alchemauss/mauss/pull/221)) add `tsf` function to `/std` module
