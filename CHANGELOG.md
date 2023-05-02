@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- ([#224](https://github.com/alchemauss/mauss/pull/224)) add string guards
 - ([#221](https://github.com/alchemauss/mauss/pull/221)) add `tsf` function to `/std` module
 
 ## 0.4.11 - 2023/03/30
