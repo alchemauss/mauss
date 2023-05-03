@@ -72,6 +72,7 @@
 - ([#147](https://github.com/alchemauss/mauss/pull/147)) add new CSV parser to `/std` module
 - ([#147](https://github.com/alchemauss/mauss/pull/147)) new `"exports"` entry `'/std'`
 - ([#140](https://github.com/alchemauss/mauss/pull/140)) overhaul `compare` to namespace
+- ([#105](https://github.com/alchemauss/mauss/pull/105)) enable i18n customization in `dt.i18n`
 
 ### Breaking Changes
 
