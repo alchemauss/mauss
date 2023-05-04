@@ -38,13 +38,13 @@ export function iterate<T extends object, I = T[keyof T]>(
 	for (let i = 0; i < pairs.length; i++) {
 		const res = callback(pairs[i], i);
 		if (!res || res.length !== 2) continue;
-		memo.push(res as typeof memo[number]);
+		memo.push(res as (typeof memo)[number]);
 	}
 	return Object.fromEntries(memo) as any;
 }
 
 export function keys<T extends object>(o: T) {
-	return Object.keys(o) as Array<keyof T>;
+	return Object.keys(o) as Array<string & keyof T>;
 }
 
 export function pick<Keys extends readonly string[]>(keys: Narrow<Keys>) {
@@ -54,4 +54,8 @@ export function pick<Keys extends readonly string[]>(keys: Narrow<Keys>) {
 		// @ts-expect-error - unknown until `keys` are passed
 		return iterate(o, ([k, v]) => props.has(k) && [k, v]);
 	};
+}
+
+export function size<T extends object>(o: T): number {
+	return Object.keys(o).length;
 }

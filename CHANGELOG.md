@@ -1,5 +1,36 @@
 # mauss changelog
 
+## 0.5.0 - Unreleased
+
+- ([#223](https://github.com/alchemauss/mauss/pull/223)) remove `create` from `ntv` namespace
+
+### Breaking Changes
+
+- [#223](https://github.com/alchemauss/mauss/pull/223) | Removed `create` from `ntv` namespace, use array `.reduce` instead
+
+## 0.4.12 - 2023/05/02
+
+- ([#224](https://github.com/alchemauss/mauss/pull/224)) add string guards
+- ([#221](https://github.com/alchemauss/mauss/pull/221)) add `tsf` function to `/std` module
+
+## 0.4.11 - 2023/03/30
+
+- ([#216](https://github.com/alchemauss/mauss/pull/216)) remove deprecated option for TS 5.0
+
+## 0.4.10 - 2023/03/27
+
+- ([#211](https://github.com/alchemauss/mauss/pull/211)) fix `ntv.keys` and `ntv.entries` always returns `string`
+- ([#205](https://github.com/alchemauss/mauss/pull/205)) add `size` function to `ntv` namespace
+- ([#204](https://github.com/alchemauss/mauss/pull/204)) add `scope` function
+- ([#202](https://github.com/alchemauss/mauss/pull/202)) add `create` function to `ntv` namespace
+
+## 0.4.9 - 2023/02/07
+
+- ([#203](https://github.com/alchemauss/mauss/pull/203)) add `execute` function
+- ([#203](https://github.com/alchemauss/mauss/pull/203)) export `identical` function
+- ([#200](https://github.com/alchemauss/mauss/pull/200)) add `bulwark` to `/guards` module
+- ([#197](https://github.com/alchemauss/mauss/pull/197)) add `zip` function to `ntv` namespace
+
 ## 0.4.8 - 2023/01/11
 
 - ([#199](https://github.com/alchemauss/mauss/pull/199)) add `pick` function to `ntv` namespace

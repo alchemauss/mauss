@@ -70,3 +70,47 @@ const unwrap = pick(['a', 'b', 'c']);
 
 unwrap({ ... });
 ```
+
+### `ntv.size`
+
+Convenience method to get the size of an object by checking the `length` of its keys.
+
+### `ntv.zip`
+
+Original function, aggregates elements from each of the arrays and returns a single array of objects with the length of the largest array.
+
+```typescript
+export function zip<T extends Array<Nullish | {}>>(...arrays: T[]): Record<IndexSignature, any>[];
+```
+
+## `tsf`
+
+A template string function. This takes a template string and returns a function that takes an object of functions, which is used to manipulate the name of the braces in the template string.
+
+This assumes the braces inside the template string are balanced and not nested. The function will not throw an error if the braces are not balanced, but the result will be unexpected. If you're using TypeScript and are passing a [string literal](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#literal-types), it will point out any unbalanced braces by throwing an error from the compiler.
+
+```typescript
+export function tsf(
+  template: string
+): (table: {
+  [key: string]: string | false | Nullish | ((key: string) => string | false | Nullish);
+}) => string;
+```
+
+The template string is parsed into an array of strings, which are then executed with the provided table of functions, which is an object with the key being the name of the braces from the template string, and the value being the function to manipulate the name of the braces.
+
+```javascript
+import { tsf } from 'mauss/std';
+
+const render = tsf('https://api.example.com/v1/{category}/{id}');
+
+function publish({ category, id }) {
+  const prefix = // ...
+  const url = render({
+    category: () => category !== 'new' && category,
+    id: (v) => prefix + uuid(`${v}-${id}`),
+  });
+
+  return fetch(url);
+}
+```

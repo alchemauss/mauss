@@ -2,7 +2,7 @@
   "name": "mauss",
   "author": "Ignatius Bagus",
   "description": "fast and efficient type-safe SDK",
-  "version": "0.4.8",
+  "version": "0.4.12",
   "license": "MIT",
   "type": "module",
   "types": "./core/index.d.ts",
@@ -10,7 +10,7 @@
     "clean": "git add * && git clean -dfx -e node_modules",
     "watch": "pnpm pub:build --watch",
     "check": "pnpm check:code && pnpm check:style",
-    "check:code": "tsc --noEmit --target ES2020",
+    "check:code": "pnpm pub:build --noEmit",
     "check:style": "prettier -c \"src/**/*.ts\"",
     "test": "pnpm test:unit",
     "test:unit": "uvu -r tsm src \"(spec\\.ts)\"",
@@ -32,7 +32,7 @@
     "./prettier.json": "./prettier.json",
     "./tsconfig.json": "./tsconfig.json"
   },
-  "packageManager": "pnpm@7.17.1",
+  "packageManager": "pnpm@7.30.5",
   "prettier": "./prettier.json",
   "repository": "github:alchemauss/mauss",
   "bugs": "https://github.com/alchemauss/mauss/issues",
@@ -52,10 +52,10 @@
     "settings"
   ],
   "devDependencies": {
-    "@types/node": "^18.11.9",
-    "prettier": "^2.8.0",
+    "@types/node": "^18.16.0",
+    "prettier": "^2.8.8",
     "tsm": "^2.3.0",
-    "typescript": "^4.9.3",
+    "typescript": "^5.0.4",
     "uvu": "^0.5.6"
   }
 }

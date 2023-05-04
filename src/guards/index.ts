@@ -1,5 +1,9 @@
 import type { Nullish, Falsy, FullPrimitives as Primitives } from '../typings/aliases.js';
 
+export function bulwark(nothing: never) {
+	throw new Error(`UncaughtError: reached forbidden guard with ${JSON.stringify(nothing)}`);
+}
+
 type Empty = '' | Nullish;
 
 /** @returns true if input is not `nullish` or an empty string */
@@ -31,4 +35,14 @@ type ValidNegatives = typeof exists | typeof nullish | typeof truthy;
 export function not<F extends ValidNegatives>(fn: F) {
 	type D = F extends typeof exists ? Primitives : F extends typeof nullish ? Nullish : Empty;
 	return <T>(i: T | D): i is T => !fn(i);
+}
+
+// string guards
+/** @returns true if string input is all lowercase letters */
+export function lowercase(s: string): boolean {
+	return s === s.toLowerCase();
+}
+/** @returns true if string input is all uppercase letters */
+export function uppercase(s: string): boolean {
+	return s === s.toUpperCase();
 }
