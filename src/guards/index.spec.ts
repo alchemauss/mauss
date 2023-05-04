@@ -5,6 +5,7 @@ import * as guards from './index.js';
 // checked based on https://developer.mozilla.org/en-US/docs/Glossary/Falsy
 const data = [true, false, 'a', 'b', 0, 1, 2, '', null, undefined, NaN];
 const numbers = [-2, -1, 0, 1, 2, 3];
+const strings = ['a', 'A', 'b', 'B', 'c', 'C'];
 
 const basics = {
 	guards: suite('guards'),
@@ -34,6 +35,16 @@ basics.guards('filters numbers that are natural', () => {
 basics.guards('filters numbers that are whole', () => {
 	const filtered = numbers.filter(guards.whole);
 	assert.equal(filtered, [0, 1, 2, 3]);
+});
+
+basics.guards('filters strings that are lowercase', () => {
+	const filtered = strings.filter(guards.lowercase);
+	assert.equal(filtered, ['a', 'b', 'c']);
+});
+
+basics.guards('filters strings that are uppercase', () => {
+	const filtered = strings.filter(guards.uppercase);
+	assert.equal(filtered, ['A', 'B', 'C']);
 });
 
 // ---- not() suite ----
