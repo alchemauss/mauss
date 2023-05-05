@@ -3,10 +3,15 @@
 ## 0.5.0 - Unreleased
 
 - ([#223](https://github.com/alchemauss/mauss/pull/223)) remove `create` from `ntv` namespace
+- ([#222](https://github.com/alchemauss/mauss/pull/222)) remove `/utils` module
 
 ### Breaking Changes
 
 - [#223](https://github.com/alchemauss/mauss/pull/223) | Removed `create` from `ntv` namespace, use array `.reduce` instead
+- [#222](https://github.com/alchemauss/mauss/pull/222) | Removed `/utils` namespace
+  - `dt` has been moved to core module
+  - `random` has been moved to core module
+  - `tryNumber` has been removed, use `Number.isNaN(Number(s)) ? s : Number(s)`
 
 ## 0.4.12 - 2023/05/02
 
