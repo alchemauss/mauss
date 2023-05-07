@@ -5,6 +5,7 @@ import * as std from './index.js';
 const basics = {
 	capitalize: suite('std:capitalize'),
 	identical: suite('std:identical'),
+	sides: suite('std:sides'),
 };
 
 basics.capitalize('change one letter for one word', () => {
@@ -71,6 +72,14 @@ basics.identical('identical clone', async () => {
 	const { clone } = await import('../../std/ntv/object.js');
 	const data = { a: [1, '', {}], o: { now: new Date() } };
 	assert.ok(std.identical(data, clone(data)));
+});
+
+basics.sides('first and last element', () => {
+	assert.equal(std.sides(''), { head: undefined, tail: undefined });
+	assert.equal(std.sides([]), { head: undefined, tail: undefined });
+
+	assert.equal(std.sides('abz'), { head: 'a', tail: 'z' });
+	assert.equal(std.sides([{ a: 0 }, { z: 'i' }]), { head: { a: 0 }, tail: { z: 'i' } });
 });
 
 Object.values(basics).forEach((v) => v.run());
