@@ -4,12 +4,12 @@ import * as assert from 'uvu/assert';
 import curry from './curry.js';
 import pipe from './pipe.js';
 
-const basics = {
-	curry: suite('lambda:curry'),
-	pipe: suite('lambda:pipe'),
+const suites = {
+	'curry/': suite('lambda/curry'),
+	'pipe/': suite('lambda/pipe'),
 };
 
-basics.curry('properly curry a function', () => {
+suites['curry/']('properly curry a function', () => {
 	const sum = (a: number, b: number, c: number) => a + b + c;
 	const curried = curry(sum);
 
@@ -20,7 +20,7 @@ basics.curry('properly curry a function', () => {
 	assert.equal(curried(1)(1)(1), 3);
 });
 
-basics.pipe('properly apply functions in ltr order', () => {
+suites['pipe/']('properly apply functions in ltr order', () => {
 	const cap = (v: string) => v.toUpperCase();
 	const name = <T extends { name: string }>(v: T) => v.name;
 	const split = (v: string) => v.split('');
@@ -29,4 +29,4 @@ basics.pipe('properly apply functions in ltr order', () => {
 	assert.equal(pipeline({ name: 'mom' }), ['M', 'O', 'M']);
 });
 
-Object.values(basics).forEach((v) => v.run());
+Object.values(suites).forEach((v) => v.run());

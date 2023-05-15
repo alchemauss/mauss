@@ -3,11 +3,11 @@ import * as assert from 'uvu/assert';
 
 import * as ntv from './array.js';
 
-const basics = {
-	zip: suite('obj:zip'),
+const suites = {
+	'arr/zip': suite('arr/zip'),
 };
 
-basics.zip('zip multiple arrays of objects', () => {
+suites['arr/zip']('zip multiple arrays of objects', () => {
 	const zipped = ntv.zip(
 		[{ a: 0 }, { x: 0 }],
 		[{ b: 0 }, { y: 0 }],
@@ -20,7 +20,7 @@ basics.zip('zip multiple arrays of objects', () => {
 		{ x: 1, y: 0, z: 0 },
 	]);
 });
-basics.zip('zip multiple uneven arrays', () => {
+suites['arr/zip']('zip multiple uneven arrays', () => {
 	const zipped = ntv.zip(
 		[{ a: 0 }],
 		[{ a: 1 }, { x: 0 }],
@@ -39,7 +39,7 @@ basics.zip('zip multiple uneven arrays', () => {
 		{ w: 0, x: 0, y: 0 },
 	]);
 });
-basics.zip('zip remove all nullish index', () => {
+suites['arr/zip']('zip remove all nullish index', () => {
 	const zipped = ntv.zip(
 		[{ a: 0 }, null, { x: 0 }, null, { a: 0 }, undefined],
 		[{ b: 0 }, null, { y: 0 }, undefined, { b: 0 }, null],
@@ -54,4 +54,4 @@ basics.zip('zip remove all nullish index', () => {
 	]);
 });
 
-Object.values(basics).forEach((v) => v.run());
+Object.values(suites).forEach((v) => v.run());

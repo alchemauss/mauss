@@ -3,17 +3,17 @@ import * as assert from 'uvu/assert';
 
 import * as ntv from './object.js';
 
-const basics = {
-	clone: suite('obj:clone'),
-	entries: suite('obj:entries'),
-	freeze: suite('obj:freeze'),
-	iterate: suite('obj:iterate'),
-	keys: suite('obj:keys'),
-	pick: suite('obj:pick'),
-	size: suite('obj:size'),
+const suites = {
+	'obj/clone': suite('obj/clone'),
+	'obj/entries': suite('obj/entries'),
+	'obj/freeze': suite('obj/freeze'),
+	'obj/iterate': suite('obj/iterate'),
+	'obj/keys': suite('obj/keys'),
+	'obj/pick': suite('obj/pick'),
+	'obj/size': suite('obj/size'),
 };
 
-basics.clone('clone any possible data type', () => {
+suites['obj/clone']('clone any possible data type', () => {
 	const base = { arr: [0, 'hi', /wut/], obj: { now: new Date() } };
 	const cloned = ntv.clone(base);
 
@@ -27,7 +27,7 @@ basics.clone('clone any possible data type', () => {
 	assert.equal(base.obj.now, cloned.obj.now);
 });
 
-basics.entries('return object entries', () => {
+suites['obj/entries']('return object entries', () => {
 	assert.equal(ntv.entries({ hello: 'world', foo: 0, bar: { baz: 1 } }), [
 		['hello', 'world'],
 		['foo', 0],
@@ -35,7 +35,7 @@ basics.entries('return object entries', () => {
 	]);
 });
 
-basics.freeze('deep freezes nested objects', () => {
+suites['obj/freeze']('deep freezes nested objects', () => {
 	const nested = ntv.freeze({
 		foo: { a: 0 },
 		bar: { b: 1 },
@@ -45,7 +45,7 @@ basics.freeze('deep freezes nested objects', () => {
 	assert.ok(Object.isFrozen(nested.foo));
 	assert.ok(Object.isFrozen(nested.bar));
 });
-basics.freeze('deep freeze ignore function', () => {
+suites['obj/freeze']('deep freeze ignore function', () => {
 	const nested = ntv.freeze({
 		identity: (v: any) => v,
 		namespace: { a() {} },
@@ -56,7 +56,7 @@ basics.freeze('deep freeze ignore function', () => {
 	assert.ok(!Object.isFrozen(nested.namespace.a));
 });
 
-basics.iterate('iterate over nested objects', () => {
+suites['obj/iterate']('iterate over nested objects', () => {
 	const months = 'jan,feb,mar,apr,may,jun,jul,aug,sep,oct,nov,dec'.split(',');
 	const currencies = 'usd,eur,sgd,gbp,aud,jpy'.split(',');
 
@@ -90,7 +90,7 @@ basics.iterate('iterate over nested objects', () => {
 		}, {})
 	);
 });
-basics.iterate('iterate with empty/falsy return', () => {
+suites['obj/iterate']('iterate with empty/falsy return', () => {
 	assert.equal(
 		ntv.iterate({}, ([]) => {}),
 		{}
@@ -114,25 +114,25 @@ basics.iterate('iterate with empty/falsy return', () => {
 			});
 	});
 });
-basics.iterate('iterate creates deep copy', () => {
+suites['obj/iterate']('iterate creates deep copy', () => {
 	const original = { x: 1, y: { z: 'foo' } };
 	const copy = ntv.iterate(original);
 	assert.ok(original !== copy);
 	assert.ok(original.y !== copy.y);
 });
 
-basics.keys('return object keys', () => {
+suites['obj/keys']('return object keys', () => {
 	assert.equal(ntv.keys({ a: 0, b: 1, c: 2 }), ['a', 'b', 'c']);
 });
 
-basics.pick('pick properties from an object', () => {
+suites['obj/pick']('pick properties from an object', () => {
 	const unwrap = ntv.pick(['a', 'b', 'c', 'z']);
 	const picked = unwrap({ a: 0, c: 'b', y: undefined, z: null });
 	assert.equal(picked, { a: 0, c: 'b', z: null });
 });
 
-basics.size('return size of an object', () => {
+suites['obj/size']('return size of an object', () => {
 	assert.equal(ntv.size({ a: 0, b: 1, c: 2 }), 3);
 });
 
-Object.values(basics).forEach((v) => v.run());
+Object.values(suites).forEach((v) => v.run());
