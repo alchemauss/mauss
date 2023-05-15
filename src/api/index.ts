@@ -1,8 +1,9 @@
-export interface FetcherOptions extends RequestInit {
-	/** Base url to prefix urls in fetch requests  */
-	base?: string;
-	/** Determines if fetcher is created in browser environment */
-	browser?: boolean;
+import type { Nullish } from '../typings/aliases.js';
+import type { AlsoPromise } from '../typings/extenders.js';
+
+type HTTPMethods = 'GET' | 'POST' | 'PUT' | 'DELETE';
+
+export interface FetcherOptions {
 	/**
 	 * Intercepts url before getting passed to fetch
 	 * @param {string} path url received from all api methods
@@ -12,74 +13,73 @@ export interface FetcherOptions extends RequestInit {
 	 * Prepares a `RequestInit` object to pass into fetch
 	 * @param {RequestInit} opts request init options
 	 */
-	prepare?(opts: RequestInit): RequestInit;
+	prepare?(opts: {
+		method: HTTPMethods;
+		to: string;
+		body?: BodyInit;
+		from?: URL;
+		headers?: Record<string, string>;
+	}): RequestInit;
+	/**
+	 * Catches error from `fetch` failure and returns a string
+	 */
+	sweep?(exception: unknown): string;
 	/**
 	 * Transforms raw response to desired data structure
 	 * @param {Response} res response object from fetch
 	 */
 	transform?(res: Response): Promise<unknown>;
+	/**
+	 * Determines if fetcher should exit with an error
+	 * @param {Response} res response object from fetch
+	 */
+	exit?(res: Response, payload: any): AlsoPromise<string | false | Nullish>;
 }
 
-export function fetcher(options: FetcherOptions) {
-	interface SendParams {
-		data?: unknown;
-		method: string;
-		passed?: typeof fetch;
-		path: string;
-		token?: string;
-	}
+export interface HTTPConfig {
+	from?: URL;
+	headers?: Record<string, string>;
+	using?: typeof fetch;
+}
 
-	async function send({ method, path, data }: SendParams) {
-		const browser = options.browser ?? typeof window !== 'undefined';
-		const { base, intercept, prepare = (r) => r, transform = (r) => r.json() } = options;
-
-		const opts: RequestInit = { method };
-		opts.headers = {}; // init outside to satisfy TS
-		if (data) {
-			if (
-				(typeof Blob !== 'undefined' && data instanceof Blob) ||
-				(typeof FormData !== 'undefined' && data instanceof FormData)
-			) {
-				opts.body = data;
-			} else if (typeof data === 'object') {
-				opts.headers['Content-Type'] = 'application/json';
-				opts.body = JSON.stringify(data);
-			} else if (typeof data === 'string') {
-				opts.headers['Content-Type'] = 'text/plain';
-				opts.headers['Content-Length'] = `${data.length}`;
-				opts.body = data;
-			}
+export function fetcher({
+	prepare = ({ method, body }) => ({ method, body: JSON.stringify(body) }),
+	intercept = (url) => url,
+	sweep = () => 'NetworkError: Please try again later.',
+	transform = (r) => r.json().catch(() => ({})),
+	exit = ({ ok }) => !ok && 'UnexpectedError: Try again later.',
+}: FetcherOptions) {
+	async function send<T>(
+		{ headers, from, using }: HTTPConfig,
+		method: HTTPMethods,
+		url: string,
+		body?: any
+	): Promise<{ kind: 'error'; error: string } | { kind: 'success'; value: T }> {
+		let response: Response;
+		try {
+			const opts = prepare({ method, to: url, body, from, headers });
+			response = await (using || fetch)(intercept(url), opts);
+		} catch (exception) {
+			return { kind: 'error', error: sweep(exception) };
 		}
 
-		/**
-		 * 1: intercept function precedes everything
-		 * 2: use native fetch functionality w/o base
-		 * 3: force base domain for server side fetch
-		 */
-		const url =
-			(intercept && intercept(path)) ||
-			(browser && (base ? base + path : path)) ||
-			(base || 'localhost:3000') + path;
-
-		const res = await fetch(url, prepare(opts));
-		return await transform(res);
+		const payload = (await transform(response.clone())) as T;
+		const error = await exit(response.clone(), payload);
+		if (error) return { kind: 'error', error };
+		return { kind: 'success', value: payload };
 	}
 
-	return {
-		async get(path: string, token?: string) {
-			return await send({ method: 'GET', path, token });
-		},
-
-		async del(path: string, token?: string) {
-			return await send({ method: 'DELETE', path, token });
-		},
-
-		async post(path: string, data: any, token?: string) {
-			return await send({ method: 'POST', path, data, token });
-		},
-
-		async put(path: string, data: any, token?: string) {
-			return await send({ method: 'PUT', path, data, token });
-		},
-	} as const;
+	return function http(url: string, options: HTTPConfig = {}) {
+		return {
+			get<T>() {
+				return send<T>(options, 'GET', url);
+			},
+			post<T>(payload?: any) {
+				return send<T>(options, 'POST', url, payload);
+			},
+			delete<T>() {
+				return send<T>(options, 'DELETE', url);
+			},
+		};
+	};
 }
