@@ -2,17 +2,15 @@ import { suite } from 'uvu';
 import * as assert from 'uvu/assert';
 import * as dt from './index.js';
 
-const basics = {
-	build: suite('temporal:build'),
-	format: suite('temporal:format'),
-	travel: suite('temporal:travel'),
+const suites = {
+	'build/': suite('temporal/build'),
+	'format/': suite('temporal/format'),
+	'travel/': suite('temporal/travel'),
 };
 
 const fixed = new Date('2017/09/08, 13:02:03');
 
-// ---- build ----
-
-basics.build('basic formatter builder', () => {
+suites['build/']('basic formatter builder', () => {
 	const format = dt.build({ base: 'UTC' });
 
 	assert.type(format, 'function');
@@ -22,9 +20,7 @@ basics.build('basic formatter builder', () => {
 	assert.equal(renderer('DD/MM/YYYY (Z)'), '08/09/2017 (+0)');
 });
 
-// ---- format ----
-
-basics.format('basic rendering', () => {
+suites['format/']('basic rendering', () => {
 	const renderer = dt.format(fixed);
 
 	assert.equal(renderer('foo'), 'foo');
@@ -55,12 +51,8 @@ basics.format('basic rendering', () => {
 		'Valid from: [2017-09-08 ~ 13:02:03]'
 	);
 });
-basics.format('throw on invalid date', () => {
+suites['format/']('throw on invalid date', () => {
 	assert.throws(() => dt.format('invalid'));
 });
 
-// ---- travel ----
-
-// basics.travel('basic travelling', () => {});
-
-Object.values(basics).forEach((v) => v.run());
+Object.values(suites).forEach((v) => v.run());
