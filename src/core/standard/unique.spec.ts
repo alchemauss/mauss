@@ -3,12 +3,12 @@ import * as assert from 'uvu/assert';
 
 import unique from './unique.js';
 
-const basics = {
-	simple: suite('unique:simple'),
-	object: suite('unique:object'),
+const suites = {
+	'simple/': suite('unique/simple'),
+	'object/': suite('unique/object'),
 };
 
-basics.simple('make array items unique', () => {
+suites['simple/']('make array items unique', () => {
 	assert.equal(unique([true, false, !0, !1]), [true, false]);
 	assert.equal(unique([1, 1, 2, 3, 2, 4, 5]), [1, 2, 3, 4, 5]);
 	assert.equal(unique(['a', 'a', 'b', 'c', 'b']), ['a', 'b', 'c']);
@@ -17,7 +17,7 @@ basics.simple('make array items unique', () => {
 	assert.equal(unique(months), ['jan', 'feb', 'mar']);
 });
 
-basics.object('make array of object unique', () => {
+suites['object/']('make array of object unique', () => {
 	assert.equal(
 		unique(
 			[
@@ -53,4 +53,4 @@ basics.object('make array of object unique', () => {
 	);
 });
 
-Object.values(basics).forEach((v) => v.run());
+Object.values(suites).forEach((v) => v.run());
