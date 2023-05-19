@@ -49,3 +49,11 @@ A utility guard that takes in any guards above and negates the result. For examp
 
 - `not(exists)` will return `true` if the input is nullish or an empty string
 - `not(natural)` will return `true` if the input exists or is a number less than or equal to 0.
+
+## `lowercase`
+
+A string guard that returns `true` if the input is a string with all lowercase characters.
+
+## `uppercase`
+
+A string guard that returns `true` if the input is a string with all uppercase characters.

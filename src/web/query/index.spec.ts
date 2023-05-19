@@ -4,14 +4,12 @@ import * as assert from 'uvu/assert';
 import qsd from './decoder.js';
 import qse from './encoder.js';
 
-const basics = {
-	decoder: suite('query:decoder'),
-	encoder: suite('query:encoder'),
+const suites = {
+	'decoder/': suite('query/decoder'),
+	'encoder/': suite('query/encoder'),
 };
 
-// ---- decoder ----
-
-basics.decoder('decode query string to object', () => {
+suites['decoder/']('decode query string to object', () => {
 	const pairs = [
 		['?hi=mom&hello=world', { hi: 'mom', hello: 'world' }],
 		['fam=mom&fam=dad&fam=sis', { fam: ['mom', 'dad', 'sis'] }],
@@ -23,9 +21,7 @@ basics.decoder('decode query string to object', () => {
 	}
 });
 
-// ---- encoder ----
-
-basics.encoder('encode object to query string', () => {
+suites['encoder/']('encode object to query string', () => {
 	let payload: string = 'dynamic';
 	const pairs = [
 		[{ hi: 'mom', hello: 'world' }, '?hi=mom&hello=world'],
@@ -40,7 +36,7 @@ basics.encoder('encode object to query string', () => {
 		assert.equal(qse(input), output);
 	}
 });
-basics.encoder('transform final string if it exists', () => {
+suites['encoder/']('transform final string if it exists', () => {
 	const bound = { q: '' };
 
 	assert.equal(qse(bound), '');
@@ -49,4 +45,4 @@ basics.encoder('transform final string if it exists', () => {
 	assert.equal(qse(bound), '?q=hi');
 });
 
-Object.values(basics).forEach((v) => v.run());
+Object.values(suites).forEach((v) => v.run());
