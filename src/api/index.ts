@@ -77,6 +77,9 @@ export function fetcher({
 			post<T>(payload?: any) {
 				return send<T>(options, 'POST', url, payload);
 			},
+			put<T>(payload?: any) {
+				return send<T>(options, 'PUT', url, payload);
+			},
 			delete<T>() {
 				return send<T>(options, 'DELETE', url);
 			},
