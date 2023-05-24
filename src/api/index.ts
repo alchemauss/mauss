@@ -3,7 +3,7 @@ import type { AlsoPromise } from '../typings/extenders.js';
 
 type HTTPMethods = 'GET' | 'POST' | 'PUT' | 'DELETE';
 
-export interface FetcherOptions {
+export interface FetcherConfig {
 	/**
 	 * Intercepts url before getting passed to fetch
 	 * @param {string} path url received from all api methods
@@ -36,7 +36,7 @@ export interface FetcherOptions {
 	exit?(res: Response, payload: any): AlsoPromise<string | false | Nullish>;
 }
 
-export interface HTTPConfig {
+export interface SendOptions {
 	from?: URL;
 	headers?: Record<string, string>;
 	using?: typeof fetch;
@@ -48,9 +48,9 @@ export function fetcher({
 	sweep = () => 'NetworkError: Please try again later.',
 	transform = (r) => r.json().catch(() => ({})),
 	exit = ({ ok }) => !ok && 'UnexpectedError: Try again later.',
-}: FetcherOptions) {
+}: FetcherConfig) {
 	async function send<T>(
-		{ headers, from, using }: HTTPConfig,
+		{ headers, from, using }: SendOptions,
 		method: HTTPMethods,
 		url: string,
 		body?: any
@@ -69,7 +69,7 @@ export function fetcher({
 		return { kind: 'success', value: payload };
 	}
 
-	return function http(url: string, options: HTTPConfig = {}) {
+	return function http(url: string, options: SendOptions = {}) {
 		return {
 			get<T>() {
 				return send<T>(options, 'GET', url);
