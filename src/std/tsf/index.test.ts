@@ -3,10 +3,12 @@ import { tsf } from './index.js';
 tsf('');
 tsf('/');
 tsf('/')({});
+tsf('/{?qs}')({});
 tsf('/{foo}')({ foo: (v) => v });
 tsf('/{foo}/{bar}')({ foo: 'hello', bar: () => 'world' });
 tsf('/{foo}/{bar}')({ foo: (v) => v, bar: (v) => v });
-tsf('/{foo}')({ foo: (v) => v.length > 1 && v.replace('o', 'u') });
+tsf('/{v}/api/users{?qs}')({ v: 'v1' });
+tsf('/{?foo}')({ '?foo': (v) => v.length > 1 && v.replace('o', 'u') });
 tsf('' as string)({ boo: (v) => v });
 tsf('' as `${string}/v1/posts/{id}/comments`)({ id: (v) => v });
 
