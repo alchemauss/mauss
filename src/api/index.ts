@@ -5,11 +5,6 @@ type HTTPMethods = 'GET' | 'POST' | 'PUT' | 'DELETE';
 
 export interface FetcherConfig {
 	/**
-	 * Intercepts url before getting passed to fetch
-	 * @param {string} path url received from all api methods
-	 */
-	intercept?(path: string): string;
-	/**
 	 * Prepares a `RequestInit` object to pass into fetch
 	 * @param {RequestInit} opts request init options
 	 */
@@ -20,6 +15,11 @@ export interface FetcherConfig {
 		from?: URL;
 		headers?: Record<string, string>;
 	}): RequestInit;
+	/**
+	 * Intercepts url before getting passed to fetch
+	 * @param {string} path url received from all api methods
+	 */
+	intercept?(path: string): string;
 	/**
 	 * Catches error from `fetch` failure and returns a string
 	 */
