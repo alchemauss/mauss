@@ -1,4 +1,3 @@
-import { Nullish } from '../../typings/aliases.js';
 import { UnaryFunction } from '../../typings/helpers.js';
 
 type Parse<T> = T extends `${string}{${infer P}}${infer R}` ? P | Parse<R> : never;
@@ -29,17 +28,22 @@ export function tsf<Input extends string>(
 		}
 	}
 
-	type ConditionalString = string | false | Nullish;
-	type Replacer = ConditionalString | UnaryFunction<string, ConditionalString>;
-	type ExpectedProperties = string extends Input ? string : Parse<Input>;
-	return function render(table: { [K in ExpectedProperties]: Replacer }) {
+	type AcceptedValues = string | false | null | undefined;
+	type ExpectedProps = string extends Input ? string : Parse<Input>;
+	type RequiredProps = Exclude<ExpectedProps, `?${string}`>;
+	type OptionalProps = Extract<ExpectedProps, `?${string}`>;
+	return function render(
+		table: Record<RequiredProps, AcceptedValues | UnaryFunction<string, AcceptedValues>> & {
+			[K in OptionalProps]?: AcceptedValues | UnaryFunction<string, AcceptedValues>;
+		}
+	) {
 		let transformed = '';
 		for (let i = 0; i < parts.length; i += 1) {
-			const replace = table[parts[i] as ExpectedProperties];
+			const replace = table[parts[i] as keyof typeof table];
 			if (typeof replace === 'function') {
 				transformed += replace(parts[i]) || '';
 			} else {
-				transformed += replace || parts[i];
+				transformed += replace || (parts[i][0] !== '?' && parts[i]) || '';
 			}
 		}
 		return transformed;
