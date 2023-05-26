@@ -40,10 +40,10 @@ test('parses template correctly', () => {
 });
 
 test('parses template with optional parameters', () => {
-	const r1 = tsf('/{v}/api/users{?qs}');
-	assert.equal(r1({ v: 'v1' }), '/v1/api/users');
-	assert.equal(r1({ v: 'v1', '?qs': '?foo=bar' }), '/v1/api/users?foo=bar');
-	assert.equal(r1({ v: 'v1', '?qs': (v) => !v && `?${v}` }), '/v1/api/users');
+	const r = tsf('/{v}/api/users{?qs}');
+	assert.equal(r({ v: 'v1' }), '/v1/api/users');
+	assert.equal(r({ v: 'v1', '?qs': '?foo=bar' }), '/v1/api/users?foo=bar');
+	assert.equal(r({ v: 'v1', '?qs': (v) => !v && `?${v}` }), '/v1/api/users');
 });
 
 test.skip('parses template with nested braces', () => {
