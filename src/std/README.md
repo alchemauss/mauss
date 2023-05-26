@@ -85,7 +85,9 @@ export function zip<T extends Array<Nullish | {}>>(...arrays: T[]): Record<Index
 
 ## `tsf`
 
-A template string function. This takes a template string and returns a function that takes an object of functions, which is used to manipulate the name of the braces in the template string.
+A template string function. This takes a template string and returns a function that takes an object of functions, which is used to manipulate the name of the braces in the template string. Parameters of the braces can be prefixed with a question mark `?` to make it optional to the type system and will fallback to an empty string if it's not defined in the table.
+
+<!-- , and a colon `:` to specify a default value. -->
 
 This assumes the braces inside the template string are balanced and not nested. The function will not throw an error if the braces are not balanced, but the result will be unexpected. If you're using TypeScript and are passing a [string literal](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#literal-types), it will point out any unbalanced braces by throwing an error from the compiler.
 
