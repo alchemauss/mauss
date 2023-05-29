@@ -1,20 +1,6 @@
 # mauss changelog
 
-## 0.5.0 - Unreleased
-
-- ([#223](https://github.com/alchemauss/mauss/pull/223)) remove `create` from `ntv` namespace
-- ([#222](https://github.com/alchemauss/mauss/pull/222)) remove `/utils` module
-- ([#164](https://github.com/alchemauss/mauss/pull/164)) rework `/api` module
-
-### Breaking Changes
-
-- [#223](https://github.com/alchemauss/mauss/pull/223) | Removed `create` from `ntv` namespace, use array `.reduce` instead
-- [#222](https://github.com/alchemauss/mauss/pull/222) | Removed `/utils` module
-  - `dt` has been moved to core module
-  - `random` has been moved to core module
-  - `tryNumber` has been removed, use `Number.isNaN(Number(s)) ? s : Number(s)`
-- [#164](https://github.com/alchemauss/mauss/pull/164) | Reworked `/api` module
-  - Now only exports the `fetcher` factory to create a `send` function
+⚠️ see https://github.com/alchemauss/mauss/releases for updates from `v0.5.0` and above
 
 ## 0.4.12 - 2023/05/02
 
