@@ -21,21 +21,21 @@ test('parses template correctly', () => {
 			foo: 'hello',
 			bar: 'world',
 		}),
-		'/hello/world'
+		'/hello/world',
 	);
 	assert.equal(
 		r1({
 			foo: (v) => v,
 			bar: (v) => v,
 		}),
-		'/foo/bar'
+		'/foo/bar',
 	);
 	assert.equal(
 		r1({
 			foo: (v) => [...v].reverse().join(''),
 			bar: (v) => [...v].reverse().join(''),
 		}),
-		'/oof/rab'
+		'/oof/rab',
 	);
 });
 

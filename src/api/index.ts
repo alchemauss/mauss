@@ -53,7 +53,7 @@ export function fetcher({
 		{ headers, from, using }: SendOptions,
 		method: HTTPMethods,
 		url: string,
-		body?: any
+		body?: any,
 	): Promise<{ kind: 'error'; error: string } | { kind: 'success'; value: T }> {
 		let response: Response;
 		try {

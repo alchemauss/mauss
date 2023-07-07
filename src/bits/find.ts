@@ -5,7 +5,7 @@ export function binary<T>(
 	check: {
 		item: UnaryFunction<T, false | UnaryFunction<T>>;
 		pointer: UnaryFunction<T, boolean>;
-	}
+	},
 ): T | undefined {
 	let start = 0, final = sorted.length - 1; // prettier-ignore
 	while (start <= final) {

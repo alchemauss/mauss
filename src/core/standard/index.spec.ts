@@ -45,14 +45,14 @@ suites['identical/']('identical primitive checks', () => {
 	assert.ok(
 		std.identical(
 			() => {},
-			() => {}
-		)
+			() => {},
+		),
 	);
 	assert.ok(
 		std.identical(
 			() => '',
-			() => 0
-		)
+			() => 0,
+		),
 	);
 });
 suites['identical/']('identical array checks', () => {

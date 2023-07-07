@@ -10,15 +10,15 @@ compare.key('name')({ name: 'abc' }, { name: 'def', foo: maybe ? 1 : undefined }
 compare.key('name', compare.string)({ name: 'abc' }, { name: 'def' });
 compare.key('name.first', compare.string)(
 	{ name: { first: 'abc-xyz' } },
-	{ name: { first: 'xyz-def' } }
+	{ name: { first: 'xyz-def' } },
 );
 compare.key('date.updated', compare.date)(
 	{ id: '', date: { updated: new Date() } },
-	{ id: '', date: { updated: new Date() } }
+	{ id: '', date: { updated: new Date() } },
 );
 compare.key('date.pub.note')(
 	{ date: { pub: { note: 'yay' } } },
-	{ date: { pub: { note: 'yay' } } }
+	{ date: { pub: { note: 'yay' } } },
 );
 
 interface Example {

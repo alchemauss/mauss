@@ -10,7 +10,7 @@ type BoundValues = Nullish | Primitives;
  */
 export default function qse<T extends object>(
 	bound: T[keyof T] extends BoundValues | readonly BoundValues[] ? T : never,
-	transformer = (final: string) => `?${final}`
+	transformer = (final: string) => `?${final}`,
 ): string {
 	const enc = encodeURIComponent;
 

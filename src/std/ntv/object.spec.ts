@@ -62,11 +62,11 @@ suites['obj/iterate']('iterate over nested objects', () => {
 
 	const statement = currencies.reduce(
 		(cs, c) => ({ ...cs, [c]: { income: 100, expense: 40 } }),
-		{} as { [k: string]: { income: number; expense: number } }
+		{} as { [k: string]: { income: number; expense: number } },
 	);
 	const nested = months.reduce(
 		(ms, m) => ({ ...ms, [m]: statement }),
-		{} as { [k: string]: typeof statement }
+		{} as { [k: string]: typeof statement },
 	);
 
 	assert.equal(
@@ -87,21 +87,21 @@ suites['obj/iterate']('iterate over nested objects', () => {
 				jpy: { balance: 60 },
 			};
 			return a;
-		}, {})
+		}, {}),
 	);
 });
 suites['obj/iterate']('iterate with empty/falsy return', () => {
 	assert.equal(
 		ntv.iterate({}, ([]) => {}),
-		{}
+		{},
 	);
 
 	assert.equal(
 		ntv.iterate(
 			{ a: '0', b: 1, c: null, d: '3', e: undefined, f: false },
-			([k, v]) => v != null && v !== false && [k, v]
+			([k, v]) => v != null && v !== false && [k, v],
 		),
-		{ a: '0', b: 1, d: '3' }
+		{ a: '0', b: 1, d: '3' },
 	);
 
 	type Nested = { [P in 'a' | 'b']?: { [K in 'x' | 'y']: { foo: string } } };

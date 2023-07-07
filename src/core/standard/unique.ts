@@ -8,7 +8,7 @@ import type { Paths } from '../../typings/prototypes.js';
  */
 export default function unique<
 	Inferred extends Record<IndexSignature, any>,
-	Identifier extends Paths<Inferred>
+	Identifier extends Paths<Inferred>,
 >(array: readonly Inferred[], key: string & Identifier): Inferred[];
 export default function unique<T>(array: readonly T[]): T[];
 export default function unique<T, I>(array: readonly T[], key?: string & I): T[] {

@@ -34,7 +34,7 @@ export type IntersectUnion<U> = /** distributive conditional type */ (
 /** Joins a list of string with custom delimiter */
 export type Join<
 	StringList extends readonly string[],
-	Delimiter extends string = '-'
+	Delimiter extends string = '-',
 > = StringList extends readonly [infer Head, infer Next, ...infer Rest]
 	? Join<
 			[`${Head & string}${Delimiter}${Next & string}`, ...Extract<Rest, readonly string[]>],
@@ -70,7 +70,7 @@ export type PartialOmit<
 	T,
 	Keys extends keyof T,
 	Saved = { [P in Exclude<keyof T, Keys>]: T[P] },
-	Final = Saved & { [P in keyof T]?: T[P] }
+	Final = Saved & { [P in keyof T]?: T[P] },
 > = { [P in keyof Final]: Final[P] };
 
 /**
@@ -105,7 +105,7 @@ export type SingleProperty<T> = {
 /** Slices a list beginning from the starting index */
 export type Slice<List extends any[], Start extends number = 0> = List extends [
 	...Extend<Start>,
-	...infer Sliced
+	...infer Sliced,
 ]
 	? Sliced
 	: [];
@@ -113,7 +113,7 @@ export type Slice<List extends any[], Start extends number = 0> = List extends [
 /** Splits a string with custom separator */
 export type Split<
 	Key extends IndexSignature,
-	Separator extends string
+	Separator extends string,
 > = Key extends `${infer Prefix}${Separator}${infer Rest}`
 	? [Prefix, ...Split<Rest, Separator>]
 	: [Key];
@@ -124,5 +124,5 @@ export type Split<
 export type Tuple<
 	Size extends number,
 	T extends any[] = [],
-	Virtual extends any[] = []
+	Virtual extends any[] = [],
 > = Virtual['length'] extends Size ? Virtual : Tuple<Size, T, [T, ...Virtual]>;
