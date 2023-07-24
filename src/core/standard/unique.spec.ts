@@ -27,9 +27,9 @@ suites['object/']('make array of object unique', () => {
 				{ id: 'ab', name: 'C' },
 				{ id: 'ef', name: 'D' },
 			],
-			'id'
+			'id',
 		),
-		[{ id: 'ab', name: 'A' }, { id: 'cd' }, { id: 'ef', name: 'B' }]
+		[{ id: 'ab', name: 'A' }, { id: 'cd' }, { id: 'ef', name: 'B' }],
 	);
 
 	assert.equal(
@@ -42,14 +42,14 @@ suites['object/']('make array of object unique', () => {
 				{ id: 'ef', name: { first: 'D' } },
 				{ id: 'hi', name: { last: 'wa' } },
 			],
-			'name.first'
+			'name.first',
 		),
 		[
 			{ id: 'ab', name: { first: 'A' } },
 			{ id: 'cd', name: { first: 'B' } },
 			{ id: 'ab', name: { first: 'C' } },
 			{ id: 'ef', name: { first: 'D' } },
-		]
+		],
 	);
 });
 

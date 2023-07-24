@@ -35,32 +35,32 @@ suites['inspect/']('inspect', () => {
 suites['undefined/']('sort undefined values with null values above', () => {
 	assert.equal(
 		[undefined, 3, 0, null, 1, -1, undefined, -2, undefined, null].sort(compare.undefined),
-		[3, 0, 1, -1, -2, null, null, undefined, undefined, undefined]
+		[3, 0, 1, -1, -2, null, null, undefined, undefined, undefined],
 	);
 });
 
 suites['boolean/']('sort boolean values with true above', () => {
 	assert.equal(
 		[true, false, true, false, true, false, true, false, true, false].sort(compare.boolean),
-		[true, true, true, true, true, false, false, false, false, false]
+		[true, true, true, true, true, false, false, false, false, false],
 	);
 });
 
 suites['number/']('sort number in descending order', () => {
 	assert.equal(
 		[5, 3, 9, 6, 0, 2, 1, -1, 4, -2].sort(compare.number),
-		[9, 6, 5, 4, 3, 2, 1, 0, -1, -2]
+		[9, 6, 5, 4, 3, 2, 1, 0, -1, -2],
 	);
 });
 
 suites['string/']('sort string in alphabetical order', () => {
 	assert.equal(
 		['k', 'h', 'g', 'f', 'e', 'l', 'd', 'm', 'c', 'b', 'j', 'i', 'a'].sort(compare.string),
-		['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm']
+		['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm'],
 	);
 	assert.equal(
 		['K', 'H', 'G', 'F', 'E', 'L', 'D', 'M', 'C', 'B', 'J', 'I', 'A'].sort(compare.string),
-		['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M']
+		['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M'],
 	);
 });
 

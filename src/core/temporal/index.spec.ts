@@ -48,7 +48,7 @@ suites['format/']('basic rendering', () => {
 
 	assert.equal(
 		`Valid from: [${renderer('YYYY-MM-DD ~ HH:mm:ss')}]`,
-		'Valid from: [2017-09-08 ~ 13:02:03]'
+		'Valid from: [2017-09-08 ~ 13:02:03]',
 	);
 });
 suites['format/']('throw on invalid date', () => {

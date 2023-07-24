@@ -12,7 +12,7 @@ suites['arr/zip']('zip multiple arrays of objects', () => {
 		[{ a: 0 }, { x: 0 }],
 		[{ b: 0 }, { y: 0 }],
 		[{ c: 0 }, { z: 0 }],
-		[{ d: 0 }, { x: 1 }]
+		[{ d: 0 }, { x: 1 }],
 	);
 
 	assert.equal(zipped, [
@@ -29,7 +29,7 @@ suites['arr/zip']('zip multiple uneven arrays', () => {
 		[{ d: 0 }, { x: 1 }],
 		[null, null, { w: 0 }, { w: 0 }],
 		[null, null, { x: 0 }, { x: 0 }],
-		[null, null, { v: 1 }, { y: 0 }]
+		[null, null, { v: 1 }, { y: 0 }],
 	);
 
 	assert.equal(zipped, [
@@ -44,7 +44,7 @@ suites['arr/zip']('zip remove all nullish index', () => {
 		[{ a: 0 }, null, { x: 0 }, null, { a: 0 }, undefined],
 		[{ b: 0 }, null, { y: 0 }, undefined, { b: 0 }, null],
 		[{ c: 0 }, null, { z: 0 }, undefined, { c: 0 }, null],
-		[{ d: 0 }, null, { x: 1 }, null, { d: 0 }, undefined]
+		[{ d: 0 }, null, { x: 1 }, null, { d: 0 }, undefined],
 	);
 
 	assert.equal(zipped, [

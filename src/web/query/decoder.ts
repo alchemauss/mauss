@@ -6,7 +6,7 @@ import type { Flatten } from '../../typings/prototypes.js';
 type CombineExisting<
 	A extends Record<IndexSignature, any>,
 	B extends Record<IndexSignature, any>,
-	Duplicate = Intersection<A, B>
+	Duplicate = Intersection<A, B>,
 > = Omit<A, keyof Duplicate> &
 	Omit<B, keyof Duplicate> & {
 		[P in keyof Duplicate]: Flatten<[A[P], B[P]]>;

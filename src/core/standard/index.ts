@@ -16,7 +16,7 @@ export function capitalize(text: string, { cap, normalize }: CapitalizeOptions =
 export function execute(
 	condition: boolean,
 	correct: () => AlsoPromise<void> | AnyFunction<[]>,
-	otherwise: () => AlsoPromise<void> | AnyFunction<[]> = () => {}
+	otherwise: () => AlsoPromise<void> | AnyFunction<[]> = () => {},
 ) {
 	condition ? correct() : otherwise();
 }

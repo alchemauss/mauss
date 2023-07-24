@@ -31,7 +31,7 @@ export function iterate<T extends object, I = T[keyof T]>(
 	callback: AnyFunction<
 		[entry: Entries<T>[number], index: number],
 		void | Falsy | [IndexSignature, I]
-	> = ([k, v]) => [k, clone(v) as I]
+	> = ([k, v]) => [k, clone(v) as I],
 ): I extends T[keyof T] ? T : unknown {
 	const pairs = entries(object);
 	const memo: typeof pairs = [];

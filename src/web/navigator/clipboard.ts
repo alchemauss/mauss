@@ -7,7 +7,7 @@ export function copy(
 	handler: {
 		accept?(): AlsoPromise<void>;
 		reject?(): AlsoPromise<void>;
-	} = {}
+	} = {},
 ) {
 	const ncb = navigator.clipboard;
 

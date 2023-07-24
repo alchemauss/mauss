@@ -13,7 +13,7 @@ pipe(name, cap, cap, split);
 pipe(
 	(v: boolean) => +v,
 	(v: number) => (v > 0 ? 'y' : 'n'),
-	(v: string) => v === 'y'
+	(v: string) => v === 'y',
 );
 
 // ---- errors ----

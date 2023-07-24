@@ -9,7 +9,7 @@ export function tsf<Input extends string>(
 				| `${string}{{${string}}${string}`
 				| `${string}{${string}}}${string}`
 		? 'Unbalanced braces detected in template'
-		: Input
+		: Input,
 ) {
 	const parts: string[] = [];
 	for (let i = 0, start = 0; i < template.length; i += 1) {
@@ -36,7 +36,7 @@ export function tsf<Input extends string>(
 	return function render(
 		table: Record<RequiredProps, AcceptedValues | UnaryFunction<string, AcceptedValues>> & {
 			[K in OptionalProps]?: AcceptedValues | UnaryFunction<string, AcceptedValues>;
-		}
+		},
 	) {
 		let transformed = '';
 		for (let i = 0; i < parts.length; i += 1) {
