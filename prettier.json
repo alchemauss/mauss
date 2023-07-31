@@ -8,8 +8,9 @@
 	"useTabs": true,
 	"overrides": [
 		{
-			"files": ["package*.json"],
+			"files": ["package.json"],
 			"options": {
+				"plugins": ["prettier-plugin-sort-package-json"],
 				"useTabs": false
 			}
 		},
