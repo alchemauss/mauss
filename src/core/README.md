@@ -24,29 +24,32 @@ This namespace provides complete list of methods that covers all `typeof` values
 compare.string('abc', 'def');
 // and other primitives
 
-[/* data */].sort(comparator);
+[
+    /* data */
+].sort(comparator);
 ```
 
 ### `compare.key`
 
 ```ts
 type Wildcard = (x: any, y: any) => number;
-export function key<
-  Identifier extends string
->(identifier: Identifier, comparator?: Wildcard): Wildcard;
+export function key<Identifier extends string>(
+    identifier: Identifier,
+    comparator?: Wildcard,
+): Wildcard;
 ```
 
 A higher-order function that accepts a string as an identifier and an optional comparator function, it breaks up the identifier described by the dot (`.`) character and returns a curried function that accepts `(x, y)` with an object defined by the identifier.
 
 ```ts
 const posts = [
-  { date: { month: 4 } },
-  { date: { month: 7 } },
-  { date: { month: 6 } },
-  { date: { month: 5 } },
-  { date: { month: 1 } },
-  { date: { month: 7 } },
-  { date: { month: 2 } },
+    { date: { month: 4 } },
+    { date: { month: 7 } },
+    { date: { month: 6 } },
+    { date: { month: 5 } },
+    { date: { month: 1 } },
+    { date: { month: 7 } },
+    { date: { month: 2 } },
 ];
 
 posts.sort(compare.key('date.month'));
@@ -56,20 +59,31 @@ The optional comparator can be used when you have an existing custom sort functi
 
 ```ts
 const posts = [
-  { date: { month: 'March' } },
-  { date: { month: 'June' } },
-  { date: { month: 'May' } },
-  { date: { month: 'April' } },
-  { date: { month: 'January' } },
-  { date: { month: 'June' } },
-  { date: { month: 'February' } },
+    { date: { month: 'March' } },
+    { date: { month: 'June' } },
+    { date: { month: 'May' } },
+    { date: { month: 'April' } },
+    { date: { month: 'January' } },
+    { date: { month: 'June' } },
+    { date: { month: 'February' } },
 ];
 
-const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+const months = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+];
 
-posts.sort(
-  compare.key('date.month', compare.order(months))
-);
+posts.sort(compare.key('date.month', compare.order(months)));
 ```
 
 ## `curry`
@@ -98,36 +112,36 @@ Simple `date/time` (`dt`) utility namespace.
 type DateValue = string | number | Date;
 
 interface BuildOptions {
-  base?: 'UTC';
+    base?: 'UTC';
 }
 
 interface TravelOptions {
-  /** relative point of reference to travel */
-  from?: DateValue;
-  /** relative days to travel in number */
-  to: number;
+    /** relative point of reference to travel */
+    from?: DateValue;
+    /** relative days to travel in number */
+    to: number;
 }
 
 export const dt: {
-  current(d?: DateValue): Date;
-  build(options: BuildOptions): (date?: DateValue) => (mask?: string) => string;
-  format: ReturnType<typeof this.build>;
-  travel({ from, to }: TravelOptions): Date;
-}
+    current(d?: DateValue): Date;
+    build(options: BuildOptions): (date?: DateValue) => (mask?: string) => string;
+    format: ReturnType<typeof this.build>;
+    travel({ from, to }: TravelOptions): Date;
+};
 ```
 
-- `dt.current` is a function `(d?: DateValue) => Date` that optionally takes in a `DateValue` to be converted into a `Date` object, `new Date()` will be used if nothing is passed
-- `dt.build` is a function that accepts `BuildOptions` and builds a formatter, a convenience export is included with all the default options as `dt.format`
-- `dt.format` is a function that takes in a `DateValue` and returns a renderer that accepts a string mask to format the date in, defaults to `'DDDD, DD MMMM YYYY'`
-- `dt.travel` is a function `({ from, to }) => Date` that takes in a `{ from, to }` object with `from` property being optional
+-   `dt.current` is a function `(d?: DateValue) => Date` that optionally takes in a `DateValue` to be converted into a `Date` object, `new Date()` will be used if nothing is passed
+-   `dt.build` is a function that accepts `BuildOptions` and builds a formatter, a convenience export is included with all the default options as `dt.format`
+-   `dt.format` is a function that takes in a `DateValue` and returns a renderer that accepts a string mask to format the date in, defaults to `'DDDD, DD MMMM YYYY'`
+-   `dt.travel` is a function `({ from, to }) => Date` that takes in a `{ from, to }` object with `from` property being optional
 
 ## `execute`
 
 ```ts
 export function execute(
-  condition: truthy,
-  correct: () => AlsoPromise<void> | AnyFunction<[]>,
-  otherwise: () => AlsoPromise<void> | AnyFunction<[]> = () => {}
+    condition: truthy,
+    correct: () => AlsoPromise<void> | AnyFunction<[]>,
+    otherwise: () => AlsoPromise<void> | AnyFunction<[]> = () => {},
 ): void;
 ```
 
@@ -135,8 +149,8 @@ A convenience function to avoid writing [IIFE](https://developer.mozilla.org/en-
 
 ```ts
 execute(you === world, () => {
-  // ...
-})
+    // ...
+});
 ```
 
 Combined with Svelte's `$:`, which is a way to mark statements as reactive, we can have `async` operations that reacts to changes in the application and `await` them as well.
@@ -174,15 +188,15 @@ export function identical(x: unknown, y: unknown): boolean;
 
 A function to check for values equality between two variables. This will work for any data type except `function`, which will always return true when two function are being compared. The heuristics are as follows:
 
-- fails immediately when the type of `x` and `y` are not the same
-- type of `function` are not comparable, always returns true
-- type of `symbol` is converted and compared as a `string`
-- primitive values are compared using strict equality operator
-- type of `object`, two empty array or object are considered the same
-- type of `object`, comparing array also considers its length and item order
-- type of `object`, two object must have the same keys before comparing its values
-- type of `object`, the order of key-value pair does not matter for equality check
-- `identical` is infinitely recursive for any amount of nested array/object
+-   fails immediately when the type of `x` and `y` are not the same
+-   type of `function` are not comparable, always returns true
+-   type of `symbol` is converted and compared as a `string`
+-   primitive values are compared using strict equality operator
+-   type of `object`, two empty array or object are considered the same
+-   type of `object`, comparing array also considers its length and item order
+-   type of `object`, two object must have the same keys before comparing its values
+-   type of `object`, the order of key-value pair does not matter for equality check
+-   `identical` is infinitely recursive for any amount of nested array/object
 
 ## `inverse`
 
