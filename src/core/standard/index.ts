@@ -65,6 +65,17 @@ export function inverse<Function extends AnyFunction>(fn: Function) {
 }
 
 /**
+ * outdent - removes the indentation based on the first line's indentation
+ * @param text input text to have its indentation cleaned up
+ * @returns text without any indentation from the first line
+ */
+export function outdent(text: string) {
+	const lines = text.split(/\r?\n/).filter((l) => l.trim());
+	const indent = (/^\s*/.exec(lines[0]) || [''])[0].length;
+	return lines.map((l) => l.slice(indent)).join('\n');
+}
+
+/**
  * regexp - implementation of global RegExp constructor with escaped pattern
  * @param pattern passed in the form of string literal
  * @param flags unique set of characters from `d|g|i|m|s|u|y`
