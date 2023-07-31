@@ -5,6 +5,7 @@ import * as std from './index.js';
 const suites = {
 	'capitalize/': suite('std/capitalize'),
 	'identical/': suite('std/identical'),
+	'outdent/': suite('std/outdent'),
 };
 
 suites['capitalize/']('change one letter for one word', () => {
@@ -71,6 +72,24 @@ suites['identical/']('identical clone', async () => {
 	const { clone } = await import('../../std/ntv/object.js');
 	const data = { a: [1, '', {}], o: { now: new Date() } };
 	assert.ok(std.identical(data, clone(data)));
+});
+
+suites['outdent/']('outdent', () => {
+	assert.equal(std.outdent(''), '');
+	assert.equal(std.outdent('  '), '');
+
+	assert.equal(std.outdent('  a'), 'a');
+	assert.equal(std.outdent('  a\n  b'), 'a\nb');
+
+	assert.equal(
+		std.outdent(`
+		a
+			b
+		c
+				d
+		`),
+		'a\n\tb\nc\n\t\td',
+	);
 });
 
 Object.values(suites).forEach((v) => v.run());
