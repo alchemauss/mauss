@@ -39,6 +39,6 @@ Using modules provided by mauss, you can write shorter and simpler code with min
 | [`web`](/src/web)         | `'mauss/web'`     |
 | [`typings`](/src/typings) | `'mauss/typings'` |
 
-***
+---
 
 <h3 align="center"><pre>Mauss | <a href="LICENSE">MIT License</a></pre></h3>
