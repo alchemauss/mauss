@@ -1,23 +1,25 @@
 {
   "name": "mauss",
-  "author": "Ignatius Bagus",
-  "description": "fast and efficient type-safe SDK",
   "version": "0.6.0",
+  "description": "fast and efficient type-safe SDK",
+  "repository": "github:alchemauss/mauss",
   "license": "MIT",
+  "author": "Ignatius Bagus",
   "type": "module",
-  "types": "./core/index.d.ts",
   "scripts": {
     "clean": "git add * && git clean -dfx -e node_modules",
     "watch": "pnpm pub:build --watch",
+    "format": "prettier -w . --plugin=prettier-plugin-sort-package-json",
     "check": "pnpm check:code && pnpm check:style",
     "check:code": "pnpm pub:build --noEmit",
-    "check:style": "prettier -c \"src/**/*.ts\"",
+    "check:style": "prettier -c . --plugin=prettier-plugin-sort-package-json",
     "test": "pnpm test:unit",
     "test:unit": "uvu -r tsm src \"(spec\\.ts)\"",
     "pub:build": "tsc --project src",
     "pub:format": "prettier -wu **/*.{d.ts,js}",
     "prepublishOnly": "pnpm pub:build && pnpm pub:format"
   },
+  "types": "./core/index.d.ts",
   "exports": {
     ".": "./core/index.js",
     "./api": "./api/index.js",
@@ -33,8 +35,6 @@
   },
   "packageManager": "pnpm@7.30.5",
   "prettier": "./prettier.json",
-  "repository": "github:alchemauss/mauss",
-  "bugs": "https://github.com/alchemauss/mauss/issues",
   "keywords": [
     "zero-dependency",
     "strongly-typed",
@@ -53,6 +53,7 @@
   "devDependencies": {
     "@types/node": "^20.4.4",
     "prettier": "^3.0.0",
+    "prettier-plugin-sort-package-json": "^0.1.0",
     "tsm": "^2.3.0",
     "typescript": "^5.1.6",
     "uvu": "^0.5.6"
