@@ -45,11 +45,11 @@ Original function, iterate over the key-value pair of an object, returns a new o
 
 ```typescript
 export function iterate<T extends object>(
-    object: T,
-    callback: AnyFunction<
-        [entry: Entries<T>[number], index: number],
-        void | Falsy | [IndexSignature, any]
-    > = ([k, v]) => [k, clone(v)],
+	object: T,
+	callback: AnyFunction<
+		[entry: Entries<T>[number], index: number],
+		void | Falsy | [IndexSignature, any]
+	> = ([k, v]) => [k, clone(v)],
 ): T;
 ```
 
@@ -93,9 +93,9 @@ This assumes the braces inside the template string are balanced and not nested. 
 
 ```typescript
 export function tsf(
-    template: string,
+	template: string,
 ): (table: {
-    [key: string]: string | false | Nullish | ((key: string) => string | false | Nullish);
+	[key: string]: string | false | Nullish | ((key: string) => string | false | Nullish);
 }) => string;
 ```
 

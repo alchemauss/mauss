@@ -15,11 +15,11 @@ import { bulwark } from 'mauss/guards';
 
 let key = 'a' as 'a' | 'z';
 switch (key) {
-    case 'a':
-        return key.charCodeAt();
-    default:
-        // Argument of type 'string' is not assignable to parameter of type 'never'.
-        return bulwark(key);
+	case 'a':
+		return key.charCodeAt();
+	default:
+		// Argument of type 'string' is not assignable to parameter of type 'never'.
+		return bulwark(key);
 }
 ```
 

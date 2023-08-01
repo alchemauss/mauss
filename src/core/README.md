@@ -25,7 +25,7 @@ compare.string('abc', 'def');
 // and other primitives
 
 [
-    /* data */
+	/* data */
 ].sort(comparator);
 ```
 
@@ -34,8 +34,8 @@ compare.string('abc', 'def');
 ```ts
 type Wildcard = (x: any, y: any) => number;
 export function key<Identifier extends string>(
-    identifier: Identifier,
-    comparator?: Wildcard,
+	identifier: Identifier,
+	comparator?: Wildcard,
 ): Wildcard;
 ```
 
@@ -43,13 +43,13 @@ A higher-order function that accepts a string as an identifier and an optional c
 
 ```ts
 const posts = [
-    { date: { month: 4 } },
-    { date: { month: 7 } },
-    { date: { month: 6 } },
-    { date: { month: 5 } },
-    { date: { month: 1 } },
-    { date: { month: 7 } },
-    { date: { month: 2 } },
+	{ date: { month: 4 } },
+	{ date: { month: 7 } },
+	{ date: { month: 6 } },
+	{ date: { month: 5 } },
+	{ date: { month: 1 } },
+	{ date: { month: 7 } },
+	{ date: { month: 2 } },
 ];
 
 posts.sort(compare.key('date.month'));
@@ -59,28 +59,28 @@ The optional comparator can be used when you have an existing custom sort functi
 
 ```ts
 const posts = [
-    { date: { month: 'March' } },
-    { date: { month: 'June' } },
-    { date: { month: 'May' } },
-    { date: { month: 'April' } },
-    { date: { month: 'January' } },
-    { date: { month: 'June' } },
-    { date: { month: 'February' } },
+	{ date: { month: 'March' } },
+	{ date: { month: 'June' } },
+	{ date: { month: 'May' } },
+	{ date: { month: 'April' } },
+	{ date: { month: 'January' } },
+	{ date: { month: 'June' } },
+	{ date: { month: 'February' } },
 ];
 
 const months = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December',
+	'January',
+	'February',
+	'March',
+	'April',
+	'May',
+	'June',
+	'July',
+	'August',
+	'September',
+	'October',
+	'November',
+	'December',
 ];
 
 posts.sort(compare.key('date.month', compare.order(months)));
@@ -112,21 +112,21 @@ Simple `date/time` (`dt`) utility namespace.
 type DateValue = string | number | Date;
 
 interface BuildOptions {
-    base?: 'UTC';
+	base?: 'UTC';
 }
 
 interface TravelOptions {
-    /** relative point of reference to travel */
-    from?: DateValue;
-    /** relative days to travel in number */
-    to: number;
+	/** relative point of reference to travel */
+	from?: DateValue;
+	/** relative days to travel in number */
+	to: number;
 }
 
 export const dt: {
-    current(d?: DateValue): Date;
-    build(options: BuildOptions): (date?: DateValue) => (mask?: string) => string;
-    format: ReturnType<typeof this.build>;
-    travel({ from, to }: TravelOptions): Date;
+	current(d?: DateValue): Date;
+	build(options: BuildOptions): (date?: DateValue) => (mask?: string) => string;
+	format: ReturnType<typeof this.build>;
+	travel({ from, to }: TravelOptions): Date;
 };
 ```
 
@@ -139,9 +139,9 @@ export const dt: {
 
 ```ts
 export function execute(
-    condition: truthy,
-    correct: () => AlsoPromise<void> | AnyFunction<[]>,
-    otherwise: () => AlsoPromise<void> | AnyFunction<[]> = () => {},
+	condition: truthy,
+	correct: () => AlsoPromise<void> | AnyFunction<[]>,
+	otherwise: () => AlsoPromise<void> | AnyFunction<[]> = () => {},
 ): void;
 ```
 
@@ -149,7 +149,7 @@ A convenience function to avoid writing [IIFE](https://developer.mozilla.org/en-
 
 ```ts
 execute(you === world, () => {
-    // ...
+	// ...
 });
 ```
 
