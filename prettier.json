@@ -8,16 +8,9 @@
 	"useTabs": true,
 	"overrides": [
 		{
-			"files": ["package*.json"],
-			"options": {
-				"useTabs": false
-			}
-		},
-		{
 			"files": ["*.md"],
 			"options": {
-				"tabWidth": 4,
-				"useTabs": false
+				"tabWidth": 4
 			}
 		},
 		{
