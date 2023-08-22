@@ -2,7 +2,7 @@ import type { Last, UnaryFunction as Constraint } from '../../typings/helpers.js
 
 type Validator<
 	Functions extends Constraint[],
-	Computed extends Constraint = (v: ReturnType<Functions[0]>) => ReturnType<Functions[1]>
+	Computed extends Constraint = (v: ReturnType<Functions[0]>) => ReturnType<Functions[1]>,
 > = Functions extends [infer Resolved, infer _, ...infer Rest]
 	? Rest extends Constraint[]
 		? [Resolved, ...Validator<[Computed, ...Rest]>]

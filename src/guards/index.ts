@@ -36,3 +36,13 @@ export function not<F extends ValidNegatives>(fn: F) {
 	type D = F extends typeof exists ? Primitives : F extends typeof nullish ? Nullish : Empty;
 	return <T>(i: T | D): i is T => !fn(i);
 }
+
+// string guards
+/** @returns true if string input is all lowercase letters */
+export function lowercase(s: string): boolean {
+	return s === s.toLowerCase();
+}
+/** @returns true if string input is all uppercase letters */
+export function uppercase(s: string): boolean {
+	return s === s.toUpperCase();
+}

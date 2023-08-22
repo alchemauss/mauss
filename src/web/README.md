@@ -14,17 +14,17 @@ This namespace extends the [`Navigator` object](https://developer.mozilla.org/en
 
 ```ts
 export function copy(
-  data: string | ClipboardItem,
-  handler: {
-    accept?(): void | Promise<void>;
-    reject?(): void | Promise<void>;
-  } = {}
+	data: string | ClipboardItem,
+	handler: {
+		accept?(): void | Promise<void>;
+		reject?(): void | Promise<void>;
+	} = {},
 ): void;
 
 export function item(
-  type: string,
-  data: string | Blob,
-  options?: ClipboardItemOptions
+	type: string,
+	data: string | Blob,
+	options?: ClipboardItemOptions,
 ): ClipboardItem;
 
 export function paste(type: 'blob'): Promise<ClipboardItems>;
@@ -40,8 +40,8 @@ Query string encoder (`qse`) encodes key-value pairs from an object into a query
 type BoundValues = Nullish | Primitives;
 export function qse<T extends object>(
 	bound: T[keyof T] extends BoundValues | readonly BoundValues[] ? T : never,
-	transformer = (final: string) => `?${final}`
-): string
+	transformer = (final: string) => `?${final}`,
+): string;
 ```
 
 The first parameter `bound` only accepts an object with nullish and primitive literals or an array of those values.

@@ -2,11 +2,19 @@ import { suite } from 'uvu';
 import * as assert from 'uvu/assert';
 import * as std from './index.js';
 
-const basics = {
-	identical: suite('std:identical'),
+const suites = {
+	'capitalize/': suite('std/capitalize'),
+	'identical/': suite('std/identical'),
 };
 
-basics.identical('identical primitive checks', () => {
+suites['capitalize/']('change one letter for one word', () => {
+	assert.equal(std.capitalize('hello'), 'Hello');
+});
+suites['capitalize/']('change two letter for two words', () => {
+	assert.equal(std.capitalize('hello world'), 'Hello World');
+});
+
+suites['identical/']('identical primitive checks', () => {
 	// boolean
 	assert.ok(std.identical(true, true));
 	assert.ok(!std.identical(true, false));
@@ -37,32 +45,32 @@ basics.identical('identical primitive checks', () => {
 	assert.ok(
 		std.identical(
 			() => {},
-			() => {}
-		)
+			() => {},
+		),
 	);
 	assert.ok(
 		std.identical(
 			() => '',
-			() => 0
-		)
+			() => 0,
+		),
 	);
 });
-basics.identical('identical array checks', () => {
+suites['identical/']('identical array checks', () => {
 	assert.ok(std.identical([], []));
 	assert.ok(std.identical(['', 1, !0], ['', 1, !0]));
 	assert.ok(std.identical([{ x: [] }], [{ x: [] }]));
 	assert.ok(!std.identical(['', 0, !0], ['', 1, !1]));
 	assert.ok(!std.identical([{ x: [] }], [{ y: [] }]));
 });
-basics.identical('identical object checks', () => {
+suites['identical/']('identical object checks', () => {
 	assert.ok(std.identical({}, {}));
 	assert.ok(std.identical({ a: '', b: 1, c: !0 }, { a: '', b: 1, c: !0 }));
 	assert.ok(std.identical({ x: [{}], y: { a: 0 } }, { x: [{}], y: { a: 0 } }));
 });
-basics.identical('identical clone', async () => {
+suites['identical/']('identical clone', async () => {
 	const { clone } = await import('../../std/ntv/object.js');
 	const data = { a: [1, '', {}], o: { now: new Date() } };
 	assert.ok(std.identical(data, clone(data)));
 });
 
-Object.values(basics).forEach((v) => v.run());
+Object.values(suites).forEach((v) => v.run());

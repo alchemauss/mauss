@@ -10,12 +10,6 @@ export function clone<T>(i: T): T {
 	return iterate(i) as T;
 }
 
-export function create<T extends IndexSignature>(array: T[], i: any = null) {
-	const object = {} as { [K in T]: typeof i };
-	for (const key of array) object[key] = i;
-	return object;
-}
-
 export function entries<T extends object>(o: T) {
 	return Object.entries(o) as Entries<T>;
 }
@@ -37,20 +31,20 @@ export function iterate<T extends object, I = T[keyof T]>(
 	callback: AnyFunction<
 		[entry: Entries<T>[number], index: number],
 		void | Falsy | [IndexSignature, I]
-	> = ([k, v]) => [k, clone(v) as I]
+	> = ([k, v]) => [k, clone(v) as I],
 ): I extends T[keyof T] ? T : unknown {
 	const pairs = entries(object);
 	const memo: typeof pairs = [];
 	for (let i = 0; i < pairs.length; i++) {
 		const res = callback(pairs[i], i);
 		if (!res || res.length !== 2) continue;
-		memo.push(res as typeof memo[number]);
+		memo.push(res as (typeof memo)[number]);
 	}
 	return Object.fromEntries(memo) as any;
 }
 
 export function keys<T extends object>(o: T) {
-	return Object.keys(o) as Array<keyof T>;
+	return Object.keys(o) as Array<string & keyof T>;
 }
 
 interface PickOptions {
@@ -80,4 +74,8 @@ export function pick<Keys extends readonly string[]>(
 			};
 		}
 	}
+}
+
+export function size<T extends object>(o: T): number {
+	return Object.keys(o).length;
 }

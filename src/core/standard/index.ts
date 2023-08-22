@@ -1,10 +1,22 @@
 import type { AlsoPromise } from '../../typings/extenders.js';
 import type { AnyFunction, Reverse } from '../../typings/helpers.js';
 
+interface CapitalizeOptions {
+	/** only capitalize the very first letter */
+	cap?: boolean;
+	/** convert the remaining word to lowercase */
+	normalize?: boolean;
+}
+export function capitalize(text: string, { cap, normalize }: CapitalizeOptions = {}): string {
+	if (normalize) text = text.toLowerCase();
+	if (cap) return `${text[0].toUpperCase()}${text.slice(1)}`;
+	return text.replace(/(?:^|\s)\S/g, (a) => a.toUpperCase());
+}
+
 export function execute(
 	condition: boolean,
 	correct: () => AlsoPromise<void> | AnyFunction<[]>,
-	otherwise: () => AlsoPromise<void> | AnyFunction<[]> = () => {}
+	otherwise: () => AlsoPromise<void> | AnyFunction<[]> = () => {},
 ) {
 	condition ? correct() : otherwise();
 }
@@ -60,4 +72,8 @@ export function inverse<Function extends AnyFunction>(fn: Function) {
  */
 export function regexp(pattern: string, flags?: string): RegExp {
 	return new RegExp(pattern.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), flags);
+}
+
+export function scope<T>(fn: () => T) {
+	return fn();
 }

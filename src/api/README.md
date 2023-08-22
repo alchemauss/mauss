@@ -1,47 +1,51 @@
 # mauss/api
 
-You can set a custom rule by calling `init` as early as possible. This is optional and might be useful for pointing to both same and external domain at the same time.
+The `/api` module exports a `fetcher` factory that can be used to create a `send` function to make requests. The factory can be configured heavily to fit your needs, it accepts an object that can contain the following properties:
+
+-   `prepare` - a function that is called before the request is sent, it receives the specified `method` and `to` url string, and optionally a `body`, `from` URL, and `headers` object. It should _prepare_ and return an object that satisfies the [`RequestInit`](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request) interface
+-   `intercept` - a function that is called against the `url` string before the request is sent
+-   `sweep` - a function that is called when `fetch` throws an error, it receives the thrown exception and returns a string
+-   `transform` - a function that is called when `fetch` returns a response, it receives the response and can return anything that will used as the `payload`, defaults to `r.json().catch(() => ({}))`
+-   `exit` - a function that is called after the response is transformed, it receives a clone of the initial response and the `payload`, and should return a string if the request was unsuccessful, or anything falsy such as `void | false | null | undefined` if it was successful
 
 ```js
-import api from 'mauss/api';
+import { fetcher, type SendOptions } from 'mauss/api';
 
-api.init({
-  host: process.env.NODE_ENV === 'production' ? 'mauss.dev' : 'localhost:3000',
-
-  intercept(path) { /* returns a value that will be used as url for `fetch(url)` */
-    const base = process.env.NODE_ENV !== 'production'
-      ? 'https://development.url/api/'
-      : 'https://production.url/api/';
-
-    /* differentiate external vs same-domain by checking if path starts with '/' */
-    return path[0] !== '/' ? base + path : path.slice(1);
-  }
+const send = fetcher({
+  prepare({ method, to, body }) {
+    // ... do some checks or logging
+    return {
+      method: method || 'GET',
+      mode: 'cors',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(body),
+    };
+  },
+  exit({ status }, payload) {
+    if (status >= 500) return 'ServerError';
+    if (status >= 400) return 'ClientError';
+    // void or non-string means successful
+  },
 });
-```
 
-All the available exported API can be passed a url string or object of `{ path, fetch }`. This is especially useful for users working with [`load` function in SvelteKit](https://kit.svelte.dev/docs#loading-input-fetch) as `fetch` can be passed down the api call.
-
-```js
-import { get, post } from 'mauss/api';
-
-const token = 'jwt:token'; // optional, pass for authenticated request
-
-/* GET example */
-const { response, body, error } = await get('/auth/profile', token);
-if (response.ok) {
-  console.log(body);  // user data in JSON format
-} else {
-  console.log(error); // error message in string
-}
-
-/* POST example */
-const { response, body, error } = await post('/auth/login', {
-  email: 'mail@example.com',
-  password: 'super_secure_password',
-});
-if (response.ok) {
-  console.log(body);  // response body
-} else {
-  console.log(error); // error message
-}
+// use the `send` function above to make and export an abstraction
+export const API = {
+  // use getter to determine the template and infer the defined parameters
+  get 'session/:id'() {
+    // `tsf` function from 'mauss/std'
+    const render = tsf('https://auth.example/{id}/login');
+    return (params: Parameters<typeof render>[0], options: SendOptions = {}) => {
+      const target = send(render(params), options);
+      return {
+        // ... abstraction methods, for example
+        async post() {
+          return await target.post();
+        },
+      };
+    };
+  },
+};
 ```

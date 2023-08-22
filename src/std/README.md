@@ -35,14 +35,6 @@ export function clone<T>(i: T): T;
 
 Creating a copy of a data type, especially an object, is useful for removing the reference to the original object, keeping it clean from unexpected changes and side effects. This is possible because we are creating a new instance, making sure that any mutation or changes that are applied won't affect one or the other.
 
-### `ntv.create`
-
-```typescript
-export function create<T>(array: T[], i: any): { [K in T]: typeof i };
-```
-
-Create an object with keys from an array of strings with the option to specify the initial value, defaulting to `null`.
-
 ### `ntv.freeze`
 
 Augmented `Object.freeze()`, deep freezes and strongly-typed.
@@ -53,11 +45,11 @@ Original function, iterate over the key-value pair of an object, returns a new o
 
 ```typescript
 export function iterate<T extends object>(
-  object: T,
-  callback: AnyFunction<
-    [entry: Entries<T>[number], index: number],
-    void | Falsy | [IndexSignature, any]
-  > = ([k, v]) => [k, clone(v)]
+	object: T,
+	callback: AnyFunction<
+		[entry: Entries<T>[number], index: number],
+		void | Falsy | [IndexSignature, any]
+	> = ([k, v]) => [k, clone(v)],
 ): T;
 ```
 
@@ -79,10 +71,48 @@ const unwrap = pick(['a', 'b', 'c']);
 unwrap({ ... });
 ```
 
+### `ntv.size`
+
+Convenience method to get the size of an object by checking the `length` of its keys.
+
 ### `ntv.zip`
 
 Original function, aggregates elements from each of the arrays and returns a single array of objects with the length of the largest array.
 
 ```typescript
 export function zip<T extends Array<Nullish | {}>>(...arrays: T[]): Record<IndexSignature, any>[];
+```
+
+## `tsf`
+
+A template string function. This takes a template string and returns a function that takes an object of functions, which is used to manipulate the name of the braces in the template string. Parameters of the braces can be prefixed with a question mark `?` to make it optional to the type system and will fallback to an empty string if it's not defined in the table.
+
+<!-- , and a colon `:` to specify a default value. -->
+
+This assumes the braces inside the template string are balanced and not nested. The function will not throw an error if the braces are not balanced, but the result will be unexpected. If you're using TypeScript and are passing a [string literal](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#literal-types), it will point out any unbalanced braces by throwing an error from the compiler.
+
+```typescript
+export function tsf(
+	template: string,
+): (table: {
+	[key: string]: string | false | Nullish | ((key: string) => string | false | Nullish);
+}) => string;
+```
+
+The template string is parsed into an array of strings, which are then executed with the provided table of functions, which is an object with the key being the name of the braces from the template string, and the value being the function to manipulate the name of the braces.
+
+```javascript
+import { tsf } from 'mauss/std';
+
+const render = tsf('https://api.example.com/v1/{category}/{id}');
+
+function publish({ category, id }) {
+  const prefix = // ...
+  const url = render({
+    category: () => category !== 'new' && category,
+    id: (v) => prefix + uuid(`${v}-${id}`),
+  });
+
+  return fetch(url);
+}
 ```
