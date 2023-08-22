@@ -47,33 +47,24 @@ export function keys<T extends object>(o: T) {
 	return Object.keys(o) as Array<string & keyof T>;
 }
 
-interface PickOptions {
-	type?: 'build' | 'filter';
-}
-export function pick<Keys extends readonly string[]>(
-	keys: Narrow<Keys>,
-	{ type = 'filter' }: PickOptions = {}
-) {
+export function pick<Keys extends readonly string[]>(keys: Narrow<Keys>) {
 	const props = new Set(keys);
 
-	switch (type) {
-		case 'build': {
-			return <T extends object>(o: T, initial = null) => {
+	return {
+		build<T extends object>(o: T, initial = null) {
+			return [...props].reduce(
+				// @ts-expect-error - unknown until `keys` are passed
+				(a, k) => ({ ...a, [k]: k in o ? o[k] : initial }),
 				// @ts-expect-error - too hard for TS
-				const object = {} as { [K in Keys[number]]: Pick<T, K> extends {} ? typeof initial : T[K] };
-				// @ts-expect-error - unknown until `keys` are passed
-				props.forEach((k) => (object[k] = k in o ? o[k] : initial));
-				return object;
-			};
-		}
-		case 'filter': {
-			// @ts-expect-error - 100% TS bug not mine
-			return <T extends object>(o: T): Pick<T, Keys[number]> => {
-				// @ts-expect-error - unknown until `keys` are passed
-				return iterate(o, ([k, v]) => props.has(k) && [k, v]);
-			};
-		}
-	}
+				{} as { [K in Keys[number]]: Pick<T, K> extends {} ? typeof initial : T[K] },
+			);
+		},
+		// @ts-expect-error - 100% TS bug not mine
+		filter<T extends object>(o: T): Pick<T, Keys[number]> {
+			// @ts-expect-error - unknown until `keys` are passed
+			return iterate(o, ([k, v]) => props.has(k) && [k, v]);
+		},
+	};
 }
 
 export function size<T extends object>(o: T): number {
