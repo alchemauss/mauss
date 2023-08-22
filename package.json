@@ -7,31 +7,37 @@
 	"type": "module",
 	"scripts": {
 		"clean": "git add * && git clean -dfx -e node_modules",
-		"watch": "pnpm pub:build --watch",
 		"format": "prettier -w . --plugin=prettier-plugin-sort-package-json",
 		"check": "pnpm check:code && pnpm check:style",
 		"check:code": "pnpm pub:build --noEmit",
 		"check:style": "prettier -c . --plugin=prettier-plugin-sort-package-json",
 		"test": "pnpm test:unit",
 		"test:unit": "uvu -r tsm src \"(spec\\.ts)\"",
-		"pub:build": "tsc --project src",
-		"pub:format": "prettier -wu **/*.{d.ts,js}",
-		"prepublishOnly": "pnpm pub:build && pnpm pub:format"
+		"build:types": "tsm scripts/compile-types.ts",
+		"build:files": "tsc --project src",
+		"prepublishOnly": "pnpm build:types && pnpm build:files"
 	},
-	"types": "./core/index.d.ts",
+	"typings": "./index.d.ts",
 	"exports": {
-		".": "./core/index.js",
-		"./api": "./api/index.js",
-		"./bits": "./bits/index.js",
-		"./guards": "./guards/index.js",
-		"./math": "./math/index.js",
-		"./std": "./std/index.js",
-		"./web": "./web/index.js",
-		"./typings": "./typings/index.d.ts",
+		".": "./src/core/index.js",
+		"./api": "./src/api/index.js",
+		"./bits": "./src/bits/index.js",
+		"./guards": "./src/guards/index.js",
+		"./math": "./src/math/index.js",
+		"./std": "./src/std/index.js",
+		"./web": "./src/web/index.js",
+		"./typings": "./index.d.ts",
 		"./package.json": "./package.json",
 		"./prettier.json": "./prettier.json",
 		"./tsconfig.json": "./tsconfig.json"
 	},
+	"files": [
+		"src/**/*.js",
+		"index.d.ts",
+		"index.d.ts.map",
+		"prettier.json",
+		"tsconfig.json"
+	],
 	"packageManager": "pnpm@8.6.11",
 	"prettier": "./prettier.json",
 	"keywords": [
@@ -51,6 +57,7 @@
 	],
 	"devDependencies": {
 		"@types/node": "^20.4.4",
+		"dts-buddy": "^0.1.13",
 		"prettier": "^3.0.0",
 		"prettier-plugin-sort-package-json": "^0.1.0",
 		"tsm": "^2.3.0",
