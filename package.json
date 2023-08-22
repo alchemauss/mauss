@@ -26,7 +26,7 @@
 		"./math": "./src/math/index.js",
 		"./std": "./src/std/index.js",
 		"./web": "./src/web/index.js",
-		"./typings": "./index.d.ts",
+		"./typings": "./src/typings/index.d.ts",
 		"./package.json": "./package.json",
 		"./prettier.json": "./prettier.json",
 		"./tsconfig.json": "./tsconfig.json"
