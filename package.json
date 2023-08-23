@@ -1,6 +1,6 @@
 {
 	"name": "mauss",
-	"version": "0.7.0",
+	"version": "0.7.1",
 	"description": "fast and efficient type-safe SDK",
 	"repository": "github:alchemauss/mauss",
 	"author": "Ignatius Bagus",
