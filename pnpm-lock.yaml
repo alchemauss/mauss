@@ -1,21 +1,25 @@
 lockfileVersion: '6.0'
 
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
 devDependencies:
   '@types/node':
-    specifier: ^20.4.4
-    version: 20.4.4
+    specifier: ^20.5.7
+    version: 20.5.7
   prettier:
-    specifier: ^3.0.0
-    version: 3.0.0
+    specifier: ^3.0.2
+    version: 3.0.2
   prettier-plugin-sort-package-json:
-    specifier: ^0.1.0
-    version: 0.1.0(prettier@3.0.0)
+    specifier: ^0.2.0
+    version: 0.2.0(prettier@3.0.2)
   tsm:
     specifier: ^2.3.0
     version: 2.3.0
   typescript:
-    specifier: ^5.1.6
-    version: 5.1.6
+    specifier: ^5.2.2
+    version: 5.2.2
   uvu:
     specifier: ^0.5.6
     version: 0.5.6
@@ -40,8 +44,8 @@ packages:
     dev: true
     optional: true
 
-  /@types/node@20.4.4:
-    resolution: {integrity: sha512-CukZhumInROvLq3+b5gLev+vgpsIqC2D0deQr/yS1WnxvmYLlJXZpaQrQiseMY+6xusl79E04UjWoqyr+t1/Ew==}
+  /@types/node@20.5.7:
+    resolution: {integrity: sha512-dP7f3LdZIysZnmvP3ANJYTSwg+wLLl8p7RqniVlV7j+oXSXAbt9h0WIBFmJy5inWZoX9wZN6eXx+YXd9Rh3RBA==}
     dev: true
 
   /dequal@2.0.3:
@@ -274,16 +278,16 @@ packages:
     engines: {node: '>=4'}
     dev: true
 
-  /prettier-plugin-sort-package-json@0.1.0(prettier@3.0.0):
-    resolution: {integrity: sha512-PE2/7Bls5A7rMH3Fvo/UnKNkj+fERmujhV4dP126djlpmwWrBBXk9ruJwLy//BX7dXjY8mffCbxH5/FUXCxpcw==}
+  /prettier-plugin-sort-package-json@0.2.0(prettier@3.0.2):
+    resolution: {integrity: sha512-jg+CfEHpmXyMJxoBSQh+IObmCxqt7KyHOuXGQm9D4heeyipEhlTJZfiS9SlfhBKrtf/yA8WZwHmynUG9xfF/rA==}
     peerDependencies:
       prettier: ^3.0.0
     dependencies:
-      prettier: 3.0.0
+      prettier: 3.0.2
     dev: true
 
-  /prettier@3.0.0:
-    resolution: {integrity: sha512-zBf5eHpwHOGPC47h0zrPyNn+eAEIdEzfywMoYn2XPi0P44Zp0tSq64rq0xAREh4auw2cJZHo9QUob+NqCQky4g==}
+  /prettier@3.0.2:
+    resolution: {integrity: sha512-o2YR9qtniXvwEZlOKbveKfDQVyqxbEIWn48Z8m3ZJjBjcCmUy3xZGIv+7AkaeuaTr6yPXJjwv07ZWlsWbEy1rQ==}
     engines: {node: '>=14'}
     hasBin: true
     dev: true
@@ -303,8 +307,8 @@ packages:
       esbuild: 0.15.18
     dev: true
 
-  /typescript@5.1.6:
-    resolution: {integrity: sha512-zaWCozRZ6DLEWAWFrVDz1H6FVXzUSfTy5FUMWsQlU8Ym5JP9eO4xkTIROFCQvhQf61z6O/G6ugw3SgAnvvm+HA==}
+  /typescript@5.2.2:
+    resolution: {integrity: sha512-mI4WrpHsbCIcwT9cF4FZvr80QUeKvsUsUvKDoR+X/7XHQH98xYD8YHZg7ANtz2GtZt/CBq2QJ0thkGJMHfqc1w==}
     engines: {node: '>=14.17'}
     hasBin: true
     dev: true
