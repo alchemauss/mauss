@@ -15,7 +15,7 @@
 		"check:style": "prettier -c . --plugin=prettier-plugin-sort-package-json",
 		"test": "pnpm test:unit",
 		"test:unit": "uvu -r tsm src \"(spec\\.ts)\"",
-		"pub:build": "tsc --project src",
+		"pub:build": "tsc --project src --declaration",
 		"pub:format": "prettier -wu **/*.{d.ts,js}",
 		"prepublishOnly": "pnpm pub:build && pnpm pub:format"
 	},
