@@ -1,5 +1,5 @@
 {
 	"extends": "../tsconfig.json",
-	"compilerOptions": { "outDir": "..", "declaration": true },
+	"compilerOptions": { "outDir": ".." },
 	"exclude": ["node_modules", "**/*.spec.ts", "**/*.test.ts"]
 }
