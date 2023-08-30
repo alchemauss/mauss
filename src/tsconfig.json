@@ -1,5 +1,5 @@
 {
 	"extends": "../tsconfig.json",
-	"compilerOptions": { "outDir": "..", "module": "Node16" },
+	"compilerOptions": { "outDir": ".." },
 	"exclude": ["node_modules", "**/*.spec.ts", "**/*.test.ts"]
 }
