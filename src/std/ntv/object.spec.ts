@@ -126,9 +126,22 @@ suites['obj/keys']('return object keys', () => {
 });
 
 suites['obj/pick']('pick properties from an object', () => {
-	const unwrap = ntv.pick(['a', 'b', 'c', 'z']);
-	const picked = unwrap({ a: 0, c: 'b', y: undefined, z: null });
-	assert.equal(picked, { a: 0, c: 'b', z: null });
+	const { build, filter } = ntv.pick(['a', 'b', 'c', 'd', 'e', 'z']);
+
+	assert.equal(build({ a: 0, c: 'b', z: null }), {
+		a: 0,
+		b: null,
+		c: 'b',
+		d: null,
+		e: null,
+		z: null,
+	});
+
+	assert.equal(filter({ a: 0, c: 'b', y: undefined, z: null }), {
+		a: 0,
+		c: 'b',
+		z: null,
+	});
 });
 
 suites['obj/size']('return size of an object', () => {
