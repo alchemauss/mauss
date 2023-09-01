@@ -33,7 +33,6 @@
 		{
 			"files": ["*.y*ml"],
 			"options": {
-				"singleQuote": false,
 				"useTabs": false
 			}
 		}
