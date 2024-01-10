@@ -2,7 +2,7 @@
 	"compilerOptions": {
 		// Project Options
 		"target": "ES2017",
-		"module": "ES2022",
+		"module": "Node16",
 		"checkJs": true,
 		"isolatedModules": true,
 
