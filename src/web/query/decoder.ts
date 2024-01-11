@@ -15,14 +15,14 @@ type CombineExisting<
 type QueryDecoder<Query extends string> = string extends Query
 	? Record<IndexSignature, string | readonly string[]>
 	: Query extends `${infer Leading}${infer Rest}`
-	? Leading extends '?'
-		? QueryDecoder<Rest>
-		: `${Leading}${Rest}` extends `${infer Param}&${infer Next}`
-		? CombineExisting<QueryDecoder<Param>, QueryDecoder<Next>>
-		: `${Leading}${Rest}` extends `${infer Key}=${infer Value}`
-		? { [K in Key]: Value }
-		: {}
-	: {};
+		? Leading extends '?'
+			? QueryDecoder<Rest>
+			: `${Leading}${Rest}` extends `${infer Param}&${infer Next}`
+				? CombineExisting<QueryDecoder<Param>, QueryDecoder<Next>>
+				: `${Leading}${Rest}` extends `${infer Key}=${infer Value}`
+					? { [K in Key]: Value }
+					: {}
+		: {};
 
 /**
  * qsd - query string decoder
