@@ -5,11 +5,11 @@ export function tsf<Input extends string>(
 	template: Input extends `${string}{}${string}`
 		? 'Empty braces are not allowed in template'
 		: Input extends
-				| `${string}{{${string}}}${string}`
-				| `${string}{{${string}}${string}`
-				| `${string}{${string}}}${string}`
-		? 'Unbalanced braces detected in template'
-		: Input,
+					| `${string}{{${string}}}${string}`
+					| `${string}{{${string}}${string}`
+					| `${string}{${string}}}${string}`
+			? 'Unbalanced braces detected in template'
+			: Input,
 ) {
 	const parts: string[] = [];
 	for (let i = 0, start = 0; i < template.length; i += 1) {

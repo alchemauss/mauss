@@ -19,10 +19,10 @@ export type Extend<Size extends number, List extends any[] = []> = List['length'
 export type Flatten<List extends any[], Memory extends any[] = []> = List extends []
 	? /** return Memory if List is empty */ Memory
 	: List extends [infer Head, ...infer Rest]
-	? Head extends any[] // check for nested array
-		? Flatten<[...Head, ...Rest], Memory>
-		: Flatten<Rest, [...Memory, Head]>
-	: never;
+		? Head extends any[] // check for nested array
+			? Flatten<[...Head, ...Rest], Memory>
+			: Flatten<Rest, [...Memory, Head]>
+		: never;
 
 /** Convert Union to Intersection */
 export type IntersectUnion<U> = /** distributive conditional type */ (
@@ -39,10 +39,10 @@ export type Join<
 	? Join<
 			[`${Head & string}${Delimiter}${Next & string}`, ...Extract<Rest, readonly string[]>],
 			Delimiter
-	  >
+		>
 	: StringList extends readonly [infer OnlyItem]
-	? OnlyItem
-	: '';
+		? OnlyItem
+		: '';
 
 // TODO remove once `const` modifier lands in TS 5.0
 // https://github.com/microsoft/TypeScript/pull/51865
@@ -86,8 +86,8 @@ export type Paths<T> = T extends object
 export type Permutation<Union, Sliced = Union> = [Union] extends [never]
 	? []
 	: Union extends Union
-	? [Union, ...Permutation<Sliced extends Union ? never : Sliced>]
-	: never;
+		? [Union, ...Permutation<Sliced extends Union ? never : Sliced>]
+		: never;
 
 /** Define a union of tuple that accepts a progressively increasing (LTR) items */
 export type Progressive<List extends any[]> = List extends [...infer Rest, any]
