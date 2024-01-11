@@ -1,5 +1,5 @@
 import { createBundle } from 'dts-buddy';
-import { exports } from '../package.json';
+// import { exports } from '../package.json';
 
 await createBundle({
 	output: 'index.d.ts',
@@ -9,7 +9,7 @@ await createBundle({
 	// 	return { ...acc, ['mauss' + key.slice(1)]: entry };
 	// }, {}),
 	modules: {
-		// "mauss": "./src/core/index.js",
+		// mauss: './src/core/index.js',
 		'mauss/api': './src/api/index.js',
 		'mauss/bits': './src/bits/index.js',
 		'mauss/guards': './src/guards/index.js',
