@@ -4,88 +4,6 @@
 import { :util } from 'mauss';
 ```
 
-## `compare`
-
-A namespace with multiple functions for various types, including an `inspect` function that can sort any array of object (but only objects).
-
-This namespace provides complete list of methods that covers all `typeof` values and some customized additions. All method returns a number that can be provided directly to `.sort` function, defaults to ordering in descending values.
-
-| Method      | Accepts     |
-| ----------- | ----------- |
-| `undefined` | `undefined` |
-| `boolean`   | `boolean`   |
-| `number`    | `number`    |
-| `string`    | `string`    |
-| `bigint`    | `bigint`    |
-| `symbol`    | `symbol`    |
-| `object`    | `object`    |
-
-```js
-compare.string('abc', 'def');
-// and other primitives
-
-[
-	/* data */
-].sort(comparator);
-```
-
-### `compare.key`
-
-```ts
-type Wildcard = (x: any, y: any) => number;
-export function key<Identifier extends string>(
-	identifier: Identifier,
-	comparator?: Wildcard,
-): Wildcard;
-```
-
-A higher-order function that accepts a string as an identifier and an optional comparator function, it breaks up the identifier described by the dot (`.`) character and returns a curried function that accepts `(x, y)` with an object defined by the identifier.
-
-```ts
-const posts = [
-	{ date: { month: 4 } },
-	{ date: { month: 7 } },
-	{ date: { month: 6 } },
-	{ date: { month: 5 } },
-	{ date: { month: 1 } },
-	{ date: { month: 7 } },
-	{ date: { month: 2 } },
-];
-
-posts.sort(compare.key('date.month'));
-```
-
-The optional comparator can be used when you have an existing custom sort function, e.g. in combination with `compare.order` to sort a set of string.
-
-```ts
-const posts = [
-	{ date: { month: 'March' } },
-	{ date: { month: 'June' } },
-	{ date: { month: 'May' } },
-	{ date: { month: 'April' } },
-	{ date: { month: 'January' } },
-	{ date: { month: 'June' } },
-	{ date: { month: 'February' } },
-];
-
-const months = [
-	'January',
-	'February',
-	'March',
-	'April',
-	'May',
-	'June',
-	'July',
-	'August',
-	'September',
-	'October',
-	'November',
-	'December',
-];
-
-posts.sort(compare.key('date.month', compare.order(months)));
-```
-
 ## `curry`
 
 A type-safe higher-order function that accepts a function with one or more parameters and returns a function that can take in one or more arguments with a max of the parameters length.
@@ -102,82 +20,6 @@ const tSearch = throttle(search, 500);
 
 dSearch('mauss'); // execute after 500ms
 tSearch('mauss'); // execute every 500ms
-```
-
-## `dt`
-
-Simple `date/time` (`dt`) utility namespace.
-
-```ts
-type DateValue = string | number | Date;
-
-interface BuildOptions {
-	base?: 'UTC';
-}
-
-interface TravelOptions {
-	/** relative point of reference to travel */
-	from?: DateValue;
-	/** relative days to travel in number */
-	to: number;
-}
-
-export const dt: {
-	current(d?: DateValue): Date;
-	build(options: BuildOptions): (date?: DateValue) => (mask?: string) => string;
-	format: ReturnType<typeof this.build>;
-	travel({ from, to }: TravelOptions): Date;
-};
-```
-
--   `dt.current` is a function `(d?: DateValue) => Date` that optionally takes in a `DateValue` to be converted into a `Date` object, `new Date()` will be used if nothing is passed
--   `dt.build` is a function that accepts `BuildOptions` and builds a formatter, a convenience export is included with all the default options as `dt.format`
--   `dt.format` is a function that takes in a `DateValue` and returns a renderer that accepts a string mask to format the date in, defaults to `'DDDD, DD MMMM YYYY'`
--   `dt.travel` is a function `({ from, to }) => Date` that takes in a `{ from, to }` object with `from` property being optional
-
-## `execute`
-
-```ts
-export function execute(
-	condition: truthy,
-	correct: () => AlsoPromise<void> | AnyFunction<[]>,
-	otherwise: () => AlsoPromise<void> | AnyFunction<[]> = () => {},
-): void;
-```
-
-A convenience function to avoid writing [IIFE](https://developer.mozilla.org/en-US/docs/Glossary/IIFE)s. Instead of having `(...)()` everywhere in the codebase, it will be much nicer to see
-
-```ts
-execute(you === world, () => {
-	// ...
-});
-```
-
-Combined with Svelte's `$:`, which is a way to mark statements as reactive, we can have `async` operations that reacts to changes in the application and `await` them as well.
-
-```svelte
-<script>
-  export let initial;
-  import { execute } from 'mauss';
-
-  let editable = initial;
-  $: execute(editable !== initial, async () => {
-    // imagine `editable` as the local state and `initial` from an API...
-    // inside here will only run when `editable` and `initial` are different
-    // (or whatever boolean condition you put as the first argument)
-    // this means it will also not run on initial component mount.
-
-    // e.g. if `editable` is changed, we'll trigger a request to update the DB.
-    //
-    // we can then use SvelteKit's `invalidate[All]` function to update
-    // `initial` and refresh the whole app's page data without having to
-    // update the variables manually and individually.
-    //
-    // when using SvelteKit, the current page/component will not be recreated
-    // but because `editable` is declared with `let`, it will not change when
-    // `initial` is updated, preventing an infinite loop.
-  })
-</script>
 ```
 
 ## `identical`
@@ -218,10 +60,44 @@ export function scope<T>(fn: () => T): T;
 
 A convenience function to declare a variable with multiple conditionals to determine its final value, without cluttering the global or top-level scope with temporary variables that are only used once, and avoid nested ternary hell.
 
+## `tsf`
+
+A template string function. This takes a template string and returns a function that takes an object of functions, which is used to manipulate the name of the braces in the template string. Parameters of the braces can be prefixed with a question mark `?` to make it optional to the type system and will fallback to an empty string if it's not defined in the table.
+
+<!-- , and a colon `:` to specify a default value. -->
+
+This assumes the braces inside the template string are balanced and not nested. The function will not throw an error if the braces are not balanced, but the result will be unexpected. If you're using TypeScript and are passing a [string literal](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#literal-types), it will point out any unbalanced braces by throwing an error from the compiler.
+
+```typescript
+export function tsf(
+	template: string,
+): (table: {
+	[key: string]: string | false | Nullish | ((key: string) => string | false | Nullish);
+}) => string;
+```
+
+The template string is parsed into an array of strings, which are then executed with the provided table of functions, which is an object with the key being the name of the braces from the template string, and the value being the function to manipulate the name of the braces.
+
+```javascript
+import { tsf } from 'mauss/std';
+
+const render = tsf('https://api.example.com/v1/{category}/{id}');
+
+function publish({ category, id }) {
+  const prefix = // ...
+  const url = render({
+    category: () => category !== 'new' && category,
+    id: (v) => prefix + uuid(`${v}-${id}`),
+  });
+
+  return fetch(url);
+}
+```
+
 ## `unique`
 
 ```ts
-export default function unique<T, I>(array: T[], key?: string & I): T[];
+export function unique<T, I>(array: T[], key?: string & I): T[];
 ```
 
 A function that accepts an array and returns the same without any duplicate values. This can also handle an array of object by passing in a `key` as an identifier to access the object, with the same behaviour as [`compare.key`](#comparekey).

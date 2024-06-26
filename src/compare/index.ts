@@ -1,8 +1,33 @@
-import type * as TS from '../../typings/index.js';
-import * as primitives from './primitives.js';
+import type * as TS from '../typings/index.js';
 
-export * from './patterned.js';
-export * from './primitives.js';
+export function undefined(x: unknown, y: unknown): number {
+	if (x == null && y == null) return 0;
+	return (x == null && 1) || (y == null && -1) || 0;
+}
+
+export function boolean(x: boolean, y: boolean): number {
+	return +y - +x;
+}
+
+export function number(x: number, y: number): number {
+	return y - x;
+}
+
+export function bigint(x: bigint, y: bigint): number {
+	return x < y ? -1 : x > y ? 1 : 0;
+}
+
+export function symbol(x: symbol, y: symbol): number {
+	return x.toString().localeCompare(y.toString());
+}
+
+export function string(x: string, y: string): number {
+	for (const [pattern, exp] of Object.entries(patterns)) {
+		const fn = { date, time }[pattern.split(':')[0]];
+		if (exp.test(x) && exp.test(y) && fn) return fn(x, y);
+	}
+	return x.localeCompare(y);
+}
 
 type Wildcard = TS.AnyFunction<[x: any, y: any], number>;
 
@@ -11,6 +36,8 @@ export function object(x: object, y: object): number {
 	if (y === null) return -1;
 	return inspect(x, y);
 }
+
+const primitives = { string, number, bigint, boolean, symbol, undefined } as const;
 
 export function wildcard(x: any, y: any): number {
 	if (x == null) return 1;
@@ -21,11 +48,10 @@ export function wildcard(x: any, y: any): number {
 	if (xt !== yt || xt === 'object') {
 		const xs = JSON.stringify(x);
 		const ys = JSON.stringify(y);
-		return primitives.string(xs, ys);
+		return string(xs, ys);
 	}
 
-	const constrained: Wildcard = primitives[xt];
-	return constrained(x, y);
+	return (primitives[xt] as Wildcard)(x, y);
 }
 
 export function inspect(
@@ -46,6 +72,23 @@ export function inspect(
 		if (data in primitives) return constrained(x[key], y[key]);
 	}
 	return 0;
+}
+
+// ---- patterned ----
+
+const patterns = {
+	'date:complete': /\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+([+-][0-2]\d:[0-5]\d|Z)/,
+	'date:time': /\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z)/,
+	date: /\d{4}-[01]\d-[0-3]\d/,
+	time: /[0-2]\d:[0-5]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z)/,
+} as const;
+
+export function date(x: string | Date, y: string | Date) {
+	return new Date(y).getTime() - new Date(x).getTime();
+}
+
+export function time(x: string | Date, y: string | Date) {
+	return Date.parse(`2017/08/28 ${y}`) - Date.parse(`2017/08/28 ${x}`);
 }
 
 // ---- customized ----
