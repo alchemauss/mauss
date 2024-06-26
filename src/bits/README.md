@@ -4,15 +4,11 @@
 import { :util } from 'mauss/bits';
 ```
 
-## `find`
-
-A namespace with generic methods to help find items in an (sometimes sorted) array.
-
-### `find.binary`
+## `binary`
 
 do a binary search on a sorted array with custom item checking and cutoff function.
 
-### `find.minmax`
+## `minmax`
 
 find the minimum and maximum value in an array of numbers.
 

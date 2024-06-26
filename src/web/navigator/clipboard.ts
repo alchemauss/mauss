@@ -2,7 +2,7 @@ import type { AlsoPromise } from '../../typings/extenders.js';
 
 const noop = () => {};
 
-export function copy(
+function copy(
 	data: string | ClipboardItem,
 	handler: {
 		accept?(): AlsoPromise<void>;
@@ -26,16 +26,20 @@ export function copy(
 	return process.then(accept, reject);
 }
 
-export function item(type: string, data: string | Blob, options?: ClipboardItemOptions) {
-	return new ClipboardItem({ [type]: data }, options);
-}
-
-export function paste(type: 'blob'): Promise<ClipboardItems>;
-export function paste(type: 'text'): Promise<string>;
-export function paste(type: 'blob' | 'text') {
+function paste(type: 'blob'): Promise<ClipboardItems>;
+function paste(type: 'text'): Promise<string>;
+function paste(type: 'blob' | 'text') {
 	const ncb = navigator.clipboard;
 
 	// check for compatibility/permissions
 
 	return { blob: ncb.read, text: ncb.readText }[type]();
 }
+
+export const clipboard = {
+	copy,
+	paste,
+	item(type: string, data: string | Blob, options?: ClipboardItemOptions) {
+		return new ClipboardItem({ [type]: data }, options);
+	},
+};
