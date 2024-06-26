@@ -68,7 +68,7 @@ suites['identical/']('identical object checks', () => {
 	assert.ok(std.identical({ x: [{}], y: { a: 0 } }, { x: [{}], y: { a: 0 } }));
 });
 suites['identical/']('identical clone', async () => {
-	const { clone } = await import('../../std/ntv/object.js');
+	const { clone } = await import('../../std/object.js');
 	const data = { a: [1, '', {}], o: { now: new Date() } };
 	assert.ok(std.identical(data, clone(data)));
 });
