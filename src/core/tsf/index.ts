@@ -1,7 +1,7 @@
 import { UnaryFunction } from '../../typings/helpers.js';
 
 type Parse<T> = T extends `${string}{${infer P}}${infer R}` ? P | Parse<R> : never;
-export function tsf<Input extends string>(
+export default function tsf<Input extends string>(
 	template: Input extends `${string}{}${string}`
 		? 'Empty braces are not allowed in template'
 		: Input extends

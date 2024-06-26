@@ -1,6 +1,6 @@
-import type { Falsy, IndexSignature } from '../../typings/aliases.js';
-import type { AnyFunction, Entries, Freeze } from '../../typings/helpers.js';
-import type { Narrow } from '../../typings/prototypes.js';
+import type { Falsy, IndexSignature } from '../typings/aliases.js';
+import type { AnyFunction, Entries, Freeze } from '../typings/helpers.js';
+import type { Narrow } from '../typings/prototypes.js';
 
 export function clone<T>(i: T): T {
 	if (!i || typeof i !== 'object') return i;

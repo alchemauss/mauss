@@ -1,3 +1,2 @@
-export * as csv from './csv/index.js';
-export * as ntv from './ntv/index.js';
-export { tsf } from './tsf/index.js';
+export { zip } from './array.js';
+export { clone, entries, freeze, iterate, keys, pick, size } from './object.js';

@@ -1,4 +1,4 @@
-import { tsf } from './index.js';
+import tsf from './index.js';
 
 tsf('');
 tsf('/');

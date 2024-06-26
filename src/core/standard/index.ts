@@ -1,4 +1,3 @@
-import type { AlsoPromise } from '../../typings/extenders.js';
 import type { AnyFunction, Reverse } from '../../typings/helpers.js';
 
 interface CapitalizeOptions {
@@ -11,14 +10,6 @@ export function capitalize(text: string, { cap, normalize }: CapitalizeOptions =
 	if (normalize) text = text.toLowerCase();
 	if (cap) return `${text[0].toUpperCase()}${text.slice(1)}`;
 	return text.replace(/(?:^|\s)\S/g, (a) => a.toUpperCase());
-}
-
-export function execute(
-	condition: boolean,
-	correct: () => AlsoPromise<void> | AnyFunction<[]>,
-	otherwise: () => AlsoPromise<void> | AnyFunction<[]> = () => {},
-) {
-	condition ? correct() : otherwise();
 }
 
 /** identical - checks whether x and y have the same values */
