@@ -1,4 +1,4 @@
-import type { IndexSignature, Nullish } from '../../typings/aliases.js';
+import type { IndexSignature, Nullish } from '../typings/aliases.js';
 
 export function zip<T extends Array<Nullish | {}>>(...arrays: T[]) {
 	const max = Math.max(...arrays.map((a) => a.length));
