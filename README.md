@@ -25,20 +25,6 @@ Natively, JavaScript already have some aspects to it and provides a wide set of 
 
 Using modules provided by mauss, you can write shorter and simpler code with minimal chaining, and without degrading the performance of your application. A good understanding of software design principles and a discipline in the application of functional and declarative paradigms are still needed to achieve the most benefits. It does not nullify bad practices completely, but it does make it harder to do so...
 
-## API Documentation
-
-| Module                    | Import            |
-| ------------------------- | ----------------- |
-| [`core`](/src/core)       | `'mauss'`         |
-| [`api`](/src/api)         | `'mauss/api'`     |
-| [`bits`](/src/bits)       | `'mauss/bits'`    |
-| [`guards`](/src/guards)   | `'mauss/guards'`  |
-| [`math`](/src/math)       | `'mauss/math'`    |
-| [`std`](/src/std)         | `'mauss/std'`     |
-| [`utils`](/src/utils)     | `'mauss/utils'`   |
-| [`web`](/src/web)         | `'mauss/web'`     |
-| [`typings`](/src/typings) | `'mauss/typings'` |
-
 ---
 
 <h3 align="center"><pre>Mauss | <a href="LICENSE">MIT License</a></pre></h3>
