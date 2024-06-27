@@ -43,7 +43,7 @@
 		"prettier.json",
 		"tsconfig.json"
 	],
-	"packageManager": "pnpm@8.14.0",
+	"packageManager": "pnpm@9.4.0",
 	"prettier": "./prettier.json",
 	"keywords": [
 		"zero-dependency",
