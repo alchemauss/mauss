@@ -11,9 +11,6 @@ importers:
       '@types/node':
         specifier: ^20.14.9
         version: 20.14.9
-      dts-buddy:
-        specifier: ^0.5.0
-        version: 0.5.0(typescript@5.5.2)
       prettier:
         specifier: ^3.3.2
         version: 3.3.2
@@ -29,6 +26,12 @@ importers:
       uvu:
         specifier: ^0.5.6
         version: 0.5.6
+
+  workspace/mauss:
+    devDependencies:
+      dts-buddy:
+        specifier: ^0.5.0
+        version: 0.5.0(typescript@5.5.2)
 
 packages:
 

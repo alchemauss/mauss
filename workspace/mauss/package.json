@@ -1,0 +1,64 @@
+{
+	"name": "mauss",
+	"version": "0.7.2",
+	"description": "fast and efficient type-safe SDK",
+	"repository": "github:alchemauss/mauss",
+	"author": "Ignatius Bagus",
+	"license": "MIT",
+	"type": "module",
+	"scripts": {
+		"format": "prettier -w . --plugin=prettier-plugin-sort-package-json",
+		"check": "pnpm check:code && pnpm check:style",
+		"check:code": "pnpm build:files --noEmit",
+		"check:style": "prettier -c . --plugin=prettier-plugin-sort-package-json",
+		"test": "pnpm test:unit",
+		"test:unit": "uvu -r tsm src \"(spec\\.ts)\"",
+		"build:types": "tsm scripts/compile-types.ts",
+		"build:files": "tsc --project src",
+		"prepublishOnly": "pnpm build:types && pnpm build:files"
+	},
+	"typings": "./index.d.ts",
+	"exports": {
+		".": "./src/core/index.js",
+		"./api": "./src/api/index.js",
+		"./bits": "./src/bits/index.js",
+		"./compare": "./src/compare/index.js",
+		"./csv": "./src/csv/index.js",
+		"./date": "./src/date/index.js",
+		"./guards": "./src/guards/index.js",
+		"./math": "./src/math/index.js",
+		"./random": "./src/random/index.js",
+		"./std": "./src/std/index.js",
+		"./web": "./src/web/index.js",
+		"./typings": "./src/typings/index.d.ts",
+		"./package.json": "./package.json",
+		"./prettier.json": "./prettier.json",
+		"./tsconfig.json": "./tsconfig.json"
+	},
+	"files": [
+		"src/**/*.js",
+		"index.d.ts",
+		"index.d.ts.map",
+		"prettier.json",
+		"tsconfig.json"
+	],
+	"prettier": "./prettier.json",
+	"keywords": [
+		"zero-dependency",
+		"strongly-typed",
+		"type-safe",
+		"fast",
+		"efficient",
+		"functional",
+		"declarative",
+		"modular",
+		"reusable",
+		"standard",
+		"typings",
+		"opinionated",
+		"settings"
+	],
+	"devDependencies": {
+		"dts-buddy": "^0.5.0"
+	}
+}

@@ -9,6 +9,7 @@ export function boolean(x: boolean, y: boolean): number {
 	return +y - +x;
 }
 
+/** Put `(x, y)` for bigger number first, and `(y, x)` for smaller number first */
 export function number(x: number, y: number): number {
 	return y - x;
 }
