@@ -14,10 +14,11 @@ jobs:
           node-version: 20
           cache: pnpm
 
-      - run: pnpm install && pnpm package
-      - run: pnpm publish ./dist --dry-run --no-git-checks
+      - run: pnpm install && cd workspace/mauss
+      - run: ls -al
+      - run: pnpm publish --dry-run --no-git-checks
 
       - uses: actions/upload-artifact@v3
         with:
-          path: ./dist
+          path: .
           retention-days: 5
