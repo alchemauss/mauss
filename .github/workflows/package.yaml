@@ -17,8 +17,3 @@ jobs:
       - run: pnpm install
       - working-directory: ./workspace/mauss
         run: pnpm publish --dry-run --no-git-checks
-
-      - uses: actions/upload-artifact@v3
-        with:
-          path: ./workspace/mauss
-          retention-days: 5
