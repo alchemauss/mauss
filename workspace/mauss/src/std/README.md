@@ -29,7 +29,7 @@ Creating a copy of a data type, especially an object, is useful for removing the
 
 ## `iterate`
 
-Original function, iterate over the key-value pair of an object, returns a new object using the pairs returned from the callback function. If callback is omitted, the default behaviour will create a deep copy of the original object.
+Original function, iterate over the key-value pair of an object, returns a new object using the pairs returned from the callback function. If callback is omitted, the default behavior will create a deep copy of the original object.
 
 ```typescript
 export function iterate<T extends object>(
