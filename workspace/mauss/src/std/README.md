@@ -6,6 +6,17 @@ Standard modules, augmented and refined.
 import { :util } from 'mauss/std';
 ```
 
+## `augment`
+
+Augments the source object with various utility methods, such as
+
+- `build(keys: string[])` - creates a new object with the keys passed
+- `readonly entries` - returns an array of the object entries
+- `filter(keys: string[])` - returns the object with only the keys passed
+- `freeze()` - deep freezes the object
+- `readonly keys` - returns an array of the object keys
+- `readonly size` - returns the size of the object
+
 ## `clone`
 
 Original function, creates a deep copy of any data type, use sparingly.
@@ -15,10 +26,6 @@ export function clone<T>(i: T): T;
 ```
 
 Creating a copy of a data type, especially an object, is useful for removing the reference to the original object, keeping it clean from unexpected changes and side effects. This is possible because we are creating a new instance, making sure that any mutation or changes that are applied won't affect one or the other.
-
-## `freeze`
-
-Augmented `Object.freeze()`, deep freezes and strongly-typed.
 
 ## `iterate`
 
@@ -35,26 +42,6 @@ export function iterate<T extends object>(
 ```
 
 The returned object will be filtered to only contain a key-value pair of the 2-tuple from `fn()`, any other values returned from the callback will be ignored, i.e. `void | Falsy`.
-
-## `pick`
-
-Original function, returns a curried function that constructs a new object consisting of the properties passed to `keys` as an array of strings.
-
-```typescript
-export function pick<K extends string[]>(keys: K): <T>(o: T) => Pick<T, K[number]>;
-```
-
-In the case of picking the same properties from multiple different objects, we can store it as `unwrap`
-
-```typescript
-const unwrap = pick(['a', 'b', 'c']);
-
-unwrap({ ... });
-```
-
-## `size`
-
-Convenience method to get the size of an object by checking the `length` of its keys.
 
 ## `zip`
 
