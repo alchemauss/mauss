@@ -75,11 +75,11 @@ suites['identical/']('identical clone', async () => {
 });
 
 suites['sides/']('first and last element', () => {
-	assert.equal(std.sides(''), { head: undefined, tail: undefined });
-	assert.equal(std.sides([]), { head: undefined, tail: undefined });
+	assert.equal(std.sides(''), { head: undefined, last: undefined });
+	assert.equal(std.sides([]), { head: undefined, last: undefined });
 
-	assert.equal(std.sides('abz'), { head: 'a', tail: 'z' });
-	assert.equal(std.sides([{ a: 0 }, { z: 'i' }]), { head: { a: 0 }, tail: { z: 'i' } });
+	assert.equal(std.sides('abz'), { head: 'a', last: 'z' });
+	assert.equal(std.sides([{ a: 0 }, { z: 'i' }]), { head: { a: 0 }, last: { z: 'i' } });
 });
 
 Object.values(suites).forEach((v) => v.run());
