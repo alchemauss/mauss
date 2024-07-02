@@ -10,12 +10,12 @@ import { :util } from 'mauss/std';
 
 Augments the source object with various utility methods, such as
 
-- `build(keys: string[])` - creates a new object with the keys passed
-- `readonly entries` - returns an array of the object entries
-- `filter(keys: string[])` - returns the object with only the keys passed
-- `freeze()` - deep freezes the object
-- `readonly keys` - returns an array of the object keys
-- `readonly size` - returns the size of the object
+-   `build(keys: string[])` - creates a new object with the keys passed
+-   `readonly entries` - returns an array of the object entries
+-   `filter(keys: string[])` - returns the object with only the keys passed
+-   `freeze()` - deep freezes the object
+-   `readonly keys` - returns an array of the object keys
+-   `readonly size` - returns the size of the object
 
 ## `clone`
 
