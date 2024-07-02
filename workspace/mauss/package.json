@@ -29,6 +29,7 @@
 		"./math": "./src/math/index.js",
 		"./random": "./src/random/index.js",
 		"./std": "./src/std/index.js",
+		"./sys": "./src/sys/index.js",
 		"./web": "./src/web/index.js",
 		"./typings": "./src/typings/index.d.ts",
 		"./package.json": "./package.json",
