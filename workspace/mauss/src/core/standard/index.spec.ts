@@ -5,6 +5,7 @@ import * as std from './index.js';
 const suites = {
 	'capitalize/': suite('std/capitalize'),
 	'identical/': suite('std/identical'),
+	'sides/': suite('std/sides'),
 };
 
 suites['capitalize/']('change one letter for one word', () => {
@@ -71,6 +72,14 @@ suites['identical/']('identical clone', async () => {
 	const { clone } = await import('../../std/object.js');
 	const data = { a: [1, '', {}], o: { now: new Date() } };
 	assert.ok(std.identical(data, clone(data)));
+});
+
+suites['sides/']('first and last element', () => {
+	assert.equal(std.sides(''), { head: undefined, last: undefined });
+	assert.equal(std.sides([]), { head: undefined, last: undefined });
+
+	assert.equal(std.sides('abz'), { head: 'a', last: 'z' });
+	assert.equal(std.sides([{ a: 0 }, { z: 'i' }]), { head: { a: 0 }, last: { z: 'i' } });
 });
 
 Object.values(suites).forEach((v) => v.run());

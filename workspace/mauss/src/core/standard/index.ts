@@ -68,3 +68,7 @@ export function regexp(pattern: string, flags?: string): RegExp {
 export function scope<T>(fn: () => T) {
 	return fn();
 }
+
+export function sides<T extends string | any[]>(x: T): Record<'head' | 'last', T[0]> {
+	return { head: x[0], last: x[x.length - 1] };
+}
