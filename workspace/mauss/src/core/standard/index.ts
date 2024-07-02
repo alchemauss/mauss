@@ -1,0 +1,77 @@
+import type { AnyFunction, Reverse } from '../../typings/helpers.js';
+
+interface CapitalizeOptions {
+	/** only capitalize the very first letter */
+	cap?: boolean;
+	/** convert the remaining word to lowercase */
+	normalize?: boolean;
+}
+export function capitalize(text: string, { cap, normalize }: CapitalizeOptions = {}): string {
+	if (normalize) text = text.toLowerCase();
+	if (cap) return `${text[0].toUpperCase()}${text.slice(1)}`;
+	return text.replace(/(?:^|\s)\S/g, (a) => a.toUpperCase());
+}
+
+/** identical - checks whether x and y have the same values */
+export function identical(x: unknown, y: unknown): boolean {
+	const [xt, yt] = [typeof x, typeof y];
+	if (xt !== yt) return false;
+	if (xt === 'function') return true;
+	if (xt === 'symbol') {
+		// @ts-expect-error - guaranteed symbol
+		return x.toString() === y.toString();
+	}
+
+	if (xt !== 'object') return x === y;
+	if (x == null || y == null) return x === y;
+
+	if (Array.isArray(x) !== Array.isArray(y)) return false;
+	if (Array.isArray(x) && Array.isArray(y)) {
+		if (x.length !== y.length) return false;
+		for (let i = 0; i < x.length; i++) {
+			if (!identical(x[i], y[i])) return false;
+		}
+		return true;
+	}
+
+	const [xk, yk] = [Object.keys(x), Object.keys(y)];
+	const keys = new Set([...xk, ...yk]);
+	if (xk.length !== yk.length || keys.size !== xk.length) return false;
+	for (const k of keys) {
+		// @ts-expect-error - guaranteed indexable
+		if (!identical(x[k], y[k])) return false;
+	}
+	return true;
+}
+
+/**
+ * inverse - reverses the order of provided arguments to fn parameters
+ * @param fn any function with one or more arguments
+ * @returns a curried function to take in the arguments
+ */
+export function inverse<Function extends AnyFunction>(fn: Function) {
+	type Reversed = Reverse<Parameters<Function>>;
+	type Returned = ReturnType<Function>;
+	return (...parameters: Reversed): Returned => fn(...parameters.reverse());
+}
+
+/**
+ * regexp - implementation of global RegExp constructor with escaped pattern
+ * @param pattern passed in the form of string literal
+ * @param flags unique set of characters from `d|g|i|m|s|u|y`
+ * @returns dynamically constructed RegExp object
+ */
+export function regexp(pattern: string, flags?: string): RegExp {
+	return new RegExp(pattern.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), flags);
+}
+
+export function scope<T>(fn: () => T) {
+	return fn();
+}
+
+type Anatomy<T> = Record<'head' | 'tail', T>;
+export function sides<T>(x: T[]): Anatomy<T>;
+export function sides<T extends string>(x: T): Anatomy<string>;
+export function sides<T extends string | T[]>(x: T) {
+	return { head: x[0], tail: x[x.length - 1] };
+}
