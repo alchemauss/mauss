@@ -1,5 +1,4 @@
-export { default as curry } from './lambda/curry.js';
-export { default as pipe } from './lambda/pipe.js';
+export { curry, pipe } from './lambda/index.js';
 
 export { debounce, immediate, throttle } from './processor/index.js';
 
