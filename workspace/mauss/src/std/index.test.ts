@@ -1,10 +1,10 @@
-import { entries } from './object.js';
+import { augment } from './index.js';
 
-entries<{}>({});
+augment<{}>({});
 
 // ---- errors ----
 
 // @ts-expect-error - error on empty argument
-entries();
+augment();
 // @ts-expect-error - error on non-object type
-entries(null);
+augment(null);

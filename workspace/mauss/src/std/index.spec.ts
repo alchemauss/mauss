@@ -1,9 +1,11 @@
 import { suite } from 'uvu';
 import * as assert from 'uvu/assert';
 
-import * as ntv from './object.js';
+import * as std from './index.js';
 
 const suites = {
+	'arr/zip': suite('arr/zip'),
+
 	'obj/clone': suite('obj/clone'),
 	'obj/entries': suite('obj/entries'),
 	'obj/freeze': suite('obj/freeze'),
@@ -13,9 +15,56 @@ const suites = {
 	'obj/size': suite('obj/size'),
 };
 
+suites['arr/zip']('zip multiple arrays of objects', () => {
+	const zipped = std.zip(
+		[{ a: 0 }, { x: 0 }],
+		[{ b: 0 }, { y: 0 }],
+		[{ c: 0 }, { z: 0 }],
+		[{ d: 0 }, { x: 1 }],
+	);
+
+	assert.equal(zipped, [
+		{ a: 0, b: 0, c: 0, d: 0 },
+		{ x: 1, y: 0, z: 0 },
+	]);
+});
+suites['arr/zip']('zip multiple uneven arrays', () => {
+	const zipped = std.zip(
+		[{ a: 0 }],
+		[{ a: 1 }, { x: 0 }],
+		[{ b: 0 }, { y: 0 }],
+		[{ c: 0 }, { z: 0 }, { v: 0 }],
+		[{ d: 0 }, { x: 1 }],
+		[null, null, { w: 0 }, { w: 0 }],
+		[null, null, { x: 0 }, { x: 0 }],
+		[null, null, { v: 1 }, { y: 0 }],
+	);
+
+	assert.equal(zipped, [
+		{ a: 1, b: 0, c: 0, d: 0 },
+		{ x: 1, y: 0, z: 0 },
+		{ v: 1, w: 0, x: 0 },
+		{ w: 0, x: 0, y: 0 },
+	]);
+});
+suites['arr/zip']('zip remove all nullish index', () => {
+	const zipped = std.zip(
+		[{ a: 0 }, null, { x: 0 }, null, { a: 0 }, undefined],
+		[{ b: 0 }, null, { y: 0 }, undefined, { b: 0 }, null],
+		[{ c: 0 }, null, { z: 0 }, undefined, { c: 0 }, null],
+		[{ d: 0 }, null, { x: 1 }, null, { d: 0 }, undefined],
+	);
+
+	assert.equal(zipped, [
+		{ a: 0, b: 0, c: 0, d: 0 },
+		{ x: 1, y: 0, z: 0 },
+		{ a: 0, b: 0, c: 0, d: 0 },
+	]);
+});
+
 suites['obj/clone']('clone any possible data type', () => {
 	const base = { arr: [0, 'hi', /wut/], obj: { now: new Date() } };
-	const cloned = ntv.clone(base);
+	const cloned = std.clone(base);
 
 	assert.ok(base !== cloned);
 	assert.ok(base.arr !== cloned.arr);
@@ -28,7 +77,7 @@ suites['obj/clone']('clone any possible data type', () => {
 });
 
 suites['obj/entries']('return object entries', () => {
-	assert.equal(ntv.entries({ hello: 'world', foo: 0, bar: { baz: 1 } }), [
+	assert.equal(std.augment({ hello: 'world', foo: 0, bar: { baz: 1 } }).entries, [
 		['hello', 'world'],
 		['foo', 0],
 		['bar', { baz: 1 }],
@@ -36,20 +85,24 @@ suites['obj/entries']('return object entries', () => {
 });
 
 suites['obj/freeze']('deep freezes nested objects', () => {
-	const nested = ntv.freeze({
-		foo: { a: 0 },
-		bar: { b: 1 },
-	});
+	const nested = std
+		.augment({
+			foo: { a: 0 },
+			bar: { b: 1 },
+		})
+		.freeze();
 
 	assert.ok(Object.isFrozen(nested));
 	assert.ok(Object.isFrozen(nested.foo));
 	assert.ok(Object.isFrozen(nested.bar));
 });
 suites['obj/freeze']('deep freeze ignore function', () => {
-	const nested = ntv.freeze({
-		identity: (v: any) => v,
-		namespace: { a() {} },
-	});
+	const nested = std
+		.augment({
+			identity: (v: any) => v,
+			namespace: { a() {} },
+		})
+		.freeze();
 
 	assert.ok(!Object.isFrozen(nested.identity));
 	assert.equal(nested.identity(0), 0);
@@ -70,8 +123,8 @@ suites['obj/iterate']('iterate over nested objects', () => {
 	);
 
 	assert.equal(
-		ntv.iterate(nested, ([month, v]) => {
-			const updated = ntv.iterate(v, ([currency, { income, expense }]) => {
+		std.iterate(nested, ([month, v]) => {
+			const updated = std.iterate(v, ([currency, { income, expense }]) => {
 				return [currency, { balance: income - expense }];
 			});
 			return [month, updated];
@@ -92,12 +145,12 @@ suites['obj/iterate']('iterate over nested objects', () => {
 });
 suites['obj/iterate']('iterate with empty/falsy return', () => {
 	assert.equal(
-		ntv.iterate({}, ([]) => {}),
+		std.iterate({}, ([]) => {}),
 		{},
 	);
 
 	assert.equal(
-		ntv.iterate(
+		std.iterate(
 			{ a: '0', b: 1, c: null, d: '3', e: undefined, f: false },
 			([k, v]) => v != null && v !== false && [k, v],
 		),
@@ -105,10 +158,10 @@ suites['obj/iterate']('iterate with empty/falsy return', () => {
 	);
 
 	type Nested = { [P in 'a' | 'b']?: { [K in 'x' | 'y']: { foo: string } } };
-	ntv.iterate({ a: { x: { foo: 'ax' } } } as Nested, ([parent, v]) => {
+	std.iterate({ a: { x: { foo: 'ax' } } } as Nested, ([parent, v]) => {
 		assert.equal(parent, 'a');
 		v &&
-			ntv.iterate(v, ([key, { foo }]) => {
+			std.iterate(v, ([key, { foo }]) => {
 				assert.equal(key, 'x');
 				assert.equal(foo, 'ax');
 			});
@@ -116,19 +169,17 @@ suites['obj/iterate']('iterate with empty/falsy return', () => {
 });
 suites['obj/iterate']('iterate creates deep copy', () => {
 	const original = { x: 1, y: { z: 'foo' } };
-	const copy = ntv.iterate(original);
+	const copy = std.iterate(original);
 	assert.ok(original !== copy);
 	assert.ok(original.y !== copy.y);
 });
 
 suites['obj/keys']('return object keys', () => {
-	assert.equal(ntv.keys({ a: 0, b: 1, c: 2 }), ['a', 'b', 'c']);
+	assert.equal(std.augment({ a: 0, b: 1, c: 2 }).keys, ['a', 'b', 'c']);
 });
 
 suites['obj/pick']('pick properties from an object', () => {
-	const { build, filter } = ntv.pick(['a', 'b', 'c', 'd', 'e', 'z']);
-
-	assert.equal(build({ a: 0, c: 'b', z: null }), {
+	assert.equal(std.augment({ a: 0, c: 'b', z: null }).build(['a', 'b', 'c', 'd', 'e', 'z']), {
 		a: 0,
 		b: null,
 		c: 'b',
@@ -137,15 +188,14 @@ suites['obj/pick']('pick properties from an object', () => {
 		z: null,
 	});
 
-	assert.equal(filter({ a: 0, c: 'b', y: undefined, z: null }), {
-		a: 0,
-		c: 'b',
-		z: null,
-	});
+	assert.equal(
+		std.augment({ a: 0, c: 'b', y: undefined, z: null }).filter(['a', 'b', 'c', 'd', 'e', 'z']),
+		{ a: 0, c: 'b', z: null },
+	);
 });
 
 suites['obj/size']('return size of an object', () => {
-	assert.equal(ntv.size({ a: 0, b: 1, c: 2 }), 3);
+	assert.equal(std.augment({ a: 0, b: 1, c: 2 }).size, 3);
 });
 
 Object.values(suites).forEach((v) => v.run());
