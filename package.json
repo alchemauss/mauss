@@ -14,7 +14,7 @@
 		"prettier": "^3.3.2",
 		"prettier-plugin-sort-package-json": "^0.2.0",
 		"tsm": "^2.3.0",
-		"typescript": "^5.5.2",
+		"typescript": "^5.5.3",
 		"uvu": "^0.5.6"
 	}
 }
