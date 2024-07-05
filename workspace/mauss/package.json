@@ -19,19 +19,57 @@
 	},
 	"typings": "./index.d.ts",
 	"exports": {
-		".": "./src/core/index.js",
-		"./api": "./src/api/index.js",
-		"./bits": "./src/bits/index.js",
-		"./compare": "./src/compare/index.js",
-		"./csv": "./src/csv/index.js",
-		"./date": "./src/date/index.js",
-		"./guards": "./src/guards/index.js",
-		"./math": "./src/math/index.js",
-		"./random": "./src/random/index.js",
-		"./std": "./src/std/index.js",
-		"./sys": "./src/sys/index.js",
-		"./web": "./src/web/index.js",
-		"./typings": "./src/typings/index.d.ts",
+		".": {
+			"types": "./index.d.ts",
+			"default": "./src/core/index.js"
+		},
+		"./api": {
+			"types": "./index.d.ts",
+			"default": "./src/api/index.js"
+		},
+		"./bits": {
+			"types": "./index.d.ts",
+			"default": "./src/bits/index.js"
+		},
+		"./compare": {
+			"types": "./index.d.ts",
+			"default": "./src/compare/index.js"
+		},
+		"./csv": {
+			"types": "./index.d.ts",
+			"default": "./src/csv/index.js"
+		},
+		"./date": {
+			"types": "./index.d.ts",
+			"default": "./src/date/index.js"
+		},
+		"./guards": {
+			"types": "./index.d.ts",
+			"default": "./src/guards/index.js"
+		},
+		"./math": {
+			"types": "./index.d.ts",
+			"default": "./src/math/index.js"
+		},
+		"./random": {
+			"types": "./index.d.ts",
+			"default": "./src/random/index.js"
+		},
+		"./std": {
+			"types": "./index.d.ts",
+			"default": "./src/std/index.js"
+		},
+		"./sys": {
+			"types": "./index.d.ts",
+			"default": "./src/sys/index.js"
+		},
+		"./web": {
+			"types": "./index.d.ts",
+			"default": "./src/web/index.js"
+		},
+		"./typings": {
+			"types": "./index.d.ts"
+		},
 		"./package.json": "./package.json",
 		"./prettier.json": "./prettier.json",
 		"./tsconfig.json": "./tsconfig.json"
