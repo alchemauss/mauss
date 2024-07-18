@@ -55,6 +55,16 @@ export function inverse<Function extends AnyFunction>(fn: Function) {
 	return (...parameters: Reversed): Returned => fn(...parameters.reverse());
 }
 
+export function memory<T>(initial: T, fn: AnyFunction<[previous: T], void>) {
+	let previous = initial;
+	return (updated: T) => {
+		if (!identical(previous, updated)) {
+			fn(previous), (previous = updated);
+		}
+		return updated;
+	};
+}
+
 /**
  * regexp - implementation of global RegExp constructor with escaped pattern
  * @param pattern passed in the form of string literal
