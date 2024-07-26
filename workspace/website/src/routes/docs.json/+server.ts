@@ -41,28 +41,35 @@ export async function GET() {
 				symbols.forEach((symbol) => {
 					const decl = symbol.valueDeclaration || symbol.declarations[0];
 					if (ts.isFunctionDeclaration(decl)) {
+						const signature = typechecker.getSignatureFromDeclaration(decl);
 						const name = symbol.getName();
 						const docs = ts
 							.getJSDocCommentsAndTags(decl)
 							.map((doc) => doc.getText())
 							.join('\n');
-						const signature = decl.getText();
-						schema[module].push({ name, docs, signature });
+						schema[module].push({
+							name,
+							docs,
+							signature: signature
+								? `function ${name}${typechecker.signatureToString(signature)}`
+								: '',
+						});
 					}
 				});
 			} else if (
 				ts.isFunctionDeclaration(node) &&
 				node.modifiers?.some((mod) => mod.kind === ts.SyntaxKind.ExportKeyword)
 			) {
+				const signature = typechecker.getSignatureFromDeclaration(node);
+				const name = node.name?.text;
 				const docs = ts
 					.getJSDocCommentsAndTags(node)
 					.map((doc) => doc.getText())
 					.join('\n');
-				const signature = node.getText();
 				schema[module].push({
-					name: node.name?.text,
+					name,
 					docs,
-					signature,
+					signature: signature ? `function ${name}${typechecker.signatureToString(signature)}` : '',
 				});
 			}
 		});
