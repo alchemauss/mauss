@@ -1,6 +1,6 @@
 import { test } from 'uvu';
 import * as assert from 'uvu/assert';
-import tsf from './index.js';
+import { tsf } from './index.js';
 
 test.skip('throws on nested braces', () => {
 	assert.throws(() => tsf('/{foo/{bar}}' as string));
