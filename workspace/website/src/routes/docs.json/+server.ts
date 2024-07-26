@@ -1,5 +1,4 @@
 import { json } from '@sveltejs/kit';
-import { readFileSync } from 'node:fs';
 import ts from 'typescript';
 import { exports } from '$ws/mauss/package.json';
 
@@ -8,7 +7,7 @@ export const prerender = true;
 export interface Schema {
 	[modules: string]: Array<{
 		name: string;
-		docs: string;
+		docs: string[];
 		signature: string;
 	}>;
 }
@@ -29,47 +28,36 @@ export async function GET() {
 		const source = program.getSourceFile(`../mauss/src/${module}/index.ts`);
 		if (!source) continue;
 
-		const typechecker = program.getTypeChecker();
+		const tc = program.getTypeChecker();
 		schema[module] = [];
 
 		ts.forEachChild(source, (node) => {
 			if (ts.isExportDeclaration(node)) {
-				// Handle re-exported symbols
-				const symbols = typechecker.getExportsOfModule(
-					typechecker.getSymbolAtLocation(node.moduleSpecifier),
-				);
+				const symbols = tc.getExportsOfModule(tc.getSymbolAtLocation(node.moduleSpecifier));
 				symbols.forEach((symbol) => {
 					const decl = symbol.valueDeclaration || symbol.declarations[0];
-					if (ts.isFunctionDeclaration(decl)) {
-						const signature = typechecker.getSignatureFromDeclaration(decl);
-						const name = symbol.getName();
-						const docs = ts
-							.getJSDocCommentsAndTags(decl)
-							.map((doc) => doc.getText())
-							.join('\n');
-						schema[module].push({
-							name,
-							docs,
-							signature: signature
-								? `function ${name}${typechecker.signatureToString(signature)}`
-								: '',
-						});
-					}
+					if (!ts.isFunctionDeclaration(decl)) return;
+
+					schema[module].push({
+						name: symbol.getName(),
+						docs: parse.jsdoc(decl),
+						get signature() {
+							const signature = tc.getSignatureFromDeclaration(decl);
+							return `function ${this.name}${tc.signatureToString(signature)}`;
+						},
+					});
 				});
 			} else if (
 				ts.isFunctionDeclaration(node) &&
 				node.modifiers?.some((mod) => mod.kind === ts.SyntaxKind.ExportKeyword)
 			) {
-				const signature = typechecker.getSignatureFromDeclaration(node);
-				const name = node.name?.text;
-				const docs = ts
-					.getJSDocCommentsAndTags(node)
-					.map((doc) => doc.getText())
-					.join('\n');
 				schema[module].push({
-					name,
-					docs,
-					signature: signature ? `function ${name}${typechecker.signatureToString(signature)}` : '',
+					name: node.name.text,
+					docs: parse.jsdoc(node),
+					get signature() {
+						const signature = tc.getSignatureFromDeclaration(node);
+						return `function ${this.name}${tc.signatureToString(signature)}`;
+					},
 				});
 			}
 		});
@@ -77,3 +65,14 @@ export async function GET() {
 
 	return json(schema);
 }
+
+const parse = {
+	jsdoc(declaration: ts.FunctionDeclaration) {
+		return ts.getJSDocCommentsAndTags(declaration).flatMap((doc) => {
+			const raw = doc.getText();
+			const lines = raw.slice(1, -1).split('\n');
+			const clean = lines.map((l) => l.replace(/^[\s*]+|[\s*]+$/g, ''));
+			return clean.filter((l) => l);
+		});
+	},
+};
