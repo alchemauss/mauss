@@ -11,7 +11,7 @@ const config = {
 		}),
 
 		alias: {
-			$ws: '..',
+			$mauss: '../mauss',
 		},
 
 		paths: {

@@ -1,6 +1,6 @@
 import { json } from '@sveltejs/kit';
 import ts from 'typescript';
-import { exports } from '$ws/mauss/package.json';
+import { exports } from '$mauss/package.json';
 
 export const prerender = true;
 
@@ -69,8 +69,7 @@ export async function GET() {
 const parse = {
 	jsdoc(declaration: ts.FunctionDeclaration) {
 		return ts.getJSDocCommentsAndTags(declaration).flatMap((doc) => {
-			const raw = doc.getText();
-			const lines = raw.slice(1, -1).split('\n');
+			const lines = doc.getText().slice(1, -1).split('\n');
 			const clean = lines.map((l) => l.replace(/^[\s*]+|[\s*]+$/g, ''));
 			return clean.filter((l) => l);
 		});
