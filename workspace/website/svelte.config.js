@@ -10,6 +10,10 @@ const config = {
 			fallback: '404.html',
 		}),
 
+		alias: {
+			$mauss: '../mauss',
+		},
+
 		paths: {
 			base: process.argv.includes('dev') ? '' : process.env.BASE_PATH,
 		},

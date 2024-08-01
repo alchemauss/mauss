@@ -1,4 +1,4 @@
-import type { IndexSignature, Primitives } from '../../typings/aliases.js';
+import type { IndexSignature, Nullish, Primitives } from '../../typings/aliases.js';
 import type { AlsoArray } from '../../typings/extenders.js';
 import type { Intersection } from '../../typings/helpers.js';
 import type { Flatten } from '../../typings/prototypes.js';
@@ -29,7 +29,7 @@ type QueryDecoder<Query extends string> = string extends Query
  * @param qs query string of a URL with or without the leading `?`
  * @returns mapped object of decoded query string
  */
-export default function qsd<Q extends string>(qs: Q) {
+export function qsd<Q extends string>(qs: Q) {
 	if (qs[0] === '?') qs = qs.slice(1) as Q;
 	if (!qs) return {} as QueryDecoder<Q>;
 
@@ -51,4 +51,40 @@ export default function qsd<Q extends string>(qs: Q) {
 		(dqs[k] as Primitives[]).push(dec(v));
 	}
 	return dqs as QueryDecoder<Q>;
+}
+
+type BoundValues = Nullish | Primitives;
+
+/**
+ * qse - query string encoder
+ * @param bound object with key-value pair to be updated in the URL
+ * @param transformer function that is applied to the final string if it exists
+ * @returns final query string
+ */
+export function qse<T extends object>(
+	bound: T[keyof T] extends BoundValues | readonly BoundValues[] ? T : never,
+	transformer = (final: string) => `?${final}`,
+): string {
+	const enc = encodeURIComponent;
+
+	let final = '';
+	for (let [k, v] of Object.entries(bound)) {
+		if (v == null || (typeof v === 'string' && !(v = v.trim()))) continue;
+		if ((k = enc(k)) && final) final += '&';
+
+		if (Array.isArray(v)) {
+			let pointer = 0;
+			while (pointer < v.length) {
+				if (pointer) final += '&';
+				const item = v[pointer++];
+				if (item == null) continue;
+				final += `${k}=${enc(item)}`;
+			}
+			continue;
+		}
+
+		final += `${k}=${enc(v as Primitives)}`;
+	}
+
+	return final ? transformer(final) : final;
 }

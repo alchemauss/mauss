@@ -3,11 +3,6 @@ name: Pages
 on:
   push:
     branches: [master]
-  # pull_request:
-
-concurrency:
-  group: 'pages'
-  cancel-in-progress: false
 
 jobs:
   build:
@@ -22,7 +17,8 @@ jobs:
           cache: pnpm
 
       - run: pnpm install
-      - run: cd workspace/website && pnpm build
+      - working-directory: ./workspace/website
+        run: pnpm build
         env:
           BASE_PATH: /${{ github.event.repository.name }}
 
