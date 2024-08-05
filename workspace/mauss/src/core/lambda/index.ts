@@ -7,6 +7,12 @@ type Currying<Fun extends AnyFunction> = <Arguments extends Progressive<Paramete
 	? ReturnType<Fun>
 	: Currying<(...args: Slice<Parameters<Fun>, Arguments['length']>) => ReturnType<Fun>>;
 
+/**
+ * A type-safe higher-order function that accepts a function with one or more parameters and returns a function that can take in one or more arguments with a max of the parameters length.
+ * If the total arguments provided has not yet reached the initial function parameters length, it will return a function until all the required parameters are fulfilled.
+ *
+ * @returns a curried function to take in the arguments
+ */
 export function curry<F extends AnyFunction>(fn: F, expected = fn.length): Currying<F> {
 	return <Arguments extends Progressive<Parameters<F>>>(...args: Arguments) => {
 		if (args.length === expected) return fn(...args);
@@ -24,6 +30,11 @@ type Validator<
 		: never // will never reach here, condition always satisfies
 	: Functions;
 
+/**
+ * A type-safe higher-order function that accepts any number of arguments, it returns a function with the parameters of the first function passed and a return type/value of the last function.
+ *
+ * @returns a function that takes in the initial type and returns the final type
+ */
 export function pipe<F extends UnaryFunction[]>(...functions: Validator<F>) {
 	type InitialType = Parameters<F[0]>[0];
 	type FinalType = ReturnType<Last<F, any>>;

@@ -1,3 +1,15 @@
+/**
+ * Parse a CSV content into a 2D array.
+ *
+ * @example
+ * ```javascript
+ * import { readFileSync } from 'fs';
+ * import { read } from 'mauss/csv';
+ * const csv = read(readFileSync('./data.csv', 'utf-8'));
+ * ```
+ *
+ * @returns a 2D array of the CSV content
+ */
 export function read(content: string) {
 	let current = [''];
 	let parsing = true;

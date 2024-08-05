@@ -14,7 +14,18 @@ export function capitalize(text: string, { cap, normalize }: CapitalizeOptions =
 	return text.replace(/(?:^|\s)\S/g, (a) => a.toUpperCase());
 }
 
-/** identical - checks whether x and y have the same values */
+/**
+ * A function to check for value equality between two variables. This will work for any data type except `function`, which will always return `true` when two function are being compared. The heuristics are as follows:
+ * - fails immediately when the type of `x` and `y` are not the same
+ * - type of `function` are not comparable, always returns true
+ * - type of `symbol` is converted and compared as a `string`
+ * - primitive values are compared using strict equality operator
+ * - type of `object`, two empty array or object are considered the same
+ * - type of `object`, comparing array also considers its length and item order
+ * - type of `object`, two object must have the same keys before comparing its values
+ * - type of `object`, the order of key-value pair does not matter for equality check
+ * - `identical` is infinitely recursive for any amount of nested array/object
+ */
 export function identical(x: unknown, y: unknown): boolean {
 	const [xt, yt] = [typeof x, typeof y];
 	if (xt !== yt) return false;
@@ -47,7 +58,8 @@ export function identical(x: unknown, y: unknown): boolean {
 }
 
 /**
- * inverse - reverses the order of provided arguments to fn parameters
+ * A function that accepts a function and returns the same function with the order of parameters reversed. This can be used in conjunction with `compare` methods to sort the items in ascending values.
+ *
  * @param fn any function with one or more arguments
  * @returns a curried function to take in the arguments
  */
@@ -58,7 +70,8 @@ export function inverse<Function extends AnyFunction>(fn: Function) {
 }
 
 /**
- * regexp - implementation of global RegExp constructor with escaped pattern
+ * A drop-in replacement for `new RegExp()` with special characters from source string escaped. This is useful when the pattern is not known at compile time and is dynamically constructed.
+ *
  * @param pattern passed in the form of string literal
  * @param flags unique set of characters from `d|g|i|m|s|u|y`
  * @returns dynamically constructed RegExp object
@@ -67,6 +80,9 @@ export function regexp(pattern: string, flags?: string): RegExp {
 	return new RegExp(pattern.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), flags);
 }
 
+/**
+ * A convenience function to declare a variable with multiple conditionals to determine its final value, without cluttering the global or top-level scope with temporary variables that are only used once, and avoid nested ternary hell.
+ */
 export function scope<T>(fn: () => T) {
 	return fn();
 }
@@ -76,7 +92,8 @@ export function sides<T extends string | any[]>(x: T): Record<'head' | 'last', T
 }
 
 /**
- * unique - transform an array to a set and back to array
+ * A function that accepts an array and returns the same without any duplicate values. This can also handle an array of object by passing in a `key` as an identifier to access the object, with the same behavior as `key` from `'/compare'` module.
+ *
  * @param array items to be inspected
  * @returns duplicate-free version of the array input
  */
