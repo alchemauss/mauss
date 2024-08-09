@@ -22,7 +22,7 @@ export function clamp(min: number, max: number) {
 }
 
 /**
- * The `%` is a remainder operator, this function computes the modulo operation and ensures a non-negative number. The result is always in the range `[0, n)`.
+ * The `%` is a remainder operator, this function computes the modulo operation and ensures a non-negative number for a non-negative divisor.
  *
  * @example
  * ```javascript
