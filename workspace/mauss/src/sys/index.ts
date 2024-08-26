@@ -1,3 +1,4 @@
+/** Joins all given parameters together using `/`, regardless of the platform */
 export function catenate(...paths: string[]): string {
 	if (!paths.length) return '.';
 	const index = paths[0].replace(/\\/g, '/').trim();
