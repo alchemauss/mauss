@@ -1,5 +1,9 @@
 import type { UnaryFunction } from '../typings/helpers.js';
 
+/**
+ * Binary search algorithm on a sorted array
+ * @returns the first item that passes the check
+ */
 export function binary<T>(
 	sorted: T[],
 	check: {
@@ -20,7 +24,10 @@ export function binary<T>(
 	return;
 }
 
-export function minmax(array: number[]): [number, number] {
+/**
+ * Find the minimum and maximum values in an array of numbers
+ */
+export function minmax(array: number[]): [min: number, max: number] {
 	if (!array.length) return [0, 0];
 
 	let min = array[0], max = array[0]; // prettier-ignore
