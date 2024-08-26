@@ -25,7 +25,8 @@ type QueryDecoder<Query extends string> = string extends Query
 		: {};
 
 /**
- * qsd - query string decoder
+ * Query string decoder (`qsd`) decodes a query string into an object. It accepts a query string with or without the leading `?` and returns a mapped object of decoded query string
+ *
  * @param qs query string of a URL with or without the leading `?`
  * @returns mapped object of decoded query string
  */
@@ -56,9 +57,10 @@ export function qsd<Q extends string>(qs: Q) {
 type BoundValues = Nullish | Primitives;
 
 /**
- * qse - query string encoder
- * @param bound object with key-value pair to be updated in the URL
- * @param transformer function that is applied to the final string if it exists
+ * Query string encoder (`qse`) encodes key-value pairs from an object into a query string. It optionally accepts a second argument for a transformer function that will be applied to the final value if it exists, else an empty string will be returned
+ *
+ * @param bound  object with key-value pair to be updated in the URL, only accepts an object with nullish and primitive literals or an array of those values
+ * @param transformer function that is applied to the final string if it exists, useful in cases where we want to add a leading `?` when the query exists but not when it's empty, or when we would like to append another existing query string after only if the output of `qse` exists
  * @returns final query string
  */
 export function qse<T extends object>(

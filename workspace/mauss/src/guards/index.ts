@@ -1,5 +1,23 @@
 import type { Nullish, Falsy, FullPrimitives as Primitives } from '../typings/aliases.js';
 
+/**
+ * A guard for exhaustive checks with `if`/`else`/`switch` statements, this will help branching logic in consuming enumeration and union types.
+ *
+ * @example
+ *
+ * ```typescript
+ * import { bulwark } from 'mauss/guards';
+ *
+ * let key = 'a' as 'a' | 'z';
+ * switch (key) {
+ * 	case 'a':
+ * 		return key.charCodeAt();
+ * 	default:
+ * 		// Argument of type 'string' is not assignable to parameter of type 'never'.
+ * 		return bulwark(key);
+ * }
+ * ```
+ */
 export function bulwark(nothing: never) {
 	throw new Error(`UncaughtError: reached forbidden guard with ${JSON.stringify(nothing)}`);
 }

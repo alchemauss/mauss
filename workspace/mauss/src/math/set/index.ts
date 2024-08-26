@@ -1,3 +1,4 @@
+/** generate all possible permutations from all items in an array */
 export function permutation<T, K>(input: T[], fn?: (i: T[]) => K) {
 	const results: Array<T[] | K> = [];
 	const permute = (arr: T[], m: T[] = []): void | number => {

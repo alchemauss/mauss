@@ -1,4 +1,5 @@
 type DateValue = string | number | Date;
+/** A function that returns the current date or the date passed in */
 export function current(d?: DateValue): Date {
 	if (d instanceof Date) return d;
 	return d ? new Date(d) : new Date();
@@ -28,6 +29,10 @@ const pad = (v: DateValue, len = 2) => str(v).padStart(len, '0');
 interface BuildOptions {
 	base?: 'UTC';
 }
+/**
+ * A function that builds a formatter
+ * @see {@link format} for the default formatter
+ */
 export function build({ base }: BuildOptions) {
 	const method = base === 'UTC' ? 'getUTC' : 'get';
 
@@ -94,6 +99,10 @@ export function build({ base }: BuildOptions) {
 	};
 }
 
+/**
+ * A function that takes in a `DateValue` and returns a renderer that accepts a string mask to format the date in
+ * @default 'DDDD, DD MMMM YYYY'
+ */
 export const format = build({});
 
 interface TravelOptions {
@@ -102,6 +111,10 @@ interface TravelOptions {
 	/** relative days to travel in number */
 	to: number;
 }
+/**
+ * Travel `to` a relative date `from` a point of reference
+ * @returns a new Date object with the relative date
+ */
 export function travel({ from, to }: TravelOptions) {
 	if (Number.isNaN((from = current(from)))) {
 		throw SyntaxError('Invalid Date');
