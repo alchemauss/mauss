@@ -53,6 +53,10 @@ suites['number/']('sort number in descending order', () => {
 	);
 });
 
+suites['bigint/']('sort bigint in ascending order', () => {
+	assert.equal([5n, 3n, 10n, 0n, 1n, -2n].sort(compare.bigint), [-2n, 0n, 1n, 3n, 5n, 10n]);
+});
+
 suites['string/']('sort string in alphabetical order', () => {
 	assert.equal(
 		['k', 'h', 'g', 'f', 'e', 'l', 'd', 'm', 'c', 'b', 'j', 'i', 'a'].sort(compare.string),
