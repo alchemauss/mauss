@@ -26,7 +26,7 @@ export function read(raw: string, memo: Record<string, any> = {}): FrontMatter[s
 	switch (cleaned[0]) {
 		case '-': {
 			const sequence = cleaned.split('-').filter((v) => v);
-			type Possibly = Primitives & FrontMatter; // what the ...?
+			type Possibly = Primitives & FrontMatter; // what..?
 			return sequence.map((v) => read(dedent(v)) as Possibly);
 		}
 		case '[': {
