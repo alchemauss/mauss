@@ -24,31 +24,20 @@ export function binary<T>(
 	return;
 }
 
-export function lcs(...words: [string, string]) {
-	// spread for unicode symbols
-	const x = [...words[0]];
-	const y = [...words[1]];
-
-	const matrix = Array.from({ length: y.length + 1 }, () => Array(x.length + 1).fill(null));
-	// provide initial values
-	for (let col = 0; col <= x.length; col += 1) matrix[0][col] = 0;
-	for (let row = 0; row <= y.length; row += 1) matrix[row][0] = 0;
+export function lcs(a: string, b: string) {
+	const [x, y] = [[...a], [...b]]; // spread for unicode symbols
+	const matrix = Array.from({ length: y.length + 1 }, () => Array(x.length + 1).fill(0));
 
 	let length = 0;
-	let colIdx = 0;
-	let rowIdx = 0;
-	for (let row = 1; row <= y.length; row += 1) {
-		for (let col = 1; col <= x.length; col += 1) {
-			if (x[col - 1] === y[row - 1]) {
-				matrix[row][col] = matrix[row - 1][col - 1] + 1;
-			} else {
-				matrix[row][col] = 0;
-			}
-
-			if (matrix[row][col] > length) {
-				length = matrix[row][col];
-				rowIdx = row;
-				colIdx = col;
+	let col = 0;
+	let row = 0;
+	for (let yi = 1; yi <= y.length; yi += 1) {
+		for (let xi = 1; xi <= x.length; xi += 1) {
+			matrix[yi][xi] = x[xi - 1] === y[yi - 1] ? matrix[yi - 1][xi - 1] + 1 : 0;
+			if (matrix[yi][xi] > length) {
+				length = matrix[yi][xi];
+				row = yi;
+				col = xi;
 			}
 		}
 	}
@@ -56,10 +45,10 @@ export function lcs(...words: [string, string]) {
 	if (length === 0) return '';
 
 	let longest = '';
-	while (matrix[rowIdx][colIdx] > 0) {
-		longest = x[colIdx - 1] + longest;
-		rowIdx -= 1;
-		colIdx -= 1;
+	while (matrix[row][col] > 0) {
+		longest = x[col - 1] + longest;
+		row -= 1;
+		col -= 1;
 	}
 
 	return longest;
