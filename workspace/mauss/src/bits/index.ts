@@ -24,6 +24,9 @@ export function binary<T>(
 	return;
 }
 
+/**
+ * Find the longest common subsequence (LCS) between two strings
+ */
 export function lcs(a: string, b: string) {
 	const [x, y] = [[...a], [...b]]; // spread for unicode symbols
 	const matrix = Array.from({ length: y.length + 1 }, () => Array(x.length + 1).fill(0));
@@ -68,6 +71,10 @@ export function minmax(array: number[]): [min: number, max: number] {
 	return [min, max];
 }
 
+/**
+ * Fast exponentiation algorithm
+ * @returns the base raised to the power of the exponent
+ */
 export function power(base: number, exponent: number): number {
 	if (exponent === 0) return 1;
 	const mul = power(base, Math.floor(exponent / 2));
