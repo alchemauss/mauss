@@ -1,22 +1,27 @@
-name: Release-CI
+name: REL
 
 on:
   push:
-    tags:
-      - "v*"
-    branches-ignore:
-      - "**"
+    tags: ['v*']
+    branches-ignore: ['**']
 
 jobs:
-  npm-publish:
+  publish:
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: 14
-          registry-url: "https://registry.npmjs.org"
-      - name: Install & Publish
-        run: npm install && npm publish
+          node-version: 20
+          registry-url: https://registry.npmjs.org
+
+      - run: pnpm install
+      - working-directory: ./workspace/mauss
+        run: pnpm publish --no-git-checks
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_CONFIG_PROVENANCE: true

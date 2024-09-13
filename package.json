@@ -1,50 +1,20 @@
 {
-  "name": "mauss",
-  "author": "Ignatius Bagus",
-  "description": "Opinionated zero-dependency development kit",
-  "version": "0.1.5",
-  "license": "MIT",
-  "type": "module",
-  "main": "index.js",
-  "types": "index.d.ts",
-  "scripts": {
-    "watch": "tsc -w --noEmit",
-    "lint": "run-p lint:**",
-    "lint:code": "tsc --noEmit",
-    "lint:style": "prettier -c src",
-    "publish:clean": "git clean -dfx -e node_modules",
-    "publish:build": "tsc -d --outDir .",
-    "publish:format": "prettier -wu **/*.{d.ts,js}",
-    "prepublishOnly": "run-s publish:**"
-  },
-  "exports": {
-    ".": "./index.js",
-    "./api": "./api/index.js",
-    "./bits": "./bits/index.js",
-    "./bits/find": "./bits/find.js",
-    "./guards": "./guards/index.js",
-    "./math": "./math/index.js",
-    "./math/set": "./math/set.js",
-    "./utils": "./utils/index.js",
-    "./utils/toolbox": "./utils/toolbox.js",
-    "./web": "./web/index.js",
-    "./package.json": "./package.json",
-    "./prettier.json": "./prettier.json",
-    "./tsconfig.json": "./tsconfig.json"
-  },
-  "prettier": "./prettier.json",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/alchemauss/mauss.git"
-  },
-  "bugs": {
-    "url": "https://github.com/alchemauss/mauss/issues"
-  },
-  "devDependencies": {
-    "@types/node": "^14.14.16",
-    "@types/node-fetch": "^2.5.10",
-    "npm-run-all": "^4.1.5",
-    "prettier": "^2.3.0",
-    "typescript": "^4.1.2"
-  }
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"clean": "git add * && git clean -dfx -e node_modules",
+		"check": "pnpm --filter \"./workspace/*\" check",
+		"format": "pnpm --filter \"./workspace/*\" format",
+		"test": "pnpm --filter \"./workspace/*\" test"
+	},
+	"packageManager": "pnpm@9.4.0",
+	"prettier": "./workspace/mauss/prettier.json",
+	"devDependencies": {
+		"@types/node": "^20.14.9",
+		"prettier": "^3.3.2",
+		"prettier-plugin-sort-package-json": "^0.2.0",
+		"tsm": "^2.3.0",
+		"typescript": "^5.5.3",
+		"uvu": "^0.5.6"
+	}
 }
