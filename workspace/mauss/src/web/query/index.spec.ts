@@ -1,8 +1,7 @@
 import { suite } from 'uvu';
 import * as assert from 'uvu/assert';
 
-import qsd from './decoder.js';
-import qse from './encoder.js';
+import { qsd, qse } from './index.js';
 
 const suites = {
 	'decoder/': suite('query/decoder'),

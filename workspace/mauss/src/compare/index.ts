@@ -97,6 +97,45 @@ export function time(x: string | Date, y: string | Date) {
 type KeyValidator<Keys, Expected> = Keys extends [infer I extends string, ...infer R]
 	? Expected & Record<I, KeyValidator<R, I extends keyof Expected ? Expected[I] : never>>
 	: Expected;
+
+/**
+ * A higher-order function that accepts a string as an identifier and an optional comparator function, it breaks up the identifier described by the dot (`.`) character and returns a curried function that accepts `(x, y)` with an object defined by the identifier.
+ *
+ * The optional comparator can be used when you have an existing custom sort function, e.g. in combination with `compare.order` to sort a set of string.
+ *
+ * @example
+ *
+ * ```javascript
+ * import * as compare from 'mauss/compare';
+ *
+ * const posts = [
+ * 	{ date: { month: 'March' } },
+ * 	{ date: { month: 'June' } },
+ * 	{ date: { month: 'May' } },
+ * 	{ date: { month: 'April' } },
+ * 	{ date: { month: 'January' } },
+ * 	{ date: { month: 'June' } },
+ * 	{ date: { month: 'February' } },
+ * ];
+ *
+ * const months = [
+ * 	'January',
+ * 	'February',
+ * 	'March',
+ * 	'April',
+ * 	'May',
+ * 	'June',
+ * 	'July',
+ * 	'August',
+ * 	'September',
+ * 	'October',
+ * 	'November',
+ * 	'December',
+ * ];
+ *
+ * posts.sort(compare.key('date.month', compare.order(months)));
+ * ```
+ */
 export function key<
 	Inferred extends Record<TS.IndexSignature, any>,
 	Identifier extends keyof Inferred = TS.Paths<Inferred>,
@@ -111,6 +150,9 @@ export function key<
 	) => (comparator || wildcard)(drill(x as Inferred), drill(y as Inferred));
 }
 
+/**
+ * A higher-order function that accepts an array of strings and returns a comparator function that sorts the strings in the order they appear in the array.
+ */
 export function order(weights: readonly string[]): Wildcard {
 	const m: Record<string, number> = {};
 	weights.forEach((v, i) => (m[v] = i));

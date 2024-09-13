@@ -36,6 +36,9 @@ function paste(type: 'blob' | 'text') {
 	return { blob: ncb.read, text: ncb.readText }[type]();
 }
 
+/**
+ * This namespace extends the [`Navigator` object](https://developer.mozilla.org/en-US/docs/Web/API/Navigator), make sure to execute the function in environments where `window.navigator` exists
+ */
 export const clipboard = {
 	copy,
 	paste,
