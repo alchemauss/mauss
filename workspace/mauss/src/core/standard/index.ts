@@ -8,6 +8,9 @@ interface CapitalizeOptions {
 	/** convert the remaining word to lowercase */
 	normalize?: boolean;
 }
+/**
+ * A function that accepts a string and returns the same with the first letter of each word capitalized. This can also be used to capitalize only the first letter of the entire string, or normalize the entire string to lowercase before capitalizing.
+ */
 export function capitalize(text: string, { cap, normalize }: CapitalizeOptions = {}): string {
 	if (normalize) text = text.toLowerCase();
 	if (cap) return `${text[0].toUpperCase()}${text.slice(1)}`;
@@ -87,6 +90,10 @@ export function scope<T>(fn: () => T) {
 	return fn();
 }
 
+/**
+ * A function that accepts an indexable object.
+ * @returns `{ head, last }` of the object
+ */
 export function sides<T extends string | any[]>(x: T): Record<'head' | 'last', T[0]> {
 	return { head: x[0], last: x[x.length - 1] };
 }
