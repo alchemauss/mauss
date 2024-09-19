@@ -5,7 +5,7 @@ import * as std from './index.js';
 const suites = {
 	'capitalize/': suite('std/capitalize'),
 	'identical/': suite('std/identical'),
-	'outdent/': suite('std/outdent'),
+	'indent/': suite('std/indent'),
 	'sides/': suite('std/sides'),
 
 	'unique/simple': suite('unique/simple'),
@@ -78,20 +78,24 @@ suites['identical/']('identical clone', async () => {
 	assert.ok(std.identical(data, clone(data)));
 });
 
-suites['outdent/']('outdent', () => {
-	assert.equal(std.outdent(''), '');
-	assert.equal(std.outdent('  '), '');
+suites['indent/']('indent', () => {
+	assert.equal(std.indent('').trim(), '');
+	assert.equal(std.indent('  ').trim(), '');
 
-	assert.equal(std.outdent('  a'), 'a');
-	assert.equal(std.outdent('  a\n  b'), 'a\nb');
+	assert.equal(std.indent('  a').trim(), 'a');
+	assert.equal(std.indent('  a\n  b').trim(), 'a\nb');
 
 	assert.equal(
-		std.outdent(`
-		a
-			b
-		c
-				d
-		`),
+		std
+			.indent(
+				`
+				a
+					b
+				c
+						d
+				`,
+			)
+			.trim(),
 		'a\n\tb\nc\n\t\td',
 	);
 });
