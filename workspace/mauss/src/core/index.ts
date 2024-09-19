@@ -9,6 +9,7 @@ export {
 	outdent,
 	regexp,
 	scope,
+  sides,
 	unique,
 } from './standard/index.js';
 
