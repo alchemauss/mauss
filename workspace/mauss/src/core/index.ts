@@ -5,11 +5,11 @@ export { debounce, immediate, throttle } from './processor/index.js';
 export {
 	capitalize,
 	identical,
+	indent,
 	inverse,
-	outdent,
 	regexp,
 	scope,
-  sides,
+	sides,
 	unique,
 } from './standard/index.js';
 
