@@ -85,19 +85,15 @@ suites['indent/']('indent', () => {
 	assert.equal(std.indent('  a').trim(), 'a');
 	assert.equal(std.indent('  a\n  b').trim(), 'a\nb');
 
-	assert.equal(
-		std
-			.indent(
-				`
-				a
-					b
-				c
-						d
-				`,
-			)
-			.trim(),
-		'a\n\tb\nc\n\t\td',
-	);
+	const i = std.indent(`
+		a
+			b
+		c
+				d
+	`);
+
+	assert.equal(i.depth, 2);
+	assert.equal(i.trim(), 'a\n\tb\nc\n\t\td');
 });
 
 suites['sides/']('first and last element', () => {
