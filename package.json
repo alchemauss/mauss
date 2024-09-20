@@ -1,61 +1,20 @@
 {
-  "name": "mauss",
-  "author": "Ignatius Bagus",
-  "description": "fast and efficient type-safe SDK",
-  "version": "0.4.12",
-  "license": "MIT",
-  "type": "module",
-  "types": "./core/index.d.ts",
-  "scripts": {
-    "clean": "git add * && git clean -dfx -e node_modules",
-    "watch": "pnpm pub:build --watch",
-    "check": "pnpm check:code && pnpm check:style",
-    "check:code": "pnpm pub:build --noEmit",
-    "check:style": "prettier -c \"src/**/*.ts\"",
-    "test": "pnpm test:unit",
-    "test:unit": "uvu -r tsm src \"(spec\\.ts)\"",
-    "pub:build": "tsc --project src",
-    "pub:format": "prettier -wu **/*.{d.ts,js}",
-    "prepublishOnly": "pnpm pub:build && pnpm pub:format"
-  },
-  "exports": {
-    ".": "./core/index.js",
-    "./api": "./api/index.js",
-    "./bits": "./bits/index.js",
-    "./guards": "./guards/index.js",
-    "./math": "./math/index.js",
-    "./std": "./std/index.js",
-    "./utils": "./utils/index.js",
-    "./web": "./web/index.js",
-    "./typings": "./typings/index.d.ts",
-    "./package.json": "./package.json",
-    "./prettier.json": "./prettier.json",
-    "./tsconfig.json": "./tsconfig.json"
-  },
-  "packageManager": "pnpm@7.30.5",
-  "prettier": "./prettier.json",
-  "repository": "github:alchemauss/mauss",
-  "bugs": "https://github.com/alchemauss/mauss/issues",
-  "keywords": [
-    "zero-dependency",
-    "strongly-typed",
-    "type-safe",
-    "fast",
-    "efficient",
-    "functional",
-    "declarative",
-    "modular",
-    "reusable",
-    "standard",
-    "typings",
-    "opinionated",
-    "settings"
-  ],
-  "devDependencies": {
-    "@types/node": "^18.16.0",
-    "prettier": "^2.8.8",
-    "tsm": "^2.3.0",
-    "typescript": "^5.0.4",
-    "uvu": "^0.5.6"
-  }
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"clean": "git add * && git clean -dfx -e node_modules",
+		"check": "pnpm --filter \"./workspace/*\" check",
+		"format": "pnpm --filter \"./workspace/*\" format",
+		"test": "pnpm --filter \"./workspace/*\" test"
+	},
+	"packageManager": "pnpm@9.4.0",
+	"prettier": "./workspace/mauss/prettier.json",
+	"devDependencies": {
+		"@types/node": "^20.14.9",
+		"prettier": "^3.3.2",
+		"prettier-plugin-sort-package-json": "^0.2.0",
+		"tsm": "^2.3.0",
+		"typescript": "^5.5.3",
+		"uvu": "^0.5.6"
+	}
 }
