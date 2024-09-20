@@ -1,27 +1,35 @@
 import type * as TS from '../typings/index.js';
 
+/** Compares nullish values, sorting `null` and `undefined` to the end */
 export function undefined(x: unknown, y: unknown): number {
 	if (x == null && y == null) return 0;
 	return (x == null && 1) || (y == null && -1) || 0;
 }
 
+/** Compares boolean values, prioritizing `true` over `false` */
 export function boolean(x: boolean, y: boolean): number {
 	return +y - +x;
 }
 
-/** Put `(x, y)` for bigger number first, and `(y, x)` for smaller number first */
+/**
+ * Put `(x, y)` for bigger number first, and `(y, x)` for smaller number first
+ * @returns `y - x` which defaults to descending order
+ */
 export function number(x: number, y: number): number {
 	return y - x;
 }
 
+/** Compares bigint values, defaults to ascending order */
 export function bigint(x: bigint, y: bigint): number {
 	return x < y ? -1 : x > y ? 1 : 0;
 }
 
+/** Compares symbols using its string values */
 export function symbol(x: symbol, y: symbol): number {
 	return x.toString().localeCompare(y.toString());
 }
 
+/** Compares string values using `.localeCompare` */
 export function string(x: string, y: string): number {
 	for (const [pattern, exp] of Object.entries(patterns)) {
 		const fn = { date, time }[pattern.split(':')[0]];
@@ -32,6 +40,7 @@ export function string(x: string, y: string): number {
 
 type Wildcard = TS.AnyFunction<[x: any, y: any], number>;
 
+/** Compares generic object values using {@link inspect} */
 export function object(x: object, y: object): number {
 	if (x === null) return 1;
 	if (y === null) return -1;
@@ -40,6 +49,7 @@ export function object(x: object, y: object): number {
 
 const primitives = { string, number, bigint, boolean, symbol, undefined } as const;
 
+/** Compares anything with anything */
 export function wildcard(x: any, y: any): number {
 	if (x == null) return 1;
 	if (y == null) return -1;
@@ -55,6 +65,10 @@ export function wildcard(x: any, y: any): number {
 	return (primitives[xt] as Wildcard)(x, y);
 }
 
+/**
+ * Recursively compares common object properties until the first difference is found
+ * @returns `0` if both objects are identical or completely different, otherwise their respective primitive difference
+ */
 export function inspect(
 	x: Record<TS.IndexSignature, any>,
 	y: Record<TS.IndexSignature, any>,
@@ -84,10 +98,12 @@ const patterns = {
 	time: /[0-2]\d:[0-5]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z)/,
 } as const;
 
+/** Compares date or date-like string values */
 export function date(x: string | Date, y: string | Date) {
 	return new Date(y).getTime() - new Date(x).getTime();
 }
 
+/** Compares time or time-like string values */
 export function time(x: string | Date, y: string | Date) {
 	return Date.parse(`2017/08/28 ${y}`) - Date.parse(`2017/08/28 ${x}`);
 }

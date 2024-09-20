@@ -8,6 +8,9 @@ interface CapitalizeOptions {
 	/** convert the remaining word to lowercase */
 	normalize?: boolean;
 }
+/**
+ * A function that accepts a string and returns the same with the first letter of each word capitalized. This can also be used to capitalize only the first letter of the entire string, or normalize the entire string to lowercase before capitalizing.
+ */
 export function capitalize(text: string, { cap, normalize }: CapitalizeOptions = {}): string {
 	if (normalize) text = text.toLowerCase();
 	if (cap) return `${text[0].toUpperCase()}${text.slice(1)}`;
@@ -58,6 +61,20 @@ export function identical(x: unknown, y: unknown): boolean {
 }
 
 /**
+ * A function to work with template strings and removes indentation based on the first line. This is useful when the template string is written with indentation for better readability, but the indentation is not desired in the final output.
+ */
+export function indent(text: string) {
+	const lines = text.split(/\r?\n/).filter((l) => l.trim());
+	const depth = (/^\s*/.exec(lines[0]) || [''])[0].length;
+	return {
+		depth,
+		trim() {
+			return lines.map((l) => l.slice(depth)).join('\n');
+		},
+	};
+}
+
+/**
  * A function that accepts a function and returns the same function with the order of parameters reversed. This can be used in conjunction with `compare` methods to sort the items in ascending values.
  *
  * @param fn any function with one or more arguments
@@ -87,6 +104,10 @@ export function scope<T>(fn: () => T) {
 	return fn();
 }
 
+/**
+ * A function that accepts an indexable object.
+ * @returns `{ head, last }` of the object
+ */
 export function sides<T extends string | any[]>(x: T): Record<'head' | 'last', T[0]> {
 	return { head: x[0], last: x[x.length - 1] };
 }

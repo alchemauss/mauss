@@ -5,6 +5,7 @@ import * as std from './index.js';
 const suites = {
 	'capitalize/': suite('std/capitalize'),
 	'identical/': suite('std/identical'),
+	'indent/': suite('std/indent'),
 	'sides/': suite('std/sides'),
 
 	'unique/simple': suite('unique/simple'),
@@ -75,6 +76,24 @@ suites['identical/']('identical clone', async () => {
 	const { clone } = await import('../../std/index.js');
 	const data = { a: [1, '', {}], o: { now: new Date() } };
 	assert.ok(std.identical(data, clone(data)));
+});
+
+suites['indent/']('indent', () => {
+	assert.equal(std.indent('').trim(), '');
+	assert.equal(std.indent('  ').trim(), '');
+
+	assert.equal(std.indent('  a').trim(), 'a');
+	assert.equal(std.indent('  a\n  b').trim(), 'a\nb');
+
+	const i = std.indent(`
+		a
+			b
+		c
+				d
+	`);
+
+	assert.equal(i.depth, 2);
+	assert.equal(i.trim(), 'a\n\tb\nc\n\t\td');
 });
 
 suites['sides/']('first and last element', () => {
