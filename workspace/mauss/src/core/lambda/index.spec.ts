@@ -1,11 +1,11 @@
 import { suite } from 'uvu';
 import * as assert from 'uvu/assert';
-
 import * as lambda from './index.js';
 
 const suites = {
 	'curry/': suite('lambda/curry'),
 	'pipe/': suite('lambda/pipe'),
+	'masked/reveal': suite('lambda/masked:reveal'),
 };
 
 suites['curry/']('properly curry a function', () => {
@@ -26,6 +26,20 @@ suites['pipe/']('properly apply functions in ltr order', () => {
 
 	const pipeline = lambda.pipe(name, cap, split);
 	assert.equal(pipeline({ name: 'mom' }), ['M', 'O', 'M']);
+});
+
+suites['masked/reveal']('properly mask and reveal a value', () => {
+	const { mask, reveal } = lambda;
+
+	const answer = mask.of(() => 42);
+	assert.equal(reveal(answer).expect('unreachable'), 42);
+
+	let maybe: string | null | undefined;
+	let wrapped = mask.wrap(maybe);
+	assert.equal(reveal(wrapped).or('2023-04-04'), '2023-04-04');
+
+	wrapped = mask.wrap('2023-04-06');
+	assert.equal(reveal(wrapped).expect('unreachable'), '2023-04-06');
 });
 
 Object.values(suites).forEach((v) => v.run());
