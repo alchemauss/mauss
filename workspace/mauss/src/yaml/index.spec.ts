@@ -7,7 +7,7 @@ test('construct simple index', () => {
 		`
 title: Simple Index
 tags: [x, y, z]
-		`.trim()
+		`.trim(),
 	);
 
 	assert.equal(index, {
@@ -23,7 +23,7 @@ date:published: 2023-02-01
 a:b:x: 0
 a:b:y: 1
 a:b:z: 2
-		`.trim()
+		`.trim(),
 	);
 
 	assert.equal(index, {
@@ -38,7 +38,7 @@ test('convert boolean values', () => {
 title: Casting Boolean
 draft: false
 hex: ["x", true, 0, false]
-		`.trim()
+		`.trim(),
 	);
 
 	assert.equal(index, {
@@ -54,7 +54,7 @@ title: Literal Block
 data: |
 	Hello World
 	Lorem Ipsum
-		`.trim()
+		`.trim(),
 	);
 
 	assert.equal(index, {
@@ -70,7 +70,7 @@ hex:
 	- 'x'
 	- true
 	- 0
-		`.trim()
+		`.trim(),
 	);
 
 	assert.equal(index, {
@@ -87,7 +87,7 @@ jobs:
 		with: node
 	sync:
 		with: pnpm
-		`.trim()
+		`.trim(),
 	);
 
 	assert.equal(index, {
@@ -111,7 +111,7 @@ jobs:
 			os: linux
 			env:
 				TOKEN: 123
-		`.trim()
+		`.trim(),
 	);
 
 	assert.equal(index, {
@@ -128,7 +128,7 @@ test('handle edge cases', () => {
 title: Edge Cases
 name: "Hello: World"
 link: https://github.com
-		`.trim()
+		`.trim(),
 	);
 
 	assert.equal(index, {
