@@ -27,8 +27,7 @@ export function read(raw: string, memo: Record<string, any> = {}): FrontMatter[s
 	switch (cleaned[0]) {
 		case '-': {
 			const sequence = cleaned.split('-').filter((v) => v);
-			type Possibly = Primitives & FrontMatter; // what..?
-			return sequence.map((v) => read(indent(v).trim()) as Possibly);
+			return sequence.map((v) => read(indent(v).trim()) as FrontMatter);
 		}
 		case '[': {
 			const pruned = cleaned.slice(1, -1);
