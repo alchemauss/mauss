@@ -6,7 +6,11 @@ export function float(max = 1, min = 0): number {
 	return Math.random() * (max - min) + min;
 }
 
-/** Generates a random integer between `min` and `max` */
+/**
+ * Generates a random integer between `min` and `max`
+ * @default max=1
+ * @default min=0
+ */
 export function int(max = 1, min = 0): number {
 	return Math.floor(float(max, min));
 }
@@ -31,6 +35,11 @@ export function key(dict: Record<IndexSignature, any>): string {
 export function val<T>(dict: Record<IndexSignature, T>): T {
 	const values = Object.values(dict);
 	return values[int(values.length)];
+}
+
+/** Gets a random item from a list */
+export function item<T>(list: T[]): T {
+	return list[int(list.length)];
 }
 
 /** Generates a random hexadecimal color code */
